@@ -336,17 +336,49 @@ next.addEventListener("click",()=>{if(index<steps.length-1){index++;render()}els
   const section=document.querySelector('#method');
   if(!section || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   document.documentElement.classList.add('js-reveal');
-  const steps=section.querySelectorAll('.method-step');
-  const observer=new IntersectionObserver(entries=>{
+  const steps=Array.from(section.querySelectorAll('.method-step'));
+  const revealObserver=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        entry.target.classList.add('is-visible','is-active');
-      }else{
-        entry.target.classList.remove('is-active');
-      }
+      if(entry.isIntersecting) entry.target.classList.add('is-visible');
     });
-  },{threshold:.55,rootMargin:'-18% 0px -28% 0px'});
-  steps.forEach(step=>observer.observe(step));
+  },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
+  steps.forEach(step=>revealObserver.observe(step));
+
+  let ticking=false;
+  function setSingleActiveStep(){
+    ticking=false;
+    const viewportCenter=window.innerHeight*0.48;
+    const sectionRect=section.getBoundingClientRect();
+    if(sectionRect.bottom<=0 || sectionRect.top>=window.innerHeight){
+      steps.forEach(step=>step.classList.remove('is-active'));
+      return;
+    }
+    let nearest=null;
+    let nearestDistance=Infinity;
+    steps.forEach(step=>{
+      const rect=step.getBoundingClientRect();
+      if(rect.bottom<=0 || rect.top>=window.innerHeight){
+        step.classList.remove('is-active');
+        return;
+      }
+      const distance=Math.abs((rect.top+rect.bottom)/2-viewportCenter);
+      if(distance<nearestDistance){
+        nearestDistance=distance;
+        nearest=step;
+      }
+      step.classList.remove('is-active');
+    });
+    if(nearest) nearest.classList.add('is-active');
+  }
+  function requestUpdate(){
+    if(!ticking){
+      ticking=true;
+      window.requestAnimationFrame(setSingleActiveStep);
+    }
+  }
+  window.addEventListener('scroll',requestUpdate,{passive:true});
+  window.addEventListener('resize',requestUpdate);
+  requestUpdate();
 })();
 </script>
 
