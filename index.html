@@ -60,12 +60,18 @@
 @keyframes video-slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:760px){.video-track{gap:12px;animation-duration:32s}.video-carousel .video-slot{width:min(78vw,340px);min-height:205px}}
 @media(prefers-reduced-motion:reduce){.video-track{animation:none;transform:none;flex-wrap:wrap;width:100%;justify-content:center}.video-carousel{mask-image:none}.video-carousel .video-slot{width:min(100%,440px)}}
-\n</style>
+\n
+/* Header cleanup and larger logo; blend dark logo canvas into the page */
+.brand-logo{height:112px;max-width:220px;mix-blend-mode:screen;background:transparent;object-fit:contain;filter:drop-shadow(0 0 14px #d7b56d30)}
+.hero-logo{width:min(92%,400px);mix-blend-mode:screen;background:transparent;object-fit:contain}
+@media(max-width:760px){.brand-logo{height:82px;max-width:155px}.hero-logo{width:min(94%,360px)}}
+@media(max-width:390px){.brand-logo{height:72px;max-width:138px}.hero-logo{width:min(96%,330px)}}
+
+</style>
 </head>
 <body>
 <header class="wrap nav">
 <a class="brand" href="#" aria-label="Mounir Institute home"><img class="brand-logo" src="assets/mounir-institute-logo.webp" alt="Mounir Institute original gold calligraphy logo"></a>
-<a class="teacher-nav" href="#teachers">My Teachers</a>
 <a class="cta" href="#journey">Begin Your Journey <span aria-hidden="true">↗</span></a>
 </header>
 <main>
