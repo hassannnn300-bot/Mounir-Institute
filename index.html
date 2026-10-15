@@ -16,7 +16,26 @@
 @media(max-width:390px){.brand-logo{height:56px;max-width:104px}.nav a.cta{padding:9px 10px;font-size:.74rem}.hero h1{font-size:clamp(2.35rem,11.5vw,3.1rem)}.options{grid-template-columns:1fr}.option{min-height:62px;padding:12px}.hero-actions{gap:10px}.hero-actions .cta{width:100%}.proof{display:grid;grid-template-columns:1fr;gap:7px}.journey{padding:22px 14px}}
 
 .testimonials-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:24px}.stars{color:var(--gold2);letter-spacing:.16em;font-size:1.05rem;line-height:1}.review-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.review-card{padding:23px;border:1px solid var(--line);border-radius:9px;background:linear-gradient(145deg,#17150f,#0e0e0c);min-height:205px;display:flex;flex-direction:column;gap:15px;transition:transform .3s,border-color .3s,box-shadow .3s}.review-card:hover{transform:translateY(-5px);border-color:#8b713d;box-shadow:0 16px 34px #0004}.review-label{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}.review-placeholder{font-family:Georgia,serif;font-size:1.28rem;line-height:1.4;color:#e9e0ce}.review-note{color:var(--muted);font-size:.83rem;margin-top:auto}.video-heading{margin-top:42px!important}.video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:20px}.video-slot{position:relative;display:flex;flex-direction:column;justify-content:space-between;min-height:220px;padding:20px;border:1px solid #51432b;border-radius:9px;overflow:hidden;background:radial-gradient(ellipse at 50% 30%,#302719 0%,#17140e 48%,#0d0d0b 100%);text-decoration:none;transition:transform .3s,border-color .3s}.video-slot:before,.video-slot:after{content:"";position:absolute;pointer-events:none;border:1px solid #8e713e44;border-radius:50%;width:240px;aspect-ratio:1;right:-80px;top:-95px;transition:transform .8s}.video-slot:after{width:175px;right:-47px;top:-60px}.video-slot:hover{transform:translateY(-4px);border-color:var(--gold)}.video-slot:hover:before{transform:rotate(30deg) scale(1.08)}.play-mark{position:relative;z-index:1;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--gold);color:var(--gold2);background:#09090999;font-size:1.05rem}.video-slot strong,.video-slot small{position:relative;z-index:1}.video-slot strong{font-family:Georgia,serif;font-size:1.35rem;font-weight:500}.video-slot small{display:block;color:var(--muted);font-size:.84rem;margin-top:5px}.review-disclaimer{font-size:.78rem;color:#938a78;margin-top:16px;line-height:1.6}
-</style>
+
+/* Teacher & mentor photo carousel */
+.teacher-gallery{overflow:hidden;position:relative;margin-top:25px;padding:5px 0 16px;mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.teacher-track{display:flex;gap:16px;width:max-content;animation:teacher-slide 34s linear infinite}
+.teacher-gallery:hover .teacher-track{animation-play-state:paused}
+.teacher-card{width:clamp(210px,25vw,285px);flex:0 0 auto;border:1px solid #4a3c25;border-radius:9px;overflow:hidden;background:linear-gradient(150deg,#201a10,#0d0d0b);transition:border-color .25s,transform .25s}
+.teacher-card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.teacher-photo{height:clamp(230px,28vw,310px);display:grid;place-items:center;text-align:center;padding:18px;position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 35%,#3c301c,#14120d 70%)}
+.teacher-photo:before,.teacher-photo:after{content:"";position:absolute;width:190px;aspect-ratio:1;border:1px solid #d7b56d55;border-radius:50%}
+.teacher-photo:after{width:140px;border-color:#d7b56d33}
+.photo-placeholder{position:relative;z-index:1;color:var(--gold2);font-family:Georgia,serif;font-size:1.2rem;line-height:1.4}
+.photo-placeholder small{display:block;margin-top:8px;font: .76rem/1.5 system-ui,sans-serif;color:var(--muted)}
+.teacher-caption{padding:15px 16px 17px}
+.teacher-caption strong{font-family:Georgia,serif;font-size:1.1rem;font-weight:500}
+.teacher-caption small{display:block;color:var(--muted);font-size:.8rem;margin-top:4px}
+.gallery-note{font-size:.8rem;color:#938a78;margin-top:10px;line-height:1.6}
+@keyframes teacher-slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.teacher-track{animation:none;transform:none;flex-wrap:wrap;width:100%;justify-content:center}.teacher-gallery{mask-image:none}.teacher-card{width:min(100%,280px)}}
+@media(max-width:760px){.teacher-track{gap:12px;animation-duration:28s}.teacher-card{width:220px}.teacher-photo{height:240px}}
+\n</style>
 </head>
 <body>
 <header class="wrap nav">
@@ -41,6 +60,29 @@
 <div class="monogram"><img class="full-logo" src="assets/mounir-institute-logo.webp" alt="Mounir Institute original logo"></div>
 <div><div class="eyebrow">Learn with Hassan Mounir</div><h2>A method shaped by <span class="gold">years of learning.</span></h2><p class="intro">With 800,000+ followers online, Hassan Mounir has travelled to study with teachers in Morocco, Egypt, Saudi Arabia and Pakistan. He brings those experiences into a clear, practical approach to learning Maqamaat for Qur’an recitation.</p><div class="social-links" aria-label="Follow Hassan Mounir on social media"><a href="https://www.instagram.com/hassanmounirofficial/" target="_blank" rel="noopener noreferrer"><span>◎</span> Instagram</a><a href="https://www.tiktok.com/@mounir.institute" target="_blank" rel="noopener noreferrer"><span>♪</span> TikTok</a><a href="https://www.youtube.com/@Mounir.institute" target="_blank" rel="noopener noreferrer"><span>▶</span> YouTube</a></div><a class="cta secondary" href="#journey">Find your starting point →</a></div>
 </div></section>
+<section class="section" id="teachers"><div class="wrap">
+<div class="eyebrow">The teachers behind the journey</div>
+<h2>Learning shaped by <span class="gold">teachers and tradition.</span></h2>
+<p class="intro">A visual journey through Hassan’s learning experiences with teachers across Morocco, Egypt, Saudi Arabia and Pakistan. This animated gallery is ready for your real photos.</p>
+<div class="teacher-gallery" aria-label="Automatically sliding gallery of Hassan Mounir and his teachers">
+<div class="teacher-track">
+<article class="teacher-card"><div class="teacher-photo"><div class="photo-placeholder">Add Hassan’s photo<small>Replace this space with a photo of Hassan Mounir</small></div></div><div class="teacher-caption"><strong>Hassan Mounir</strong><small>Founder · Mounir Institute</small></div></article>
+<article class="teacher-card"><div class="teacher-photo"><div class="photo-placeholder">Add teacher photo<small>Replace with a photo alongside a teacher</small></div></div><div class="teacher-caption"><strong>My teachers</strong><small>Learning and guidance</small></div></article>
+<article class="teacher-card"><div class="teacher-photo"><div class="photo-placeholder">Morocco<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Morocco</strong><small>Teachers and learning experiences</small></div></article>
+<article class="teacher-card"><div class="teacher-photo"><div class="photo-placeholder">Egypt<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Egypt</strong><small>Teachers and learning experiences</small></div></article>
+<article class="teacher-card"><div class="teacher-photo"><div class="photo-placeholder">Saudi Arabia<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Saudi Arabia</strong><small>Teachers and learning experiences</small></div></article>
+<article class="teacher-card"><div class="teacher-photo"><div class="photo-placeholder">Pakistan<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Pakistan</strong><small>Teachers and learning experiences</small></div></article>
+<!-- Duplicate the cards for a seamless continuous loop. Replace placeholders with real, approved photos before publishing. -->
+<article class="teacher-card" aria-hidden="true"><div class="teacher-photo"><div class="photo-placeholder">Add Hassan’s photo<small>Replace this space with a photo of Hassan Mounir</small></div></div><div class="teacher-caption"><strong>Hassan Mounir</strong><small>Founder · Mounir Institute</small></div></article>
+<article class="teacher-card" aria-hidden="true"><div class="teacher-photo"><div class="photo-placeholder">Add teacher photo<small>Replace with a photo alongside a teacher</small></div></div><div class="teacher-caption"><strong>My teachers</strong><small>Learning and guidance</small></div></article>
+<article class="teacher-card" aria-hidden="true"><div class="teacher-photo"><div class="photo-placeholder">Morocco<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Morocco</strong><small>Teachers and learning experiences</small></div></article>
+<article class="teacher-card" aria-hidden="true"><div class="teacher-photo"><div class="photo-placeholder">Egypt<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Egypt</strong><small>Teachers and learning experiences</small></div></article>
+<article class="teacher-card" aria-hidden="true"><div class="teacher-photo"><div class="photo-placeholder">Saudi Arabia<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Saudi Arabia</strong><small>Teachers and learning experiences</small></div></article>
+<article class="teacher-card" aria-hidden="true"><div class="teacher-photo"><div class="photo-placeholder">Pakistan<small>Add a photo from your studies</small></div></div><div class="teacher-caption"><strong>Pakistan</strong><small>Teachers and learning experiences</small></div></article>
+</div></div>
+<p class="gallery-note">Photo spaces only for now — no stock photos or invented teacher images. Once you upload your photos, these can become a polished, continuously sliding gallery. Please use photos you have permission to publish.</p>
+</div></section>
+
 <section class="section" id="programmes"><div class="wrap">
 <div class="eyebrow">Programmes</div><h2>Choose your <span class="gold">learning path.</span></h2>
 <div class="pricing">
