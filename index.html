@@ -258,25 +258,41 @@
 .price-card .excluded-benefits li::before{content:"×";left:2px;color:#716b5d;font-size:1.05rem}
 
 
-/* Subtle interactive lift for each learning plan */
+/* Refined, slow gold illumination across the learning plans */
 .plan-card{
- transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,background .22s ease;
+ position:relative;
+ isolation:isolate;
+ overflow:hidden;
  transform:translateY(0);
+ transition:transform .65s cubic-bezier(.22,1,.36,1),border-color .8s ease,box-shadow .8s ease;
+}
+.plan-card::before{
+ content:"";
+ position:absolute;
+ inset:0;
+ z-index:-1;
+ pointer-events:none;
+ background:radial-gradient(ellipse 110% 85% at 12% 0%,rgba(210,164,79,.24),transparent 70%),linear-gradient(145deg,#302516 0%,#1c180f 55%,#12110e 100%);
+ opacity:0;
+ transition:opacity 1.05s cubic-bezier(.22,1,.36,1);
+}
+.plan-card.featured::before{
+ background:radial-gradient(ellipse 110% 85% at 12% 0%,rgba(233,185,92,.27),transparent 70%),linear-gradient(145deg,#3a2b18 0%,#21190f 55%,#13110d 100%);
 }
 .plan-card:hover,
 .plan-card:focus-within{
- transform:translateY(-5px);
+ transform:translateY(-6px);
  border-color:var(--gold);
- background:linear-gradient(150deg,#282113,#17140e);
- box-shadow:0 14px 34px #0007,0 0 0 1px #d7b56d35;
+ box-shadow:0 20px 48px #0008,0 0 0 1px #d7b56d30;
 }
+.plan-card:hover::before,
+.plan-card:focus-within::before{opacity:1}
 .plan-card.featured:hover,
 .plan-card.featured:focus-within{
- background:linear-gradient(155deg,#352817,#19150e 72%);
- box-shadow:0 16px 38px #0008,0 0 0 1px #f0dca560;
+ box-shadow:0 22px 52px #0009,0 0 0 1px #f0dca550;
 }
 @media (prefers-reduced-motion:reduce){
- .plan-card{transition:none}
+ .plan-card,.plan-card::before{transition:none}
  .plan-card:hover,.plan-card:focus-within{transform:none}
 }
 </style>
