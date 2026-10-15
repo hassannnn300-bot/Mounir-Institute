@@ -119,6 +119,31 @@
 
 
 .vsl-section{padding:24px 0 76px;text-align:center}.vsl-heading{max-width:660px;margin:0 auto 24px}.vsl-heading h2{margin:8px 0 10px}.vsl-heading p{color:var(--muted);margin:0}.vsl-frame{aspect-ratio:16/9;max-width:920px;margin:0 auto;padding:2px;border-radius:14px;background:linear-gradient(140deg,#b28b48,#3c3020 42%,#9b793d 80%,#392d1c);box-shadow:0 22px 65px #0008;overflow:hidden}.vsl-inner{height:100%;border-radius:12px;background:radial-gradient(ellipse at 50% 40%,#252016 0%,#11110f 58%,#090909 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--gold2)}.vsl-play{display:grid;place-items:center;width:66px;height:66px;border:1px solid #9c7b42;border-radius:50%;font-size:21px;padding-left:4px;background:#d7b56d12;margin-bottom:8px}.vsl-inner strong{font-family:Georgia,serif;font-size:clamp(1rem,2vw,1.4rem);font-weight:500}.vsl-inner span{font-size:.75rem;text-transform:uppercase;letter-spacing:.18em;color:var(--muted)}@media(max-width:600px){.vsl-section{padding:10px 0 48px}.vsl-play{width:48px;height:48px;font-size:16px}.vsl-inner{gap:5px}.vsl-play{margin-bottom:2px}}
+
+/* The Mounir Method: scroll-led learning pathway */
+.method-section{padding:clamp(58px,8vw,100px) 0;background:linear-gradient(180deg,#090909 0%,#0d0c0a 48%,#090909 100%);overflow:hidden}
+.method-intro{max-width:700px;margin:0 auto 48px;text-align:center}
+.method-intro h2{margin:10px 0 14px;font-size:clamp(2rem,4.3vw,3.25rem);line-height:1.12;letter-spacing:-.035em}
+.method-intro p{max-width:580px;margin:0 auto;color:var(--muted)}
+.method-timeline{position:relative;max-width:920px;margin:0 auto;display:grid;gap:18px}
+.method-timeline:before{content:"";position:absolute;left:31px;top:34px;bottom:34px;width:1px;background:linear-gradient(to bottom,transparent,#8c6b35 8%,#8c6b35 92%,transparent);opacity:.75}
+.method-step{position:relative;display:grid;grid-template-columns:64px minmax(0,1fr);gap:20px;align-items:start}
+.method-number{position:relative;z-index:1;display:grid;place-items:center;width:64px;height:64px;border:1px solid #806333;border-radius:50%;background:#11100d;color:var(--gold2);font:500 1.25rem Georgia,serif;box-shadow:0 0 0 7px #090909}
+.method-card{position:relative;padding:25px 28px 26px;border:1px solid rgba(215,181,109,.2);border-radius:14px;background:linear-gradient(125deg,rgba(28,25,19,.92),rgba(16,16,14,.96));transition:border-color .3s,transform .3s,background .3s}
+.method-step:hover .method-card{border-color:rgba(215,181,109,.5);transform:translateY(-2px);background:linear-gradient(125deg,rgba(35,30,21,.96),rgba(17,17,15,.98))}
+.method-step-tag{display:block;margin-bottom:7px;color:var(--gold);font-size:.7rem;font-weight:750;letter-spacing:.16em;text-transform:uppercase}
+.method-card h3{margin:0 0 8px;font:500 clamp(1.22rem,2.3vw,1.55rem)/1.25 Georgia,serif;color:var(--ink)}
+.method-card p{margin:0;color:var(--muted);max-width:680px;font-size:.97rem}
+.method-takeaway{display:inline-flex;align-items:center;gap:8px;margin-top:15px;color:#e8d5a6;font-size:.83rem}
+.method-takeaway:before{content:"";width:18px;height:1px;background:var(--gold)}
+.method-close{max-width:700px;margin:36px auto 0;text-align:center;color:var(--muted);font-size:.9rem}
+.method-close strong{color:var(--gold2);font-weight:600}
+.js-reveal .method-step{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.js-reveal .method-step.is-visible{opacity:1;transform:translateY(0)}
+.js-reveal .method-step:nth-child(even){transition-delay:.08s}
+@media(max-width:600px){.method-section{padding:54px 0 62px}.method-intro{margin-bottom:32px;text-align:left}.method-intro p{margin-left:0}.method-timeline{gap:13px}.method-timeline:before{left:21px;top:27px;bottom:27px}.method-step{grid-template-columns:44px minmax(0,1fr);gap:12px}.method-number{width:44px;height:44px;font-size:1rem;box-shadow:0 0 0 5px #090909}.method-card{padding:19px 17px 20px;border-radius:12px}.method-card p{font-size:.92rem}.method-takeaway{font-size:.78rem;margin-top:12px}}
+@media(prefers-reduced-motion:reduce){.js-reveal .method-step{opacity:1;transform:none;transition:none}.method-step:hover .method-card{transform:none}}
+
 </style>
 </head>
 <body>
@@ -141,6 +166,44 @@
 </section>
 
 <section class="vsl-section wrap" id="watch-introduction" aria-labelledby="vsl-title"><div class="vsl-heading"><div class="eyebrow">A personal introduction</div><h2 id="vsl-title">Discover the <span class="gold">Mounir Method.</span></h2><p>Watch my introduction to the learning journey and see how the course is structured.</p></div><div class="vsl-frame" aria-label="Reserved space for the upcoming Mounir Institute video introduction"><div class="vsl-inner"><div class="vsl-play" aria-hidden="true">▶</div><strong>My video introduction</strong><span>Coming soon</span></div></div></section>
+
+
+<section class="method-section" id="method" aria-labelledby="method-title">
+  <div class="wrap">
+    <div class="method-intro">
+      <div class="eyebrow">The Mounir Method</div>
+      <h2 id="method-title">A clear path from <span class="gold">learning to living it.</span></h2>
+      <p>Build your recitation step by step. Each stage gives you a practical skill to understand, practise and bring into your Qur’an recitation.</p>
+    </div>
+    <div class="method-timeline" aria-label="Six stages of learning Maqamaat">
+      <article class="method-step">
+        <div class="method-number" aria-hidden="true">01</div>
+        <div class="method-card"><span class="method-step-tag">Stage one · Understand</span><h3>Start with the foundations</h3><p>Understand what Maqamaat are, how they shape the feel of a recitation, and how to approach them with care while keeping the Qur’an and correct Tajweed at the centre.</p><span class="method-takeaway">Know what you’re learning and why</span></div>
+      </article>
+      <article class="method-step">
+        <div class="method-number" aria-hidden="true">02</div>
+        <div class="method-card"><span class="method-step-tag">Stage two · Hear it</span><h3>Train your ear and voice</h3><p>Learn to recognise a Maqam, follow its basic melodic movement, and practise it through guided listening, simple scales and humming exercises.</p><span class="method-takeaway">Recognise the sound before applying it</span></div>
+      </article>
+      <article class="method-step">
+        <div class="method-number" aria-hidden="true">03</div>
+        <div class="method-card"><span class="method-step-tag">Stage three · Apply</span><h3>Put it into Surah Al-Fatiha</h3><p>Move from exercises into recitation. Use Maqam Nahawand as a practical starting point and learn how to apply what you hear to familiar verses.</p><span class="method-takeaway">Connect practice to real recitation</span></div>
+      </article>
+      <article class="method-step">
+        <div class="method-number" aria-hidden="true">04</div>
+        <div class="method-card"><span class="method-step-tag">Stage four · Build control</span><h3>Develop your breath and vocal technique</h3><p>Use focused breathing techniques and vocal drills to support steadier phrases, greater control and a more comfortable practice routine.</p><span class="method-takeaway">Build control through consistent practice</span></div>
+      </article>
+      <article class="method-step">
+        <div class="method-number" aria-hidden="true">05</div>
+        <div class="method-card"><span class="method-step-tag">Stage five · Expand</span><h3>Explore all eight Maqamaat</h3><p>Work through the eight Maqamaat in a structured sequence, learning to recognise the character of each one and practise its movement at your own pace.</p><span class="method-takeaway">Grow your range one Maqam at a time</span></div>
+      </article>
+      <article class="method-step">
+        <div class="method-number" aria-hidden="true">06</div>
+        <div class="method-card"><span class="method-step-tag">Stage six · Refine</span><h3>Practise, review and make it your own</h3><p>Bring the skills together in regular recitation practice. Revisit lessons, strengthen the areas that need work and use mentoring where you want more personalised guidance.</p><span class="method-takeaway">Turn lessons into a lasting practice</span></div>
+      </article>
+    </div>
+    <p class="method-close"><strong>Progress at a steady pace.</strong> The aim is not to rush through stages, but to build understanding and apply each skill with care.</p>
+  </div>
+</section>
 
 <section class="section"><div class="wrap instructor">
 <div class="instructor-media"><div class="portrait-arch"><div class="instructor-portrait" role="img" aria-label="Hassan Mounir in blue traditional attire, with illuminated architecture behind him"></div></div><span class="portrait-ornament" aria-hidden="true">✦</span><div class="portrait-social"><div class="connect-title">Connect with 800K+</div><nav class="social-icons" aria-label="Connect with Hassan Mounir"><a href="https://www.instagram.com/hassanmounirofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a><a href="https://www.tiktok.com/@mounir.institute" target="_blank" rel="noopener noreferrer" aria-label="TikTok" title="TikTok"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.7 2h-3.1v13.1a3.3 3.3 0 1 1-3.3-3.3c.3 0 .6 0 .9.1V8.7a7 7 0 0 0-.9-.1 6.5 6.5 0 1 0 6.5 6.5V8.5a8.2 8.2 0 0 0 4.2 1.2V5.4A5 5 0 0 1 16.7 2Z"/></svg></a><a href="https://www.youtube.com/@Mounir.institute" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.1a2.7 2.7 0 0 0-1.9-1.9C18 4.7 12 4.7 12 4.7s-6 0-7.7.5a2.7 2.7 0 0 0-1.9 1.9C2 8.8 2 12 2 12s0 3.2.4 4.9a2.7 2.7 0 0 0 1.9 1.9c1.7.5 7.7.5 7.7.5s6 0 7.7-.5a2.7 2.7 0 0 0 1.9-1.9c.4-1.7.4-4.9.4-4.9s0-3.2-.4-4.9ZM10 15.5v-7l6 3.5-6 3.5Z"/></svg></a></nav></div></div>
@@ -261,5 +324,24 @@ back.addEventListener("click",()=>{if(index>0){index--;render()}else{index=-1;na
 next.addEventListener("click",()=>{if(index<steps.length-1){index++;render()}else if(index===steps.length-1){index=steps.length;details()}else{const n=content.querySelector("#full-name"),e=content.querySelector("#email");if(n&&e&&n.value.trim()&&e.validity.valid){done()}}});
 })();
 </script>
+
+<script>
+(function(){
+  const section=document.querySelector('#method');
+  if(!section || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js-reveal');
+  const steps=section.querySelectorAll('.method-step');
+  const observer=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  },{threshold:.14,rootMargin:'0px 0px -35px 0px'});
+  steps.forEach(step=>observer.observe(step));
+})();
+</script>
+
 </body>
 </html>
