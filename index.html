@@ -35,11 +35,26 @@
 @keyframes teacher-slide{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(prefers-reduced-motion:reduce){.teacher-track{animation:none;transform:none;flex-wrap:wrap;width:100%;justify-content:center}.teacher-gallery{mask-image:none}.teacher-card{width:min(100%,280px)}}
 @media(max-width:760px){.teacher-track{gap:12px;animation-duration:28s}.teacher-card{width:220px}.teacher-photo{height:240px}}
+\n
+/* Make the teacher photo spaces unmistakable and easy to find */
+.teacher-nav{color:var(--gold2);text-decoration:none;font-size:.88rem;border-bottom:1px solid #7b6338;padding:8px 0;white-space:nowrap}
+.teacher-nav:hover{color:#fff;border-color:var(--gold)}
+#teachers{scroll-margin-top:18px;background:linear-gradient(180deg,#0d0c09 0%,#090909 100%)}
+#teachers .teacher-gallery{border:1px solid #4b3d26;border-radius:12px;padding:16px 0 12px;background:#0d0c09;mask-image:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+#teachers .teacher-card{border:1px solid #65502e;box-shadow:inset 0 0 0 1px #d7b56d10}
+#teachers .teacher-photo{border-bottom:1px solid #4b3d26;background:linear-gradient(135deg,#1d1a12,#0d0d0b);min-height:250px}
+#teachers .photo-placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;min-height:205px;border:1px dashed #9c7e45;border-radius:7px;padding:14px;color:var(--gold2);font-family:system-ui,sans-serif;font-size:.94rem;font-weight:650;letter-spacing:.01em}
+#teachers .photo-placeholder:before{content:"＋";display:grid;place-items:center;width:48px;height:48px;margin-bottom:14px;border:1px solid var(--gold);border-radius:50%;font-size:1.7rem;font-weight:300;color:var(--gold2);background:#d7b56d12}
+#teachers .photo-placeholder small{font-weight:400;text-align:center;max-width:170px;line-height:1.5}
+#teachers .teacher-caption{background:#11100d}
+@media(max-width:760px){.teacher-nav{font-size:.76rem}.nav{gap:8px}.brand-logo{max-width:100px}}
+@media(max-width:390px){.teacher-nav{display:none}}
 \n</style>
 </head>
 <body>
 <header class="wrap nav">
 <a class="brand" href="#" aria-label="Mounir Institute home"><img class="brand-logo" src="assets/mounir-institute-logo.webp" alt="Mounir Institute original gold calligraphy logo"></a>
+<a class="teacher-nav" href="#teachers">My Teachers</a>
 <a class="cta" href="#journey">Begin Your Journey <span aria-hidden="true">↗</span></a>
 </header>
 <main>
