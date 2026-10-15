@@ -341,8 +341,6 @@ next.addEventListener("click",()=>{if(index<steps.length-1){index++;render()}els
     entries.forEach(entry=>{
       if(entry.isIntersecting){
         entry.target.classList.add('is-visible','is-active');
-      }else{
-        entry.target.classList.remove('is-active');
       }
     });
   },{threshold:.42,rootMargin:'-12% 0px -22% 0px'});
