@@ -500,7 +500,7 @@ function showShortVsl(){
  watched.addEventListener("change",()=>{next.disabled=!watched.checked});
 }
 function showResults(){
- funnelStage="results";count.textContent="Your results";bar.style.width="100%";nav.hidden=false;back.hidden=true;next.textContent="Explore next steps →";next.disabled=false;
+ funnelStage="results";count.textContent="Your results";bar.style.width="100%";nav.hidden=false;back.hidden=true;next.textContent="Return to home →";next.disabled=false;
  const goal=answers.goal||"Learn Maqamaat from the beginning";
  const format=answers.format||"I’m not sure yet";
  const goalAdvice={
@@ -550,7 +550,7 @@ function showVsl(){
 document.getElementById("begin").addEventListener("click",()=>{index=0;render()});
 back.addEventListener("click",()=>{if(infoStep){infoStep=false;index=steps.length-1;render()}else if(index>0){index--;render()}else{index=-1;nav.hidden=true;count.textContent="Welcome";bar.style.width="0";content.innerHTML='<h3 class="question">Your recitation journey starts here.</h3><p class="hint">This short questionnaire takes about a minute. There are no budget questions—just a few details about you and what you want to improve.</p><button class="cta" id="begin">Begin My Journey →</button>';document.getElementById("begin").addEventListener("click",()=>{index=0;render()})}});
 let infoStep=false;
-next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){if(!content.querySelector("#short-vsl-watched")?.checked)return;funnelStage="";back.hidden=false;showResults();return;}if(funnelStage==="results"){funnelStage="";back.hidden=false;showVsl();return;}if(index<steps.length-1){index++;render()}else if(!infoStep){infoStep=true;details()}else{const name=content.querySelector("#full-name"),email=content.querySelector("#email"),country=content.querySelector("#country-code"),phone=content.querySelector("#phone");if(!name||!email||!country||!phone||!name.value.trim()||!email.validity.valid||!email.value.trim())return;const digits=phone.value.replace(/\D/g,"");const full=(country.value||"")+digits;if(!/^\+[1-9]\d{7,14}$/.test(full)||digits.length<5)return;answers.name=name.value.trim();answers.email=email.value.trim();answers.phone=full;showShortVsl()}});
+next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){if(!content.querySelector("#short-vsl-watched")?.checked)return;funnelStage="";back.hidden=false;showResults();return;}if(funnelStage==="results"){window.location.href=window.location.pathname;return;}if(index<steps.length-1){index++;render()}else if(!infoStep){infoStep=true;details()}else{const name=content.querySelector("#full-name"),email=content.querySelector("#email"),country=content.querySelector("#country-code"),phone=content.querySelector("#phone");if(!name||!email||!country||!phone||!name.value.trim()||!email.validity.valid||!email.value.trim())return;const digits=phone.value.replace(/\D/g,"");const full=(country.value||"")+digits;if(!/^\+[1-9]\d{7,14}$/.test(full)||digits.length<5)return;answers.name=name.value.trim();answers.email=email.value.trim();answers.phone=full;showShortVsl()}});
 })();
 </script>
 
