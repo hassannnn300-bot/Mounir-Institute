@@ -456,7 +456,7 @@ function done(){
  unlock.addEventListener("click",showResults);
 }
 function showShortVsl(){
- funnelStage="short-vsl";count.textContent="Watch the short video";bar.style.width="100%";nav.hidden=false;back.hidden=true;next.textContent="Next Step →";next.disabled=true;
+ funnelStage="short-vsl";count.textContent="Watch the short video";bar.style.width="100%";nav.hidden=false;back.hidden=true;next.textContent="Unlock my results →";next.disabled=true;
  content.innerHTML='<div class="success short-vsl-page"><div class="eyebrow">Your results are ready to unlock</div><h3>Watch this short video first.</h3><p class="hint">This brief introduction explains the Mounir Institute approach. Watch it, then unlock the personalised results based on your answers.</p><div class="short-vsl-frame"><div class="play-mark">▶</div><strong>Your short VSL will appear here</strong><p class="fineprint">Video placeholder — add your short VSL link to embed the real video here.</p></div><label class="vsl-confirm"><input id="short-vsl-watched" type="checkbox"><span>I’ve watched the video and I’m ready to unlock my personalised results.</span></label><p class="fineprint">This checkbox is self-confirmation. Automatic watch-time verification requires a supported video player.</p></div>';
  const watched=content.querySelector("#short-vsl-watched");
  watched.addEventListener("change",()=>{next.disabled=!watched.checked});
