@@ -69,6 +69,11 @@
 
 .instructor-portrait{position:relative;min-height:470px;align-self:stretch;overflow:hidden;background:#090909 url("assets/IMG_2277%202.jpg?v=8") center 35%/cover no-repeat;-webkit-mask-image:radial-gradient(ellipse 73% 72% at 51% 43%,#000 42%,rgba(0,0,0,.9) 60%,transparent 100%);mask-image:radial-gradient(ellipse 73% 72% at 51% 43%,#000 42%,rgba(0,0,0,.9) 60%,transparent 100%)}.instructor-portrait:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#090909 0%,transparent 32%),linear-gradient(90deg,#090909 0%,transparent 20%,transparent 82%,#090909 100%);pointer-events:none}@media(max-width:760px){.instructor-portrait{min-height:360px;background-position:center 32%;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 13%,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0%,#000 13%,#000 70%,transparent 100%)}}
 .review-student-name{font-size:1rem;font-weight:750;letter-spacing:.015em;text-transform:none;color:var(--gold2);margin-bottom:14px}.instructor-portrait{background-image:url("assets/IMG_2277%202.jpg?v=8")!important;min-height:500px;isolation:isolate}.instructor-portrait:after{background:linear-gradient(0deg,#090909 0%,transparent 34%),linear-gradient(90deg,#090909 0%,transparent 15%,transparent 88%,#090909 100%)}
+
+/* Portrait: pull back framing and feather all four edges into midnight black. */
+.instructor-portrait{background-size:contain!important;background-position:center center!important;background-color:#090909!important;background-repeat:no-repeat!important;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 78%,transparent 100%)!important;mask-image:linear-gradient(to bottom,transparent 0%,#000 18%,#000 78%,transparent 100%)!important}
+.instructor-portrait:after{background:linear-gradient(to bottom,#090909 0%,transparent 23%,transparent 72%,#090909 100%),linear-gradient(to right,#090909 0%,transparent 19%,transparent 81%,#090909 100%)!important}
+@media(max-width:760px){.instructor-portrait{min-height:400px;background-size:contain!important;background-position:center center!important}}
 </style>
 </head>
 <body>
