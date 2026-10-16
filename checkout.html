@@ -82,7 +82,9 @@
     button.disabled = true;
     button.textContent = "Preparing secure checkout…";
     status.classList.remove("show");
+    let checkoutStage = "Contacting checkout service";
     try {
+      if (typeof Stripe !== "function") throw new Error("Stripe.js did not load. Check your connection or browser content blockers.");
       const response = await fetch("/api/create-checkout-session", {
         method:"POST",
         headers:{"Content-Type":"application/json"},
@@ -91,14 +93,20 @@
       const data = await response.json();
       if(!response.ok) throw new Error(data.error || "Could not start checkout.");
       if(!data.clientSecret || !data.publishableKey) throw new Error("Stripe did not return the checkout configuration.");
-      const stripe = Stripe(data.publishableKey);
+      checkoutStage = "Checking the Stripe publishable key";
+      if (!/^pk_(test|live)_[A-Za-z0-9]+$/.test(data.publishableKey.trim())) {
+        throw new Error("Vercel's STRIPE_PUBLISHABLE_KEY is not a valid publishable-key format. It must start with pk_test_ or pk_live_; do not use an rk_ restricted key.");
+      }
+      checkoutStage = "Initialising Stripe embedded checkout";
+      const stripe = Stripe(data.publishableKey.trim());
+      checkoutStage = "Mounting the secure payment form";
       const checkout = await stripe.initEmbeddedCheckout({fetchClientSecret: async () => data.clientSecret});
       checkout.mount("#embedded-checkout");
       checkoutMounted = true;
       button.hidden = true;
       showStatus("Secure payment form ready. Complete your payment below.");
     } catch (error) {
-      showStatus(error.message || "Could not load secure checkout. Please try again.");
+      showStatus(checkoutStage + ": " + (error.message || "Could not load secure checkout. Please try again."));
       button.disabled = false;
       button.textContent = "Try secure checkout again →";
     }
