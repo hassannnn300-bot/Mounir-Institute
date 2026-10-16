@@ -23,23 +23,18 @@
   <p class="intro">Enrol securely with Stripe.</p>
   <div class="layout">
     <section class="panel">
-      <div class="number">01 / Your details</div>
-      <h2 style="margin-top:7px">Student information</h2>
-      <p class="note">Enter your email to continue.</p>
+      <div class="number">01 / Your details & payment</div>
+      <h2 style="margin-top:7px">Complete your enrolment</h2>
+      <p class="note">Your email from the questionnaire is ready below. Review it, then load the secure payment form.</p>
       <div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
-      <div id="details-status" class="status" role="status" aria-live="polite"></div>
-      <button class="cta" id="continue-to-payment" type="button">Continue to payment →</button>
       <div class="divider"></div>
-      <div id="payment-step" hidden>
-        <div class="number">02 / Payment</div>
-        <h2 style="margin-top:7px">Secure payment details</h2>
-        <p class="note">Pay securely below.</p>
-        <div id="status" class="status" role="status" aria-live="polite"></div>
-        <div id="embedded-checkout"></div>
-        <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
-        <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
-        <p class="fine">Payments are securely processed by Stripe.</p>
-      </div>
+      <h2 style="margin-top:7px">Secure payment details</h2>
+      <p class="note">Pay securely below.</p>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <div id="embedded-checkout"></div>
+      <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
+      <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
+      <p class="fine">Payments are securely processed by Stripe.</p>
     </section>
     <aside class="panel summary">
       <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
@@ -65,11 +60,21 @@
   const plan = plans[planKey];
   const status = document.getElementById("status");
   const button = document.getElementById("start-payment");
-  const continueButton = document.getElementById("continue-to-payment");
-  const detailsStatus = document.getElementById("details-status");
-  const paymentStep = document.getElementById("payment-step");
   const emailInput = document.getElementById("email");
   let checkoutMounted = false;
+  try {
+    const savedEmail = sessionStorage.getItem("mounir_checkout_email") || "";
+    if(savedEmail && emailInput){
+      emailInput.value = savedEmail;
+      emailInput.readOnly = true;
+      emailInput.setAttribute("aria-describedby","email-source-note");
+      const note = document.createElement("p");
+      note.id = "email-source-note";
+      note.className = "fine";
+      note.textContent = "Using the email you entered in the questionnaire.";
+      emailInput.closest(".field").appendChild(note);
+    }
+  } catch(e) {}
   document.getElementById("plan-name").textContent = plan.name;
   document.getElementById("plan-desc").textContent = plan.desc;
   document.getElementById("price").innerHTML = plan.price + ' <small>' + plan.period + '</small>';
@@ -78,32 +83,11 @@
   document.getElementById("features").replaceChildren(...plan.features.map(text => {const li=document.createElement("li");li.textContent=text;return li;}));
   if(planKey !== "recorded") document.getElementById("total-label").textContent = "Due today";
   function showStatus(message){status.textContent=message;status.classList.add("show");}
-  continueButton.addEventListener("click", () => {
-    const email = emailInput.value.trim();
-    if(!email || !emailInput.checkValidity()){
-      detailsStatus.textContent = "Please enter a valid email address to continue.";
-      detailsStatus.classList.add("show");
-      emailInput.focus();
-      return;
-    }
-    detailsStatus.classList.remove("show");
-    paymentStep.hidden = false;
-    continueButton.textContent = "Details saved ✓";
-    continueButton.disabled = true;
-    paymentStep.scrollIntoView({behavior:"smooth",block:"start"});
-  });
-  emailInput.addEventListener("input", () => {
-    if(emailInput.checkValidity() && emailInput.value.trim()){
-      detailsStatus.classList.remove("show");
-      continueButton.disabled = false;
-      continueButton.textContent = "Continue to payment →";
-    }
-  });
   button.addEventListener("click", async () => {
     if(checkoutMounted) return;
     const email = emailInput.value.trim();
     if(!email || !emailInput.checkValidity()){
-      showStatus("Please return to step 1 and enter a valid email address.");
+      showStatus("Please enter a valid email address to continue.");
       emailInput.focus();
       return;
     }
