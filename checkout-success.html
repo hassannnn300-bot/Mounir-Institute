@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909">
+<title>Enrolment status | Mounir Institute</title>
+<style>
+:root{--bg:#090909;--gold:#d7b56d;--light:#f0dca5;--muted:#b7b2a5;--line:#383126}*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#40301955,transparent 45%),var(--bg);color:#f7f4ec;font:15px/1.7 Inter,system-ui,sans-serif;display:flex;flex-direction:column}header{width:min(100%,1120px);margin:auto;padding:17px 24px;border-bottom:1px solid #342d20}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;letter-spacing:.12em;font-weight:800;font-size:14px}.mark{height:38px;width:38px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--light);font:19px Georgia,serif}.brand span{color:var(--gold)}main{width:min(100% - 32px,650px);margin:auto;padding:55px 0}.panel{border:1px solid var(--line);border-radius:14px;padding:clamp(24px,5vw,42px);background:linear-gradient(145deg,#1b1914,#11110f);text-align:center}.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:800}h1{font:normal clamp(32px,6vw,48px)/1.15 Georgia,serif;margin:13px 0;color:var(--light)}p{color:var(--muted)}.status{margin:24px 0;padding:14px;border:1px solid #65502e;border-radius:8px;background:#d7b56d0c;color:var(--light)}a.button{display:inline-flex;justify-content:center;margin-top:15px;padding:13px 20px;border:1px solid var(--gold);border-radius:6px;background:linear-gradient(115deg,#b48c47,#f0dca5,#c79d54);color:#17120b;font-weight:800;text-decoration:none}.fine{font-size:12px}
+</style>
+</head>
+<body>
+<header><a class="brand" href="./"><span class="mark">M</span><span style="color:#f7f4ec">MOUNIR <span>INSTITUTE</span></span></a></header>
+<main><section class="panel"><div class="eyebrow">Mounir Institute · Enrolment</div><h1 id="heading">Checking your payment…</h1><p id="description">We're securely checking the status of your checkout with Stripe.</p><div id="status" class="status" role="status" aria-live="polite">Please keep this page open for a moment.</div><a class="button" href="./">Return to Mounir Institute</a><p class="fine">If you need help, contact <a href="mailto:info@mounirinstitute.com">info@mounirinstitute.com</a>.</p></section></main>
+<script>
+(async()=>{
+ const params=new URLSearchParams(location.search);const id=params.get("session_id");
+ const heading=document.getElementById("heading"),description=document.getElementById("description"),status=document.getElementById("status");
+ if(!id){heading.textContent="No payment session found";description.textContent="We couldn't find a checkout session in this link.";status.textContent="If you completed payment, contact info@mounirinstitute.com so we can help verify it.";return;}
+ try{
+  const response=await fetch("/api/checkout-session-status?session_id="+encodeURIComponent(id),{cache:"no-store"});
+  const data=await response.json();
+  if(!response.ok)throw new Error(data.error||"Verification unavailable");
+  if(data.status==="complete"&&(data.paymentStatus==="paid"||data.mode==="subscription"&&data.paymentStatus==="no_payment_required")){
+   heading.textContent="Thank you — checkout complete";
+   description.textContent="Your Stripe checkout has been completed.";
+   status.textContent=data.customerEmail?"Confirmation email: "+data.customerEmail:"Stripe has confirmed the checkout.";
+  }else{
+   heading.textContent="Payment not completed yet";
+   description.textContent="Stripe has not confirmed a completed payment for this session.";
+   status.textContent="You can return to the site and try checkout again. If you believe you've paid, contact info@mounirinstitute.com.";
+  }
+ }catch(e){heading.textContent="We couldn't verify the payment";description.textContent="Your checkout status couldn't be confirmed automatically.";status.textContent="Please contact info@mounirinstitute.com before retrying if you think a payment was taken.";}
+})();
+</script>
+</body></html>
