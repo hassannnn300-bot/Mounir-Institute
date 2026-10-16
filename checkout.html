@@ -61,7 +61,7 @@
   const button = document.getElementById("start-payment");
   let checkoutMounted = false;
   let savedEmail = "";
-  try { savedEmail = (sessionStorage.getItem("mounir_checkout_email") || "").trim(); } catch(e) {}
+  try { savedEmail = (sessionStorage.getItem("mounir_checkout_email") || localStorage.getItem("mounir_checkout_email") || "").trim(); } catch(e) {}
   document.getElementById("plan-name").textContent = plan.name;
   document.getElementById("plan-desc").textContent = plan.desc;
   document.getElementById("price").innerHTML = plan.price + ' <small>' + plan.period + '</small>';
@@ -73,7 +73,7 @@
   button.addEventListener("click", async () => {
     if(checkoutMounted) return;
     const email = savedEmail;
-    if(!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
       showStatus("Your questionnaire details weren’t carried over. Please return to the questionnaire and continue from your results.");
       const link = document.createElement("a");
       link.href = "./";
