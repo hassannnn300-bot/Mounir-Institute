@@ -777,7 +777,7 @@ next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){animateResultsU
   showStep(0);
   const visibility=new IntersectionObserver(entries=>{
     if(entries[0].isIntersecting){
-      if(!section._glowTimer)section._glowTimer=window.setInterval(()=>showStep((active+1)%steps.length),3000);
+      if(!section._glowTimer)section._glowTimer=window.setInterval(()=>showStep((active+1)%steps.length),1800);
     }else{
       window.clearInterval(section._glowTimer);
       section._glowTimer=null;
@@ -787,7 +787,7 @@ next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){animateResultsU
   document.addEventListener('visibilitychange',()=>{
     if(document.hidden){window.clearInterval(section._glowTimer);section._glowTimer=null;}
     else if(section.getBoundingClientRect().bottom>0&&section.getBoundingClientRect().top<innerHeight&&!section._glowTimer){
-      section._glowTimer=window.setInterval(()=>showStep((active+1)%steps.length),3000);
+      section._glowTimer=window.setInterval(()=>showStep((active+1)%steps.length),1800);
     }
   });
 })();
