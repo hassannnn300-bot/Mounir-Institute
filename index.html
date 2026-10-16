@@ -494,18 +494,34 @@ function done(){
  watched.addEventListener("change",()=>{unlock.disabled=!watched.checked});
  unlock.addEventListener("click",showResults);
 }
-// Set this to the direct URL of your hosted second VSL (MP4/WebM).
-// The results remain locked while it is empty.
-const SECOND_VSL_URL = "";
+// YouTube's IFrame Player API reports when the second VSL reaches its end.
+const SECOND_VSL_ID = "6PjrNBr5ZKI";
 let shortVslCompleted = false;
+let secondVslPlayer = null;
+let youtubeApiPromise;
+function loadYouTubePlayerApi(){
+ if(window.YT && window.YT.Player)return Promise.resolve();
+ if(!youtubeApiPromise){youtubeApiPromise=new Promise((resolve,reject)=>{
+  const previous=window.onYouTubeIframeAPIReady;
+  window.onYouTubeIframeAPIReady=()=>{if(typeof previous==="function")previous();resolve();};
+  const script=document.createElement("script");script.src="https://www.youtube.com/iframe_api";script.onerror=()=>reject(new Error("Unable to load YouTube player"));document.head.append(script);
+ });}
+ return youtubeApiPromise;
+}
+function completeSecondVsl(){
+ if(funnelStage!=="short-vsl" || shortVslCompleted)return;
+ shortVslCompleted=true;
+ const lock=content.querySelector("#result-lock");
+ if(lock){lock.classList.add("ready");lock.querySelector(".result-lock-icon").textContent="🔓";lock.querySelector("#result-lock-title").textContent="Your results are ready";lock.querySelector("#result-lock-note").textContent="Select the button below to reveal your learning path.";}
+ next.disabled=false;next.textContent="Unlock my results →";
+}
 function showShortVsl(){
  funnelStage="short-vsl";shortVslCompleted=false;count.textContent="Watch the short video";bar.style.width="100%";nav.hidden=false;back.hidden=true;next.textContent="🔒 Results locked";next.disabled=true;
- content.innerHTML='<div class="success short-vsl-page"><div class="eyebrow">Your personalised results are ready</div><h3>One final step to unlock your results.</h3><p class="hint">Watch the full short introduction. Once the video finishes, your results will unlock automatically.</p><div class="short-vsl-frame" id="short-vsl-player"><div class="play-mark">▶</div><strong>Second VSL coming soon</strong><p class="fineprint">Your results stay locked until the actual video is connected and finishes playing.</p></div><div class="result-lock" id="result-lock" role="status" aria-live="polite"><div class="result-lock-icon" aria-hidden="true">🔒</div><strong id="result-lock-title">Your results are locked</strong><span id="result-lock-note">Complete the video to unlock your personalised learning path.</span></div></div>';
- if(SECOND_VSL_URL){
-  const frame=content.querySelector("#short-vsl-player");frame.replaceChildren();
-  const video=document.createElement("video");video.controls=true;video.playsInline=true;video.preload="metadata";video.src=SECOND_VSL_URL;video.setAttribute("aria-label","Second Mounir Institute introduction video");frame.append(video);
-  video.addEventListener("ended",()=>{shortVslCompleted=true;const lock=content.querySelector("#result-lock");if(lock){lock.classList.add("ready");lock.querySelector(".result-lock-icon").textContent="🔓";lock.querySelector("#result-lock-title").textContent="Your results are ready";lock.querySelector("#result-lock-note").textContent="Select the button below to reveal your learning path.";}next.disabled=false;next.textContent="Unlock my results →";},{once:true});
- }
+ content.innerHTML='<div class="success short-vsl-page"><div class="eyebrow">Your personalised results are ready</div><h3>One final step to unlock your results.</h3><p class="hint">Watch the second introduction below. When it reaches the end, your results will unlock.</p><div class="short-vsl-frame" id="short-vsl-player"><div id="second-vsl-youtube" style="width:100%;aspect-ratio:16/9"></div></div><div class="result-lock" id="result-lock" role="status" aria-live="polite"><div class="result-lock-icon" aria-hidden="true">🔒</div><strong id="result-lock-title">Your results are locked</strong><span id="result-lock-note">Finish the video to unlock your personalised learning path.</span></div></div>';
+ loadYouTubePlayerApi().then(()=>{
+  if(funnelStage!=="short-vsl" || !content.querySelector("#second-vsl-youtube"))return;
+  secondVslPlayer=new window.YT.Player("second-vsl-youtube",{videoId:SECOND_VSL_ID,width:"100%",height:"100%",playerVars:{playsinline:1,rel:0},events:{onStateChange:event=>{if(event.data===window.YT.PlayerState.ENDED)completeSecondVsl();},onError:()=>{const note=content.querySelector("#result-lock-note");if(note)note.textContent="Video unavailable. Please try refreshing the page or contact us.";}}});
+ }).catch(()=>{const note=content.querySelector("#result-lock-note");if(note)note.textContent="The video could not load. Please refresh and try again.";});
 }
 function animateResultsUnlock(){
  if(!shortVslCompleted)return;
