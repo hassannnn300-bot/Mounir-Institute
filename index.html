@@ -537,6 +537,10 @@
 <style>/* Soft transition into and out of the charcoal progression section */
 .method-section{background:linear-gradient(to bottom,#090909 0%,#111111 7%,#171717 19%,#171717 81%,#111111 93%,#090909 100%)!important;border-top:0!important;border-bottom:0!important}
 </style>
+<style>/* Barely perceptible warm halo behind the progression heading */
+.method-section .method-intro h2{position:relative;isolation:isolate}
+.method-section .method-intro h2:before{content:"";position:absolute;z-index:-1;pointer-events:none;left:50%;top:50%;width:min(100%,540px);height:110px;transform:translate(-50%,-50%);background:radial-gradient(ellipse at center,rgba(201,157,75,.075) 0%,rgba(201,157,75,.025) 42%,transparent 73%);filter:blur(20px)}
+</style>
 </head>
 <body>
 
