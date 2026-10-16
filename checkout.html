@@ -25,8 +25,7 @@
     <section class="panel">
       <div class="number">01 / Your details & payment</div>
       <h2 style="margin-top:7px">Complete your enrolment</h2>
-      <p class="note">Your email from the questionnaire is ready below. Review it, then load the secure payment form.</p>
-      <div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+      <p class="note">Your contact details are carried over from the questionnaire, so you can continue without entering your email again.</p>
       <div class="divider"></div>
       <h2 style="margin-top:7px">Secure payment details</h2>
       <p class="note">Pay securely below.</p>
@@ -60,21 +59,9 @@
   const plan = plans[planKey];
   const status = document.getElementById("status");
   const button = document.getElementById("start-payment");
-  const emailInput = document.getElementById("email");
   let checkoutMounted = false;
-  try {
-    const savedEmail = sessionStorage.getItem("mounir_checkout_email") || "";
-    if(savedEmail && emailInput){
-      emailInput.value = savedEmail;
-      emailInput.readOnly = true;
-      emailInput.setAttribute("aria-describedby","email-source-note");
-      const note = document.createElement("p");
-      note.id = "email-source-note";
-      note.className = "fine";
-      note.textContent = "Using the email you entered in the questionnaire.";
-      emailInput.closest(".field").appendChild(note);
-    }
-  } catch(e) {}
+  let savedEmail = "";
+  try { savedEmail = (sessionStorage.getItem("mounir_checkout_email") || "").trim(); } catch(e) {}
   document.getElementById("plan-name").textContent = plan.name;
   document.getElementById("plan-desc").textContent = plan.desc;
   document.getElementById("price").innerHTML = plan.price + ' <small>' + plan.period + '</small>';
@@ -85,10 +72,15 @@
   function showStatus(message){status.textContent=message;status.classList.add("show");}
   button.addEventListener("click", async () => {
     if(checkoutMounted) return;
-    const email = emailInput.value.trim();
-    if(!email || !emailInput.checkValidity()){
-      showStatus("Please enter a valid email address to continue.");
-      emailInput.focus();
+    const email = savedEmail;
+    if(!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)){
+      showStatus("Your questionnaire details weren’t carried over. Please return to the questionnaire and continue from your results.");
+      const link = document.createElement("a");
+      link.href = "./";
+      link.className = "small-link";
+      link.textContent = "Return to questionnaire →";
+      status.appendChild(document.createElement("br"));
+      status.appendChild(link);
       return;
     }
     button.disabled = true;
