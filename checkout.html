@@ -85,13 +85,24 @@
     let checkoutStage = "Contacting checkout service";
     try {
       if (typeof Stripe !== "function") throw new Error("Stripe.js did not load. Check your connection or browser content blockers.");
-      const response = await fetch("/api/create-checkout-session", {
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({plan:planKey,email})
-      });
-      const data = await response.json();
-      if(!response.ok) throw new Error(data.error || "Could not start checkout.");
+      let response;
+      try {
+        response = await fetch(new URL("/api/create-checkout-session", window.location.origin).href, {
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({plan:planKey,email})
+        });
+      } catch (networkError) {
+        throw new Error("Request failed before the server replied (" + (networkError.message || "network error") + "). Check that this page is the deployed https://mounir-institute.vercel.app site and that the latest deployment is Ready.");
+      }
+      checkoutStage = "Reading checkout service response";
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        throw new Error("The checkout service returned a non-JSON response (HTTP " + response.status + "). This usually means the API route is not deployed correctly.");
+      }
+      if(!response.ok) throw new Error(data.error || ("Checkout service returned HTTP " + response.status + "."));
       if(!data.clientSecret || !data.publishableKey) throw new Error("Stripe did not return the checkout configuration.");
       checkoutStage = "Checking the Stripe publishable key";
       if (!/^pk_(test|live)_[A-Za-z0-9]+$/.test(data.publishableKey.trim())) {
