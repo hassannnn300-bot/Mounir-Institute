@@ -84,6 +84,10 @@ export default async function handler(req, res) {
 
   const params = new URLSearchParams();
   params.set("ui_mode", "embedded_page");
+  // Stripe owns the embedded iframe: brand it through Checkout Session settings.
+  params.set("branding_settings[background_color]", "#141310");
+  params.set("branding_settings[button_color]", "#D7B56D");
+  params.set("branding_settings[display_name]", "Mounir Institute");
   params.set("mode", plan.mode);
   params.set("return_url", baseUrl + "/checkout-success.html?session_id={CHECKOUT_SESSION_ID}");
   params.set("line_items[0][quantity]", "1");
