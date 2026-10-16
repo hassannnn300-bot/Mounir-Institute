@@ -20,27 +20,27 @@
 <main>
   <div class="eyebrow">Your journey starts here · Secure checkout</div>
   <h1>Invest in your <em style="color:var(--light)">recitation.</em></h1>
-  <p class="intro">Complete your enrolment without leaving the Mounir Institute website. Your payment details are collected securely by Stripe.</p>
+  <p class="intro">Enrol securely with Stripe.</p>
   <div class="layout">
     <section class="panel">
       <div class="number">01 / Your details</div>
       <h2 style="margin-top:7px">Student information</h2>
-      <p class="note">Enter your email so we can associate your enrolment with the right student.</p>
+      <p class="note">Enter your email to continue.</p>
       <div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
       <div class="divider"></div>
       <div class="number">02 / Payment</div>
       <h2 style="margin-top:7px">Secure payment details</h2>
-      <p class="note">Stripe's secure checkout appears below, within this page and beneath our Mounir Institute banner.</p>
+      <p class="note">Pay securely below.</p>
       <div id="status" class="status" role="status" aria-live="polite"></div>
       <div id="embedded-checkout"></div>
       <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
       <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
-      <p class="fine">You stay on this page while entering payment details. Stripe processes the payment; card details never pass through our website server.</p>
+      <p class="fine">Payments are securely processed by Stripe.</p>
     </section>
     <aside class="panel summary">
       <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
       <h2 class="plan-title" id="plan-name">Recorded Maqamaat Lessons</h2>
-      <p class="note" id="plan-desc">Learn at your own pace, whenever and wherever you choose.</p>
+      <p class="note" id="plan-desc">Learn at your pace.</p>
       <div class="price" id="price">£250 <small>one-time</small></div>
       <ul id="features"></ul>
       <div class="total"><span id="total-label">Due today</span><strong id="total">£250</strong></div>
@@ -52,9 +52,9 @@
 <script>
 (() => {
   const plans = {
-    recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your own pace, whenever and wherever you choose.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
-    monthly: {name:"Monthly Learning",desc:"Build consistency through structured lessons and a student community.",price:"£50",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£50 today, then £50 monthly until cancelled."},
-    mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"A more personal journey with individual mentoring from Qari Hassan Mounir.",price:"£150",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£150 today, then £150 monthly until cancelled."}
+    recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your pace.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
+    monthly: {name:"Monthly Learning",desc:"Live lessons and community.",price:"£50",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£50 today, then £50 monthly until cancelled."},
+    mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£150",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£150 today, then £150 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
   const planKey = Object.prototype.hasOwnProperty.call(plans,key) ? key : "recorded";
