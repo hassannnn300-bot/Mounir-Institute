@@ -759,51 +759,37 @@ next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){animateResultsU
 <script>
 (function(){
   const section=document.querySelector('#method');
-  if(!section || !('IntersectionObserver' in window) || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  document.documentElement.classList.add('js-reveal');
+  if(!section)return;
   const steps=Array.from(section.querySelectorAll('.method-step'));
+  if(!steps.length)return;
+  const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+  if(reducedMotion.matches){steps[0].classList.add('is-active');return;}
+  document.documentElement.classList.add('js-reveal');
   const revealObserver=new IntersectionObserver(entries=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting) entry.target.classList.add('is-visible');
-    });
+    entries.forEach(entry=>{if(entry.isIntersecting)entry.target.classList.add('is-visible');});
   },{threshold:.12,rootMargin:'0px 0px -35px 0px'});
   steps.forEach(step=>revealObserver.observe(step));
-
-  let ticking=false;
-  function setSingleActiveStep(){
-    ticking=false;
-    const viewportCenter=window.innerHeight*0.48;
-    const sectionRect=section.getBoundingClientRect();
-    if(sectionRect.bottom<=0 || sectionRect.top>=window.innerHeight){
-      steps.forEach(step=>step.classList.remove('is-active'));
-      return;
-    }
-    let nearest=null;
-    let nearestDistance=Infinity;
-    steps.forEach(step=>{
-      const rect=step.getBoundingClientRect();
-      if(rect.bottom<=0 || rect.top>=window.innerHeight){
-        step.classList.remove('is-active');
-        return;
-      }
-      const distance=Math.abs((rect.top+rect.bottom)/2-viewportCenter);
-      if(distance<nearestDistance){
-        nearestDistance=distance;
-        nearest=step;
-      }
-      step.classList.remove('is-active');
-    });
-    if(nearest) nearest.classList.add('is-active');
+  let active=0;
+  function showStep(index){
+    active=index;
+    steps.forEach((step,i)=>step.classList.toggle('is-active',i===active));
   }
-  function requestUpdate(){
-    if(!ticking){
-      ticking=true;
-      window.requestAnimationFrame(setSingleActiveStep);
+  showStep(0);
+  const visibility=new IntersectionObserver(entries=>{
+    if(entries[0].isIntersecting){
+      if(!section._glowTimer)section._glowTimer=window.setInterval(()=>showStep((active+1)%steps.length),3000);
+    }else{
+      window.clearInterval(section._glowTimer);
+      section._glowTimer=null;
     }
-  }
-  window.addEventListener('scroll',requestUpdate,{passive:true});
-  window.addEventListener('resize',requestUpdate);
-  requestUpdate();
+  },{threshold:.1});
+  visibility.observe(section);
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden){window.clearInterval(section._glowTimer);section._glowTimer=null;}
+    else if(section.getBoundingClientRect().bottom>0&&section.getBoundingClientRect().top<innerHeight&&!section._glowTimer){
+      section._glowTimer=window.setInterval(()=>showStep((active+1)%steps.length),3000);
+    }
+  });
 })();
 </script>
 
