@@ -108,7 +108,7 @@ export default async function handler(req, res) {
     }
     return res.status(200).json({
       clientSecret: session.client_secret,
-      publishableKey,
+      publishableKey: publishableKey.trim(),
       plan: body.plan
     });
   } catch (error) {
