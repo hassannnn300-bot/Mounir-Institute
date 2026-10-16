@@ -16,7 +16,24 @@ export default async function handler(req, res) {
   const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
   if (!secretKey || !publishableKey) {
     return res.status(503).json({
-      error: "Secure checkout is not configured yet. Add STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY in Vercel Project Settings → Environment Variables."
+      error: "Secure checkout is missing its Stripe keys. In Vercel, check STRIPE_SECRET_KEY and STRIPE_PUBLISHABLE_KEY are set for the Production environment."
+    });
+  }
+
+  // Validate key types before calling Stripe so a copied restricted key,
+  // secret key in the publishable field, or pasted quotes/spaces is caught clearly.
+  const secretMatch = /^sk_(test|live)_[A-Za-z0-9]+$/.exec(secretKey.trim());
+  const publishableMatch = /^pk_(test|live)_[A-Za-z0-9]+$/.exec(publishableKey.trim());
+  if (!secretMatch || !publishableMatch) {
+    console.error("Stripe key format check failed. Secret key type:", secretKey.trim().slice(0, 3),
+      "publishable key type:", publishableKey.trim().slice(0, 3));
+    return res.status(503).json({
+      error: "Stripe key configuration issue: Vercel must contain a standard sk_test_/sk_live_ secret key and a matching pk_test_/pk_live_ publishable key. Do not use an rk_ restricted key or add quotation marks."
+    });
+  }
+  if (secretMatch[1] !== publishableMatch[1]) {
+    return res.status(503).json({
+      error: "Your Stripe keys do not match: both must be test keys or both must be live keys."
     });
   }
 
@@ -79,7 +96,7 @@ export default async function handler(req, res) {
     const stripeResponse = await fetch("https://api.stripe.com/v1/checkout/sessions", {
       method: "POST",
       headers: {
-        Authorization: "Bearer " + secretKey,
+        Authorization: "Bearer " + secretKey.trim(),
         "Content-Type": "application/x-www-form-urlencoded"
       },
       body: params.toString()
