@@ -8,8 +8,17 @@ export default async function handler(req, res) {
 
   const origin = req.headers.origin;
   const allowedOrigin = process.env.SITE_URL || "https://mounir-institute.vercel.app";
-  if (origin && new URL(origin).origin !== new URL(allowedOrigin).origin) {
-    return res.status(403).json({ error: "Request origin not allowed." });
+  let baseUrl;
+  try {
+    baseUrl = new URL(allowedOrigin).origin;
+    if (origin && new URL(origin).origin !== baseUrl) {
+      return res.status(403).json({ error: "Request origin not allowed." });
+    }
+  } catch (error) {
+    console.error("Invalid SITE_URL configuration:", error && error.message);
+    return res.status(503).json({
+      error: "Checkout configuration issue: Vercel's SITE_URL must be a full valid URL, for example https://mounir-institute.vercel.app (without quotes or extra spaces)."
+    });
   }
 
   const secretKey = process.env.STRIPE_SECRET_KEY;
@@ -73,7 +82,6 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Enter a valid email address." });
   }
 
-  const baseUrl = new URL(allowedOrigin).origin;
   const params = new URLSearchParams();
   params.set("ui_mode", "embedded");
   params.set("mode", plan.mode);
