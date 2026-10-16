@@ -1,7 +1,109 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#090909"><title>Secure Checkout Preview | Mounir Institute</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090909">
+<meta name="description" content="Secure Mounir Institute checkout for Qur'an Maqamaat learning.">
+<title>Secure Checkout | Mounir Institute</title>
 <style>
-:root{color-scheme:dark;--bg:#090909;--panel:#141310;--gold:#d7b56d;--light:#f0dca5;--muted:#b7b2a5;--line:#383126}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 12% 5%,#40301955,transparent 38%),#090909;color:#f7f4ec;font:15px/1.65 Inter,system-ui,sans-serif}a{color:inherit}header{max-width:1120px;margin:auto;padding:23px 24px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #342d20}.brand{text-decoration:none;letter-spacing:.14em;font-weight:750;font-size:14px}.brand span{color:var(--gold)}.back{color:var(--muted);text-decoration:none;font-size:13px}.back:hover{color:var(--gold)}main{max-width:1120px;margin:65px auto 90px;padding:0 24px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.24em;color:var(--gold);font-weight:800}h1,h2{font-family:Georgia,serif;font-weight:400}h1{font-size:clamp(38px,5vw,62px);line-height:1.12;margin:13px 0}h2{font-size:28px;margin:0 0 18px}.intro{max-width:610px;color:var(--muted);margin-bottom:35px}.layout{display:grid;grid-template-columns:1.15fr .85fr;gap:24px;align-items:start}.panel{border:1px solid var(--line);border-radius:17px;padding:clamp(22px,3.5vw,38px);background:linear-gradient(145deg,#1b1914,#11110f);box-shadow:0 18px 55px #0004}.panel.summary{background:linear-gradient(155deg,#292216,#13120f 58%);position:sticky;top:20px}.number{color:var(--gold);font-size:12px;letter-spacing:.14em;text-transform:uppercase}.field{margin:15px 0}label{display:block;margin-bottom:7px;font-size:13px;color:#e7ddc9}input{width:100%;padding:14px 15px;border-radius:8px;border:1px solid #4a4131;background:#0d0d0c;color:#fff;outline:none}input:focus{border-color:var(--gold)}.note{color:var(--muted);font-size:13px}.payment-placeholder{border:1px dashed #7d6640;border-radius:11px;padding:26px;margin-top:20px;background:#d7b56d09}.payment-placeholder strong{color:var(--light)}.cta{display:block;text-align:center;text-decoration:none;border:0;border-radius:9px;padding:15px 18px;background:linear-gradient(115deg,#b48c47,#f0dca5,#c79d54);color:#17120b;font:750 14px Inter,system-ui,sans-serif;margin-top:23px;cursor:pointer}.cta:hover{filter:brightness(1.08)}.fine{font-size:12px;color:#a9a293;text-align:center}.plan-title{font:normal 31px Georgia,serif;color:var(--light);margin:14px 0}.price{font:normal 46px Georgia,serif;margin:8px 0 4px}.price small{font:14px Inter,system-ui;color:var(--muted)}ul{list-style:none;padding:0;margin:22px 0}li{padding:9px 0;border-bottom:1px solid #ffffff14;color:#e0d7c5}li:before{content:"✓";color:var(--gold);margin-right:12px}.total{display:flex;justify-content:space-between;border-top:1px solid #6c5838;padding-top:20px;margin-top:24px;font-weight:700}.total strong{color:var(--light);font-size:21px}.test{display:inline-block;border:1px solid #7d6640;border-radius:30px;padding:5px 11px;color:var(--gold);font-size:11px;letter-spacing:.09em;margin-top:12px}.divider{height:1px;background:#383126;margin:28px 0}@media(max-width:780px){main{margin:38px auto}.layout{grid-template-columns:1fr}.summary{position:static!important;grid-row:1}header{padding:18px 20px}.back{font-size:12px}}
-</style></head><body><header><a class="brand" href="./">MOUNIR <span>INSTITUTE</span></a><a class="back" href="./">← Return to home</a></header><main><div class="eyebrow">Your journey starts here · Checkout preview</div><h1>Invest in your <em style="color:var(--light)">recitation.</em></h1><p class="intro">A considered learning experience, built around the beauty of Qur'an recitation. Review your chosen path below before continuing to secure test checkout.</p><div class="layout"><section class="panel"><div class="number">01 / Your details</div><h2>Student information</h2><p class="note">This is a visual preview of the future on-site checkout. Do not enter personal or payment information here yet; these fields are not submitted or stored.</p><div class="field"><label for="name">Full name</label><input id="name" type="text" placeholder="Your full name" disabled></div><div class="field"><label for="email">Email address</label><input id="email" type="email" placeholder="you@example.com" disabled></div><div class="divider"></div><div class="number">02 / Secure payment</div><h2>Payment details</h2><div class="payment-placeholder"><strong>Stripe Payment Element integration area</strong><p class="note">When the secure backend is connected, Stripe will render the real payment fields here. Card details will go directly to Stripe, never into our website's code.</p></div><a class="cta" id="pay" rel="noopener noreferrer" href="#">Continue to Stripe test checkout →</a><p class="fine">TEST MODE · No real charges · Securely processed by Stripe</p></section><aside class="panel summary"><div class="number">Your selected path</div><span class="test">STRIPE TEST MODE</span><h2 class="plan-title" id="plan-name"></h2><p class="note" id="plan-desc"></p><div class="price" id="price"></div><ul id="features"></ul><div class="total"><span>Today's test total</span><strong id="total"></strong></div><p class="note" id="renewal"></p><a href="./" class="back">← Explore other learning options</a></aside></div></main><script>
-const plans={recorded:{name:"Recorded Maqamaat Lessons",desc:"Learn at your own pace, whenever and wherever you choose.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],url:"https://buy.stripe.com/test_8x2fZg783d8y1ye92S1ZS00"},monthly:{name:"Monthly Learning",desc:"Build consistency through structured lessons and a student community.",price:"£50",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],url:"https://buy.stripe.com/test_3cIbJ0eAvecC1ye3Iy1ZS01"},mentoring:{name:"1-to-1 Learning",desc:"A more personal journey with Qari Hassan Mounir.",price:"£150",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],url:"https://buy.stripe.com/test_7sYaEWdwrgkKfp41Aq1ZS02"}};const key=new URLSearchParams(location.search).get("plan");const p=plans[key]||plans.recorded;document.getElementById("plan-name").textContent=p.name;document.getElementById("plan-desc").textContent=p.desc;document.getElementById("price").innerHTML=p.price+' <small>'+p.period+'</small>';document.getElementById("total").textContent=p.price;document.getElementById("renewal").textContent=p.period==="one-time"?"One-time test payment.":"Test subscription: renews monthly until cancelled.";document.getElementById("features").replaceChildren(...p.features.map(x=>{const li=document.createElement("li");li.textContent=x;return li}));document.getElementById("pay").href=p.url;
-</script></body></html>
+:root{color-scheme:dark;--bg:#090909;--panel:#141310;--gold:#d7b56d;--light:#f0dca5;--muted:#b7b2a5;--line:#383126;--ink:#f7f4ec}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 12% 5%,#40301955,transparent 38%),var(--bg);color:var(--ink);font:15px/1.65 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:inherit}button,input{font:inherit}header{max-width:1120px;margin:auto;padding:17px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid #342d20}.brand{display:flex;align-items:center;gap:12px;text-decoration:none;letter-spacing:.12em;font-weight:800;font-size:14px}.brand-mark{height:38px;width:38px;border:1px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--light);font:19px Georgia,serif;box-shadow:inset 0 0 0 3px #090909,inset 0 0 0 4px #65512e}.brand span{color:var(--gold)}.back{color:var(--muted);text-decoration:none;font-size:13px}.back:hover{color:var(--gold)}main{max-width:1120px;margin:43px auto 80px;padding:0 24px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.24em;color:var(--gold);font-weight:800}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:400}h1{font-size:clamp(36px,5vw,58px);line-height:1.12;margin:10px 0 12px}h2{font-size:27px;margin:0 0 14px}.intro{max-width:680px;color:var(--muted);margin:0 0 30px}.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(290px,.85fr);gap:20px;align-items:start}.panel{min-width:0;border:1px solid var(--line);border-radius:13px;padding:clamp(20px,3vw,34px);background:linear-gradient(145deg,#1b1914,#11110f);box-shadow:0 18px 55px #0004}.summary{background:linear-gradient(155deg,#292216,#13120f 58%)}.number{color:var(--gold);font-size:11px;letter-spacing:.14em;text-transform:uppercase}.field{margin:15px 0}.field label{display:block;margin-bottom:7px;font-size:13px;color:#e7ddc9}.field input{width:100%;padding:13px 14px;border-radius:7px;border:1px solid #4a4131;background:#0d0d0c;color:#fff;outline:none}.field input:focus{border-color:var(--gold);box-shadow:0 0 0 2px #d7b56d25}.note{color:var(--muted);font-size:13px}.cta{display:flex;width:100%;align-items:center;justify-content:center;text-align:center;text-decoration:none;border:1px solid var(--gold);border-radius:7px;padding:14px 18px;background:linear-gradient(115deg,#b48c47,#f0dca5,#c79d54);color:#17120b;font-weight:800;margin-top:18px;cursor:pointer}.cta:hover{filter:brightness(1.08)}.cta:disabled{opacity:.55;cursor:wait}.fine{font-size:12px;color:#a9a293;text-align:center}.plan-title{font:normal 29px Georgia,serif;color:var(--light);margin:13px 0}.price{font:normal 44px Georgia,serif;margin:8px 0 4px;color:var(--light)}.price small{font:14px Inter,system-ui;color:var(--muted)}ul{list-style:none;padding:0;margin:20px 0}li{padding:9px 0;border-bottom:1px solid #ffffff14;color:#e0d7c5}li:before{content:"✓";color:var(--gold);margin-right:12px}.total{display:flex;justify-content:space-between;gap:12px;border-top:1px solid #6c5838;padding-top:18px;margin-top:23px;font-weight:700}.total strong{color:var(--light);font-size:20px}.pill{display:inline-block;border:1px solid #7d6640;border-radius:30px;padding:5px 11px;color:var(--gold);font-size:10px;letter-spacing:.09em;margin-top:10px}.divider{height:1px;background:#383126;margin:25px 0}.status{display:none;border:1px solid #7d6640;border-radius:8px;background:#d7b56d0b;padding:13px 15px;color:var(--light);margin:14px 0}.status.show{display:block}#embedded-checkout{margin-top:16px;min-height:40px}.secure-note{display:flex;align-items:center;justify-content:center;gap:8px;color:#a9a293;font-size:12px;margin-top:16px}.secure-note svg{width:15px;height:15px;stroke:var(--gold)}.small-link{display:inline-block;color:var(--light);font-size:13px;margin-top:14px}.fine a{color:var(--light)}@media(max-width:780px){main{margin:30px auto 55px}.layout{grid-template-columns:1fr}.summary{grid-row:1}header{padding:13px 16px}.brand{font-size:12px}.brand-mark{height:33px;width:33px}.back{font-size:12px}main{padding:0 16px}.intro{margin-bottom:22px}}
+</style>
+<script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+<header>
+  <a class="brand" href="./" aria-label="Mounir Institute home"><span class="brand-mark">M</span><span style="color:#f7f4ec">MOUNIR <span>INSTITUTE</span></span></a>
+  <a class="back" href="./">← Return to home</a>
+</header>
+<main>
+  <div class="eyebrow">Your journey starts here · Secure checkout</div>
+  <h1>Invest in your <em style="color:var(--light)">recitation.</em></h1>
+  <p class="intro">Complete your enrolment without leaving the Mounir Institute website. Your payment details are collected securely by Stripe.</p>
+  <div class="layout">
+    <section class="panel">
+      <div class="number">01 / Your details</div>
+      <h2 style="margin-top:7px">Student information</h2>
+      <p class="note">Enter your email so we can associate your enrolment with the right student.</p>
+      <div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" required></div>
+      <div class="divider"></div>
+      <div class="number">02 / Payment</div>
+      <h2 style="margin-top:7px">Secure payment details</h2>
+      <p class="note">Stripe's secure checkout appears below, within this page and beneath our Mounir Institute banner.</p>
+      <div id="status" class="status" role="status" aria-live="polite"></div>
+      <div id="embedded-checkout"></div>
+      <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
+      <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
+      <p class="fine">You stay on this page while entering payment details. Stripe processes the payment; card details never pass through our website server.</p>
+    </section>
+    <aside class="panel summary">
+      <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
+      <h2 class="plan-title" id="plan-name">Recorded Maqamaat Lessons</h2>
+      <p class="note" id="plan-desc">Learn at your own pace, whenever and wherever you choose.</p>
+      <div class="price" id="price">£250 <small>one-time</small></div>
+      <ul id="features"></ul>
+      <div class="total"><span id="total-label">Due today</span><strong id="total">£250</strong></div>
+      <p class="note" id="renewal">One-time payment. No recurring charge.</p>
+      <div class="divider"></div><a class="small-link" href="./#pricing">← Explore other learning options</a>
+    </aside>
+  </div>
+</main>
+<script>
+(() => {
+  const plans = {
+    recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your own pace, whenever and wherever you choose.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
+    monthly: {name:"Monthly Learning",desc:"Build consistency through structured lessons and a student community.",price:"£50",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£50 today, then £50 monthly until cancelled."},
+    mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"A more personal journey with individual mentoring from Qari Hassan Mounir.",price:"£150",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£150 today, then £150 monthly until cancelled."}
+  };
+  const key = new URLSearchParams(location.search).get("plan");
+  const planKey = Object.prototype.hasOwnProperty.call(plans,key) ? key : "recorded";
+  const plan = plans[planKey];
+  const status = document.getElementById("status");
+  const button = document.getElementById("start-payment");
+  const mount = document.getElementById("embedded-checkout");
+  let checkoutMounted = false;
+  document.getElementById("plan-name").textContent = plan.name;
+  document.getElementById("plan-desc").textContent = plan.desc;
+  document.getElementById("price").innerHTML = plan.price + ' <small>' + plan.period + '</small>';
+  document.getElementById("total").textContent = plan.price;
+  document.getElementById("renewal").textContent = plan.renewal;
+  document.getElementById("features").replaceChildren(...plan.features.map(text => {const li=document.createElement("li");li.textContent=text;return li;}));
+  if(planKey !== "recorded") document.getElementById("total-label").textContent = "Due today";
+  function showStatus(message){status.textContent=message;status.classList.add("show");}
+  button.addEventListener("click", async () => {
+    if(checkoutMounted) return;
+    const email = document.getElementById("email").value.trim();
+    if(!email || !document.getElementById("email").checkValidity()){
+      showStatus("Please enter a valid email address to continue.");
+      document.getElementById("email").focus();
+      return;
+    }
+    button.disabled = true;
+    button.textContent = "Preparing secure checkout…";
+    status.classList.remove("show");
+    try {
+      const response = await fetch("/api/create-checkout-session", {
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({plan:planKey,email})
+      });
+      const data = await response.json();
+      if(!response.ok) throw new Error(data.error || "Could not start checkout.");
+      if(!data.clientSecret || !data.publishableKey) throw new Error("Stripe did not return the checkout configuration.");
+      const stripe = Stripe(data.publishableKey);
+      const checkout = await stripe.initEmbeddedCheckout({fetchClientSecret: async () => data.clientSecret});
+      checkout.mount("#embedded-checkout");
+      checkoutMounted = true;
+      button.hidden = true;
+      showStatus("Secure payment form ready. Complete your payment below.");
+    } catch (error) {
+      showStatus(error.message || "Could not load secure checkout. Please try again.");
+      button.disabled = false;
+      button.textContent = "Try secure checkout again →";
+    }
+  });
+})();
+</script>
+</body>
+</html>
