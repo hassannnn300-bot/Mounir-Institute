@@ -83,7 +83,7 @@ export default async function handler(req, res) {
   }
 
   const params = new URLSearchParams();
-  params.set("ui_mode", "embedded");
+  params.set("ui_mode", "embedded_page");
   params.set("mode", plan.mode);
   params.set("return_url", baseUrl + "/checkout-success.html?session_id={CHECKOUT_SESSION_ID}");
   params.set("line_items[0][quantity]", "1");
