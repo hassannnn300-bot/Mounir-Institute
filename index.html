@@ -349,6 +349,25 @@
 #programmes .price-card:hover,#programmes .price-card:focus-within{transform:translate3d(0,-14px,0) scale(1.025);z-index:2;box-shadow:0 28px 65px #000a,0 0 32px #b99a5a30}
 }
 #teachers .teacher-photo{padding:0!important;display:block!important}#teachers .teacher-photo:before,#teachers .teacher-photo:after{display:none!important}#teachers .teacher-photo img{display:block;width:100%;height:100%;min-height:250px;object-fit:cover;object-position:center}#teachers .teacher-card:hover img{transform:scale(1.035)}#teachers .teacher-photo img{transition:transform .35s ease}@media(max-width:760px){#teachers .teacher-photo img{min-height:240px}}
+
+/* Progress-led student testimonial thumbnails */
+.testimonial-thumbnail-wrap{position:relative;aspect-ratio:16/9;background:#090806;overflow:hidden}
+.testimonial-thumbnail{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;width:100%;height:100%;padding:18px 14px;border:0;cursor:pointer;overflow:hidden;color:#f6edda;background:radial-gradient(ellipse at 50% 42%,#352817 0%,#17130d 42%,#080807 100%);text-align:center}
+.testimonial-thumbnail:before{content:"";position:absolute;inset:9px;border:1px solid #b99a5b;pointer-events:none}
+.testimonial-thumbnail:after{content:"";position:absolute;width:185px;height:185px;border:1px solid #d7b56d20;border-radius:50%;box-shadow:0 0 0 18px #d7b56d08,0 0 0 38px #d7b56d05;pointer-events:none}
+.thumbnail-topline{position:relative;z-index:1;display:flex;align-items:center;gap:8px;color:#d7b56d;font:800 .58rem/1.2 system-ui,sans-serif;letter-spacing:.19em}
+.thumbnail-monogram{display:grid;place-items:center;width:25px;height:25px;border:1px solid #d7b56d;border-radius:50%;font: .72rem Georgia,serif;letter-spacing:0}
+.thumbnail-result{position:relative;z-index:1;margin-top:14px;font:500 clamp(.8rem,2vw,1.15rem)/1.1 Georgia,serif;letter-spacing:.17em;color:#f5ead2}
+.thumbnail-result strong{display:block;margin-top:5px;color:#e3c47e;font:700 clamp(1.65rem,4vw,2.65rem)/1 Georgia,serif;letter-spacing:.05em;text-shadow:0 2px 18px #d7b56d24}
+.thumbnail-subtitle{position:relative;z-index:1;margin-top:9px;color:#c9b98f;font:600 .5rem/1.4 system-ui,sans-serif;letter-spacing:.15em}
+.thumbnail-play{position:relative;z-index:1;display:grid;place-items:center;width:36px;height:36px;margin-top:12px;padding-left:3px;border:1px solid #e3c47e;border-radius:50%;background:#d7b56d16;color:#f5dfab;font-size:.8rem;transition:transform .2s,background .2s}
+.testimonial-thumbnail:hover .thumbnail-play{transform:scale(1.1);background:#d7b56d30}
+.thumbnail-name{position:absolute;bottom:22px;left:18px;z-index:1;color:#f6edda;font:600 .72rem/1 system-ui,sans-serif}
+.thumbnail-bottomline{position:absolute;right:18px;bottom:22px;z-index:1;color:#c4a765;font:600 .43rem/1.2 system-ui,sans-serif;letter-spacing:.1em}
+.testimonial-thumbnail-wrap iframe{display:block;width:100%;height:100%;border:0}
+@media(max-width:420px){.testimonial-thumbnail{padding:12px}.thumbnail-result{margin-top:10px}.thumbnail-result strong{font-size:1.55rem}.thumbnail-subtitle{font-size:.43rem}.thumbnail-play{width:30px;height:30px;margin-top:8px}.thumbnail-name{bottom:18px;left:15px}.thumbnail-bottomline{right:15px;bottom:18px;font-size:.36rem}}
+@media(prefers-reduced-motion:reduce){.thumbnail-play{transition:none}}
+
 </style>
 <style>.phone-combo{position:relative!important;overflow:visible!important;background:#0b0b09!important;border:1px solid #494131!important;border-radius:5px!important;box-shadow:none!important}.country-picker{position:relative;flex:0 0 112px;min-width:0;border-right:1px solid #494131}.country-trigger{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;height:100%;min-height:44px;padding:8px 9px;background:#0b0b09;border:0;border-radius:5px 0 0 5px;color:#f7f4ec;font:inherit;font-size:.84rem;white-space:nowrap;cursor:pointer}.country-trigger .country-selected{overflow:hidden;text-overflow:ellipsis}.country-trigger .country-arrow{color:#d7b56d;font-size:.7rem;flex-shrink:0}.country-dropdown{position:absolute;z-index:30;top:calc(100% + 5px);left:0;width:min(280px,calc(100vw - 70px));max-height:285px;overflow:hidden;background:#11110f;border:1px solid #65502e;border-radius:6px;box-shadow:0 12px 30px #000b}.country-dropdown[hidden]{display:none}.country-search{display:block;width:100%;background:#0b0b09;border:0;border-bottom:1px solid #494131;border-radius:0;padding:10px 12px;color:#f7f4ec;font:inherit;font-size:.84rem;outline:none}.country-search::placeholder{color:#918a7c}.country-results{max-height:230px;overflow-y:auto}.country-result{display:block;width:100%;padding:9px 12px;text-align:left;background:transparent;border:0;border-bottom:1px solid #29261f;color:#f7f4ec;font:inherit;font-size:.84rem;cursor:pointer}.country-result:last-child{border-bottom:0}.country-result:hover,.country-result:focus{background:#262014;color:#f0dca5;outline:none}.country-empty{padding:12px;color:#b7b2a5;font-size:.82rem}.phone-combo #phone{flex:1;min-width:0;width:0;background:transparent;border:0;border-radius:0;padding:11px 12px;color:#fff;font:inherit;outline:none}.phone-combo:focus-within{border-color:#b99a5a}@media(max-width:420px){.country-picker{flex-basis:104px}.country-trigger{padding:8px 7px;font-size:.8rem}.phone-combo #phone{padding:11px 8px;font-size:.85rem}}</style>
 </head>
@@ -438,27 +457,27 @@
 <div class="testimonial-carousel" aria-label="Student video testimonials">
 <div class="testimonial-track">
 <article class="video-testimonial-card" style="border:1px solid #51432b;border-radius:10px;overflow:hidden;background:#11100d">
-<div style="aspect-ratio:16/9;background:#090909"><iframe src="https://drive.google.com/file/d/1qoPSoX78FW2nan1N7L94YnThSvvMNp_f/preview" title="Asghar A student testimonial" style="width:100%;height:100%;border:0;display:block" allow="autoplay" allowfullscreen loading="lazy"></iframe></div>
+<div class="testimonial-thumbnail-wrap" style="aspect-ratio:16/9"><button class="testimonial-thumbnail" type="button" data-video="https://drive.google.com/file/d/1qoPSoX78FW2nan1N7L94YnThSvvMNp_f/preview" data-title="Asghar A student testimonial" aria-label="Play Asghar A testimonial"><span class="thumbnail-topline"><span class="thumbnail-monogram">MI</span><span>MOUNIR INSTITUTE</span></span><span class="thumbnail-result">IN JUST <strong>10 DAYS</strong></span><span class="thumbnail-subtitle">A STUDENT'S MAQAMAAT JOURNEY</span><span class="thumbnail-play" aria-hidden="true">▶</span><span class="thumbnail-name">Asghar A</span><span class="thumbnail-bottomline">QUR’AN RECITATION · MAQAMAAT</span></button></div>
 <div class="testimonial-brandbar"><span class="testimonial-brandmark">MI</span><span class="testimonial-brandname">MOUNIR INSTITUTE</span><span class="testimonial-brandline"></span></div><div class="testimonial-card-caption"><div class="eyebrow">Student testimonial</div><h3 style="font-family:Georgia,serif;font-weight:500;font-size:1.25rem;margin:6px 0 0">Asghar A</h3></div>
 </article>
 <article class="video-testimonial-card" style="border:1px solid #51432b;border-radius:10px;overflow:hidden;background:#11100d">
-<div style="aspect-ratio:16/9;background:#090909"><iframe src="https://drive.google.com/file/d/1_eGRx8q4A9QEEib6zOf7EtXNG2VTYZeQ/preview" title="Ali M student testimonial" style="width:100%;height:100%;border:0;display:block" allow="autoplay" allowfullscreen loading="lazy"></iframe></div>
+<div class="testimonial-thumbnail-wrap" style="aspect-ratio:16/9"><button class="testimonial-thumbnail" type="button" data-video="https://drive.google.com/file/d/1_eGRx8q4A9QEEib6zOf7EtXNG2VTYZeQ/preview" data-title="Ali M student testimonial" aria-label="Play Ali M testimonial"><span class="thumbnail-topline"><span class="thumbnail-monogram">MI</span><span>MOUNIR INSTITUTE</span></span><span class="thumbnail-result">IN JUST <strong>3 MONTHS</strong></span><span class="thumbnail-subtitle">A STUDENT'S MAQAMAAT JOURNEY</span><span class="thumbnail-play" aria-hidden="true">▶</span><span class="thumbnail-name">Ali M</span><span class="thumbnail-bottomline">QUR’AN RECITATION · MAQAMAAT</span></button></div>
 <div class="testimonial-brandbar"><span class="testimonial-brandmark">MI</span><span class="testimonial-brandname">MOUNIR INSTITUTE</span><span class="testimonial-brandline"></span></div><div class="testimonial-card-caption"><div class="eyebrow">Student testimonial</div><h3 style="font-family:Georgia,serif;font-weight:500;font-size:1.25rem;margin:6px 0 0">Ali M</h3></div>
 </article>
 <article class="video-testimonial-card" style="border:1px solid #51432b;border-radius:10px;overflow:hidden;background:#11100d">
-<div style="aspect-ratio:16/9;background:#090909"><iframe src="https://drive.google.com/file/d/1kMD_teIFByFgHyJ0RQo7km7tuFsiPwKC/preview" title="Sidi R student testimonial" style="width:100%;height:100%;border:0;display:block" allow="autoplay" allowfullscreen loading="lazy"></iframe></div>
+<div class="testimonial-thumbnail-wrap" style="aspect-ratio:16/9"><button class="testimonial-thumbnail" type="button" data-video="https://drive.google.com/file/d/1kMD_teIFByFgHyJ0RQo7km7tuFsiPwKC/preview" data-title="Sidi R student testimonial" aria-label="Play Sidi R testimonial"><span class="thumbnail-topline"><span class="thumbnail-monogram">MI</span><span>MOUNIR INSTITUTE</span></span><span class="thumbnail-result">IN JUST <strong>6 MONTHS</strong></span><span class="thumbnail-subtitle">A STUDENT'S MAQAMAAT JOURNEY</span><span class="thumbnail-play" aria-hidden="true">▶</span><span class="thumbnail-name">Sidi R</span><span class="thumbnail-bottomline">QUR’AN RECITATION · MAQAMAAT</span></button></div>
 <div class="testimonial-brandbar"><span class="testimonial-brandmark">MI</span><span class="testimonial-brandname">MOUNIR INSTITUTE</span><span class="testimonial-brandline"></span></div><div class="testimonial-card-caption"><div class="eyebrow">Student testimonial</div><h3 style="font-family:Georgia,serif;font-weight:500;font-size:1.25rem;margin:6px 0 0">Sidi R</h3></div>
 </article>
 <div class="testimonial-loop-copy" aria-hidden="true"><article class="video-testimonial-card" style="border:1px solid #51432b;border-radius:10px;overflow:hidden;background:#11100d">
-<div style="aspect-ratio:16/9;background:#090909"><iframe src="https://drive.google.com/file/d/1qoPSoX78FW2nan1N7L94YnThSvvMNp_f/preview" title="Asghar A student testimonial" style="width:100%;height:100%;border:0;display:block" allow="autoplay" allowfullscreen loading="lazy"></iframe></div>
+<div class="testimonial-thumbnail-wrap" style="aspect-ratio:16/9"><button class="testimonial-thumbnail" type="button" data-video="https://drive.google.com/file/d/1qoPSoX78FW2nan1N7L94YnThSvvMNp_f/preview" data-title="Asghar A student testimonial" aria-label="Play Asghar A testimonial"><span class="thumbnail-topline"><span class="thumbnail-monogram">MI</span><span>MOUNIR INSTITUTE</span></span><span class="thumbnail-result">IN JUST <strong>10 DAYS</strong></span><span class="thumbnail-subtitle">A STUDENT'S MAQAMAAT JOURNEY</span><span class="thumbnail-play" aria-hidden="true">▶</span><span class="thumbnail-name">Asghar A</span><span class="thumbnail-bottomline">QUR’AN RECITATION · MAQAMAAT</span></button></div>
 <div class="testimonial-brandbar"><span class="testimonial-brandmark">MI</span><span class="testimonial-brandname">MOUNIR INSTITUTE</span><span class="testimonial-brandline"></span></div><div class="testimonial-card-caption"><div class="eyebrow">Student testimonial</div><h3 style="font-family:Georgia,serif;font-weight:500;font-size:1.25rem;margin:6px 0 0">Asghar A</h3></div>
 </article>
 <article class="video-testimonial-card" style="border:1px solid #51432b;border-radius:10px;overflow:hidden;background:#11100d">
-<div style="aspect-ratio:16/9;background:#090909"><iframe src="https://drive.google.com/file/d/1_eGRx8q4A9QEEib6zOf7EtXNG2VTYZeQ/preview" title="Ali M student testimonial" style="width:100%;height:100%;border:0;display:block" allow="autoplay" allowfullscreen loading="lazy"></iframe></div>
+<div class="testimonial-thumbnail-wrap" style="aspect-ratio:16/9"><button class="testimonial-thumbnail" type="button" data-video="https://drive.google.com/file/d/1_eGRx8q4A9QEEib6zOf7EtXNG2VTYZeQ/preview" data-title="Ali M student testimonial" aria-label="Play Ali M testimonial"><span class="thumbnail-topline"><span class="thumbnail-monogram">MI</span><span>MOUNIR INSTITUTE</span></span><span class="thumbnail-result">IN JUST <strong>3 MONTHS</strong></span><span class="thumbnail-subtitle">A STUDENT'S MAQAMAAT JOURNEY</span><span class="thumbnail-play" aria-hidden="true">▶</span><span class="thumbnail-name">Ali M</span><span class="thumbnail-bottomline">QUR’AN RECITATION · MAQAMAAT</span></button></div>
 <div class="testimonial-brandbar"><span class="testimonial-brandmark">MI</span><span class="testimonial-brandname">MOUNIR INSTITUTE</span><span class="testimonial-brandline"></span></div><div class="testimonial-card-caption"><div class="eyebrow">Student testimonial</div><h3 style="font-family:Georgia,serif;font-weight:500;font-size:1.25rem;margin:6px 0 0">Ali M</h3></div>
 </article>
 <article class="video-testimonial-card" style="border:1px solid #51432b;border-radius:10px;overflow:hidden;background:#11100d">
-<div style="aspect-ratio:16/9;background:#090909"><iframe src="https://drive.google.com/file/d/1kMD_teIFByFgHyJ0RQo7km7tuFsiPwKC/preview" title="Sidi R student testimonial" style="width:100%;height:100%;border:0;display:block" allow="autoplay" allowfullscreen loading="lazy"></iframe></div>
+<div class="testimonial-thumbnail-wrap" style="aspect-ratio:16/9"><button class="testimonial-thumbnail" type="button" data-video="https://drive.google.com/file/d/1kMD_teIFByFgHyJ0RQo7km7tuFsiPwKC/preview" data-title="Sidi R student testimonial" aria-label="Play Sidi R testimonial"><span class="thumbnail-topline"><span class="thumbnail-monogram">MI</span><span>MOUNIR INSTITUTE</span></span><span class="thumbnail-result">IN JUST <strong>6 MONTHS</strong></span><span class="thumbnail-subtitle">A STUDENT'S MAQAMAAT JOURNEY</span><span class="thumbnail-play" aria-hidden="true">▶</span><span class="thumbnail-name">Sidi R</span><span class="thumbnail-bottomline">QUR’AN RECITATION · MAQAMAAT</span></button></div>
 <div class="testimonial-brandbar"><span class="testimonial-brandmark">MI</span><span class="testimonial-brandname">MOUNIR INSTITUTE</span><span class="testimonial-brandline"></span></div><div class="testimonial-card-caption"><div class="eyebrow">Student testimonial</div><h3 style="font-family:Georgia,serif;font-weight:500;font-size:1.25rem;margin:6px 0 0">Sidi R</h3></div>
 </article></div>
 </div>
@@ -653,6 +672,26 @@ next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){animateResultsU
   window.addEventListener('scroll',requestUpdate,{passive:true});
   window.addEventListener('resize',requestUpdate);
   requestUpdate();
+})();
+</script>
+
+
+<script>
+(function(){
+  document.addEventListener('click',function(event){
+    const button=event.target.closest('.testimonial-thumbnail');
+    if(!button)return;
+    const wrap=button.closest('.testimonial-thumbnail-wrap');
+    if(!wrap)return;
+    const iframe=document.createElement('iframe');
+    iframe.src=button.dataset.video;
+    iframe.title=button.dataset.title||'Mounir Institute student testimonial';
+    iframe.allow='autoplay';
+    iframe.allowFullscreen=true;
+    iframe.loading='lazy';
+    iframe.referrerPolicy='strict-origin-when-cross-origin';
+    wrap.replaceChildren(iframe);
+  });
 })();
 </script>
 
