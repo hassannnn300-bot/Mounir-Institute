@@ -550,6 +550,40 @@
 <style>/* FAQ: understated accordion beneath the student questionnaire */
 .faq-section{padding-top:65px;padding-bottom:90px;background:#0c0c0c}.faq-inner{max-width:820px}.faq-inner>.eyebrow,.faq-inner>h2{text-align:center}.faq-inner>h2{margin:12px 0 32px;font-size:clamp(1.8rem,3.5vw,2.6rem)}.faq-list{border-top:1px solid rgba(215,181,109,.24)}.faq-list details{border-bottom:1px solid rgba(215,181,109,.24)}.faq-list summary{list-style:none;cursor:pointer;padding:21px 34px 21px 0;position:relative;font-weight:500;color:#eee8dc}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary:after{content:"+";position:absolute;right:4px;top:17px;font:300 1.6rem Georgia,serif;color:#c7aa70}.faq-list details[open] summary:after{content:"−"}.faq-list details p{margin:0;padding:0 30px 22px 0;color:var(--muted);line-height:1.65}.faq-list details a{color:var(--gold2)}.faq-list summary:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
 </style>
+
+<style>
+/* Questionnaire: warm, responsive motion and tactile answer cards */
+#journey-box{position:relative;overflow:hidden;isolation:isolate;transition:border-color .35s,box-shadow .35s}
+#journey-box:before{content:"";position:absolute;inset:-1px;pointer-events:none;z-index:-1;background:radial-gradient(ellipse at 8% 0%,#d7b56d12,transparent 42%),radial-gradient(ellipse at 100% 100%,#d7b56d0b,transparent 40%)}
+#journey-box:focus-within{border-color:#685532;box-shadow:0 22px 85px #0009,0 0 35px #d7b56d08}
+#step-content.step-enter{animation:journey-enter .48s cubic-bezier(.2,.75,.25,1) both}
+#step-content .question{animation:question-arrive .55s cubic-bezier(.2,.75,.25,1) both}
+#step-content .hint{animation:hint-arrive .55s .06s ease both}
+#step-content .option{position:relative;overflow:hidden;animation:option-arrive .48s cubic-bezier(.2,.75,.25,1) both;animation-delay:calc(var(--option-index,0)*65ms);will-change:transform,border-color,box-shadow}
+#step-content .option:before{content:"";position:absolute;inset:0;opacity:0;background:linear-gradient(115deg,transparent 15%,#f0dca510 48%,transparent 78%);transform:translateX(-110%);transition:opacity .25s}
+#step-content .option:hover:before{opacity:1;animation:option-shimmer .8s ease}
+#step-content .option:after{content:"✓";position:absolute;right:11px;top:10px;width:20px;height:20px;display:grid;place-items:center;border-radius:50%;background:var(--gold2);color:#17130b;font-size:12px;font-weight:900;opacity:0;transform:scale(.55) rotate(-18deg);transition:opacity .2s,transform .25s cubic-bezier(.2,.8,.2,1)}
+#step-content .option[aria-pressed="true"]{border-color:var(--gold2);background:linear-gradient(120deg,#302617,#1c1912);box-shadow:0 0 0 1px #d7b56d28,0 8px 25px #0005,inset 0 0 24px #d7b56d08;transform:translateY(-2px)}
+#step-content .option[aria-pressed="true"]:after{opacity:1;transform:scale(1) rotate(0)}
+#step-content .option[aria-pressed="true"] .symbol{background:var(--gold2);color:#21190c;transform:scale(1.06)}
+#step-content .option .symbol{transition:transform .25s,background .25s,color .25s;flex-shrink:0}
+#step-content .option:active{transform:scale(.985)}
+#progress-bar{position:relative;background:linear-gradient(90deg,#a77c36,#f0dca5,#c49b50);box-shadow:0 0 13px #d7b56d55}
+#step-count{display:inline-flex;align-items:center;gap:8px}
+#step-count:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold2);box-shadow:0 0 10px #d7b56d;animation:status-pulse 2.2s ease-in-out infinite}
+#back,#next{transition:transform .2s,filter .2s,opacity .2s,box-shadow .2s}
+#next:not(:disabled){box-shadow:0 4px 18px #d7b56d18}
+#next:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 8px 26px #d7b56d30}
+#next:disabled{filter:saturate(.45)}
+@keyframes journey-enter{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes question-arrive{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes hint-arrive{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes option-arrive{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes option-shimmer{0%{transform:translateX(-110%)}100%{transform:translateX(110%)}}
+@keyframes status-pulse{0%,100%{opacity:.65;box-shadow:0 0 5px #d7b56d66}50%{opacity:1;box-shadow:0 0 13px #d7b56d}}
+@media(max-width:600px){#step-content .option{animation-delay:calc(var(--option-index,0)*45ms)}#step-content .option:after{right:8px;top:8px}}
+@media(prefers-reduced-motion:reduce){#step-content.step-enter,#step-content .question,#step-content .hint,#step-content .option,#step-count:before{animation:none!important}#step-content .option,#step-content .option:after,#step-content .option .symbol{transition:none!important}}
+</style>
 </head>
 <body>
 
@@ -689,7 +723,7 @@ let index=-1;const content=document.getElementById("step-content"),count=documen
 document.getElementById("year").textContent=new Date().getFullYear();
 function render(){
  const s=steps[index];count.textContent="Question "+(index+1)+" of "+steps.length;bar.style.width=((index+1)/(steps.length+1)*100)+"%";nav.hidden=false;
- content.innerHTML='<h3 class="question">'+s.title+'</h3><p class="hint">'+s.hint+'</p><div class="options" role="group" aria-label="'+s.title+'">'+s.options.map((o,i)=>'<button type="button" class="option" aria-pressed="'+(answers[s.key]===o[0]?'true':'false')+'" data-value="'+i+'"><span class="symbol">'+o[1]+'</span><span class="label">'+o[0]+'</span></button>').join('')+'</div>';
+ content.classList.remove("step-enter");content.innerHTML='<h3 class="question">'+s.title+'</h3><p class="hint">'+s.hint+'</p><div class="options" role="group" aria-label="'+s.title+'">'+s.options.map((o,i)=>'<button type="button" class="option" style="--option-index:'+i+'" aria-pressed="'+(answers[s.key]===o[0]?'true':'false')+'" data-value="'+i+'"><span class="symbol">'+o[1]+'</span><span class="label">'+o[0]+'</span></button>').join('')+'</div>';void content.offsetWidth;content.classList.add("step-enter");
  content.querySelectorAll(".option").forEach((b,i)=>b.addEventListener("click",()=>{answers[s.key]=s.options[i][0];content.querySelectorAll(".option").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");next.disabled=false;}));
  next.textContent=index===steps.length-1?"Get my results →":"Continue →";next.disabled=!answers[s.key];back.disabled=index===0;
 }
