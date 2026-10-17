@@ -2153,3 +2153,10 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
   .diploma-incentive{padding:17px!important;gap:13px!important}
 }
 </style>
+<style id="rectangular-hassan-portrait">
+/* Match the actual photo with a clean rectangular frame rather than an arch. */
+.instructor-media .portrait-arch{width:100%!important;max-width:480px!important;height:clamp(380px,43vw,535px)!important;aspect-ratio:4/5!important;border-radius:8px!important;clip-path:none!important;overflow:hidden!important}
+.instructor-media .portrait-arch:before{border-radius:4px!important}
+.instructor-media .portrait-arch .instructor-portrait{width:100%!important;height:100%!important;border-radius:6px!important;clip-path:none!important;background-size:cover!important;background-position:center 32%!important}
+@media(max-width:760px){.instructor-media .portrait-arch{height:clamp(360px,108vw,490px)!important;max-width:440px!important;margin-inline:auto!important}.instructor-media .portrait-arch .instructor-portrait{background-position:center 30%!important}}
+</style>
