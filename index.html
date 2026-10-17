@@ -683,6 +683,76 @@ button,a{touch-action:manipulation}
   .teacher-gallery,.testimonial-carousel,.video-carousel,.review-carousel{scroll-behavior:auto}
 }
 </style>
+
+<style id="mobile-overhaul-oct-2026">
+/* Phone-first redesign: lighter copy, full photographs, genuinely moving carousels */
+@media(max-width:760px){
+  .section{padding:30px 0!important}
+  .section h2{margin:7px 0 11px!important;font-size:clamp(1.7rem,7vw,2.2rem)!important}
+  .intro{font-size:.9rem!important;line-height:1.55!important;margin:0 0 14px!important}
+  .hero{padding:24px 0 28px!important;gap:16px!important}
+  .hero p,.hero .hero-promise{font-size:.94rem!important;line-height:1.55!important;margin:8px 0 12px!important}
+  .proof{margin-top:16px!important}
+  .feature{padding:15px!important}
+  .feature .num{font-size:1.4rem!important}
+  .feature h3{margin:6px 0!important;font-size:1rem!important}
+  .feature p,.price-card p,.price-card li{font-size:.86rem!important;line-height:1.5!important}
+  .price-card ul{margin:12px 0 16px!important}
+  .price-card{padding:17px!important}
+  .instructor{gap:16px!important}
+  .instructor ul{margin:10px 0;padding-left:18px}
+  .instructor li{margin:7px 0!important;line-height:1.5!important}
+  .method-intro,.gallery-note,.review-disclaimer{font-size:.82rem!important;line-height:1.5!important}
+  .method-step{padding:15px!important}
+  .method-step p{font-size:.87rem!important;line-height:1.5!important}
+  .teacher-gallery,.testimonial-carousel,.video-carousel,.review-carousel{
+    overflow:hidden!important;touch-action:pan-y!important;scroll-snap-type:none!important;
+    scrollbar-width:none!important;mask-image:linear-gradient(90deg,transparent,#000 2%,#000 98%,transparent)!important;
+  }
+  .teacher-track,.testimonial-track,.video-track,.review-track{
+    display:flex!important;flex-wrap:nowrap!important;width:max-content!important;max-width:none!important;
+    animation-play-state:running!important;transform:translateX(0);will-change:transform;
+    padding:4px 2px 14px!important;
+  }
+  .teacher-track{animation:teacher-slide 42s linear infinite!important;gap:12px!important}
+  .testimonial-track{animation:testimonial-marquee 48s linear infinite!important;gap:12px!important}
+  .video-track{animation:video-slide 44s linear infinite!important;gap:12px!important}
+  .review-track{animation:review-slide 48s linear infinite!important;gap:12px!important}
+  .teacher-gallery:hover .teacher-track,.testimonial-carousel:hover .testimonial-track,
+  .video-carousel:hover .video-track,.review-carousel:hover .review-track{animation-play-state:running!important}
+  .teacher-loop-copy,.testimonial-loop-copy{display:flex!important;gap:12px!important}
+  .teacher-card{flex:0 0 min(76vw,290px)!important;width:min(76vw,290px)!important;max-width:none!important}
+  #teachers .teacher-photo{height:auto!important;min-height:0!important;aspect-ratio:4/3!important;background:#100f0c!important}
+  #teachers .teacher-photo img{width:100%!important;height:100%!important;min-height:0!important;object-fit:contain!important;object-position:center!important;transform:none!important}
+  .video-testimonial-card{flex:0 0 min(82vw,330px)!important;width:min(82vw,330px)!important;max-width:none!important}
+  .video-testimonial-card iframe{width:100%!important;aspect-ratio:16/9!important;height:auto!important}
+  .testimonial-thumbnail-wrap{aspect-ratio:16/9!important}
+  .testimonial-thumbnail{background-size:contain,contain!important}
+  .review-carousel .review-card,.video-slot{flex:0 0 min(82vw,330px)!important;width:min(82vw,330px)!important;max-width:none!important}
+  .teacher-caption{padding:12px!important}
+  .teacher-caption strong{font-size:1rem!important;line-height:1.3!important}
+  .teacher-caption small{font-size:.76rem!important;line-height:1.4!important}
+  /* Shorten the page visually without removing the key offer or call to action */
+  .social-note,.gallery-note{display:none!important}
+  .section .intro{max-width:44ch}
+  .footer{padding:22px 0!important}
+}
+@media(max-width:480px){
+  .wrap{width:calc(100% - 28px)!important}
+  .hero h1{font-size:clamp(2.2rem,10.5vw,3rem)!important}
+  .hero-art{min-height:160px!important;max-height:185px!important}
+  .section{padding:26px 0!important}
+  .features,.pricing{gap:10px!important}
+  .diploma-incentive{padding:16px!important}
+  .teacher-card{flex-basis:78vw!important;width:78vw!important}
+  .video-testimonial-card,.review-carousel .review-card,.video-slot{flex-basis:84vw!important;width:84vw!important}
+}
+/* If the visitor requests reduced motion, respect that preference. */
+@media(prefers-reduced-motion:reduce){
+  .teacher-track,.testimonial-track,.video-track,.review-track{animation:none!important;transform:none!important}
+  .teacher-gallery,.testimonial-carousel,.video-carousel,.review-carousel{overflow-x:auto!important;touch-action:pan-x!important}
+}
+</style>
 </head>
 <body>
 
