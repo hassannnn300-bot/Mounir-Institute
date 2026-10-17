@@ -1194,50 +1194,125 @@ if(new URLSearchParams(location.search).get("return")==="options"){try{const sav
 </style>
 <script id="carousel-scroll-controller">
 (function(){
-  const selectors=['.teacher-gallery','.testimonial-carousel','.video-carousel','.review-carousel'];
-  function init(){
-    document.querySelectorAll(selectors.join(',')).forEach(el=>{
-      if(el.dataset.scrollControllerReady==='1')return;
-      el.dataset.scrollControllerReady='1';
-      let direction=1,pausedUntil=0,dragging=false,startX=0,startScroll=0,lastFrame=0;
-      const speed=el.classList.contains('teacher-gallery')?0.28:0.32;
-      function pause(){pausedUntil=performance.now()+2600}
-      el.addEventListener('pointerdown',e=>{
-        if(e.pointerType==='mouse'&&e.button!==0)return;
-        dragging=true;startX=e.clientX;startScroll=el.scrollLeft;pause();
-        if(e.pointerType==='mouse')el.setPointerCapture?.(e.pointerId);
-      });
-      el.addEventListener('pointermove',e=>{
-        if(!dragging)return;
-        const dx=e.clientX-startX;
-        if(Math.abs(dx)>2){el.scrollLeft=startScroll-dx;pause()}
-      });
-      const endDrag=()=>{if(dragging){dragging=false;pause()}};
-      el.addEventListener('pointerup',endDrag);
-      el.addEventListener('pointercancel',endDrag);
-      el.addEventListener('mouseleave',endDrag);
-      el.addEventListener('wheel',pause,{passive:true});
-      el.addEventListener('touchstart',pause,{passive:true});
-      el.addEventListener('touchmove',pause,{passive:true});
-      el.addEventListener('keydown',pause);
-      el.addEventListener('focusin',pause);
-      el.addEventListener('mouseenter',pause);
-      function tick(now){
-        if(!document.hidden&&!dragging&&now>pausedUntil&&el.scrollWidth>el.clientWidth+4){
-          const max=el.scrollWidth-el.clientWidth;
-          el.scrollLeft+=direction*speed*(Math.min(40,now-(lastFrame||now)));
-          if(el.scrollLeft>=max-1){el.scrollLeft=max;direction=-1}
-          else if(el.scrollLeft<=1){el.scrollLeft=0;direction=1}
+  const configs=[
+    {selector:'.teacher-gallery',track:'.teacher-track',card:'.teacher-card',label:'Learning journey photos'},
+    {selector:'.testimonial-carousel',track:'.testimonial-track',card:'.video-testimonial-card',label:'Student video testimonials'}
+  ];
+  function setup(){
+    configs.forEach(config=>{
+      document.querySelectorAll(config.selector).forEach(carousel=>{
+        if(carousel.dataset.manualCarouselReady==='1')return;
+        const track=carousel.querySelector(config.track);
+        if(!track)return;
+        carousel.dataset.manualCarouselReady='1';
+        carousel.setAttribute('aria-label',config.label+' carousel. Swipe or drag to browse.');
+        carousel.setAttribute('tabindex','0');
+        carousel.removeAttribute('aria-roledescription');
+        track.querySelectorAll('[aria-hidden="true"]').forEach(clone=>clone.remove());
+        track.querySelectorAll('.testimonial-loop-copy').forEach(clone=>clone.remove());
+        const cards=Array.from(track.querySelectorAll(':scope > '+config.card));
+        if(!cards.length)return;
+        cards.forEach(card=>{card.style.scrollSnapAlign='start';card.style.scrollSnapStop='always';});
+        const dots=document.createElement('div');
+        dots.className='manual-carousel-dots';
+        dots.setAttribute('role','group');
+        dots.setAttribute('aria-label',config.label+' navigation');
+        cards.forEach((card,index)=>{
+          const dot=document.createElement('button');
+          dot.type='button';dot.className='manual-carousel-dot';
+          dot.setAttribute('aria-label','Go to '+config.label.toLowerCase()+' '+(index+1)+' of '+cards.length);
+          dot.setAttribute('aria-current',index===0?'true':'false');
+          dot.addEventListener('click',()=>{
+            carousel.scrollTo({left:card.offsetLeft-track.offsetLeft,behavior:'smooth'});
+          });
+          dots.appendChild(dot);
+        });
+        carousel.insertAdjacentElement('afterend',dots);
+        let raf=0;
+        function updateDots(){
+          raf=0;
+          const position=carousel.scrollLeft;
+          let nearest=0,best=Infinity;
+          cards.forEach((card,index)=>{
+            const distance=Math.abs((card.offsetLeft-track.offsetLeft)-position);
+            if(distance<best){best=distance;nearest=index;}
+          });
+          Array.from(dots.children).forEach((dot,index)=>{
+            dot.setAttribute('aria-current',index===nearest?'true':'false');
+          });
         }
-        lastFrame=now;
-        requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
+        carousel.addEventListener('scroll',()=>{if(!raf)raf=requestAnimationFrame(updateDots)},{passive:true});
+        window.addEventListener('resize',updateDots,{passive:true});
+        let pointerStart=null,scrollStart=0,dragged=false;
+        carousel.addEventListener('pointerdown',event=>{
+          if(event.pointerType!=='mouse'||event.button!==0)return;
+          pointerStart=event.clientX;scrollStart=carousel.scrollLeft;dragged=false;
+          carousel.classList.add('is-dragging');
+          carousel.setPointerCapture?.(event.pointerId);
+        });
+        carousel.addEventListener('pointermove',event=>{
+          if(pointerStart===null)return;
+          const delta=event.clientX-pointerStart;
+          if(Math.abs(delta)>4)dragged=true;
+          if(dragged)carousel.scrollLeft=scrollStart-delta;
+        });
+        const stopDrag=()=>{pointerStart=null;carousel.classList.remove('is-dragging');};
+        carousel.addEventListener('pointerup',stopDrag);
+        carousel.addEventListener('pointercancel',stopDrag);
+        carousel.addEventListener('lostpointercapture',stopDrag);
+        carousel.addEventListener('click',event=>{
+          if(dragged){event.preventDefault();event.stopPropagation();dragged=false;}
+        },true);
+        updateDots();
+      });
     });
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
 })();
 </script>
+
+
+<style id="manual-snap-carousel-style">
+/* Manual, Instagram-style snap carousels — no autoplay. */
+.teacher-gallery,.testimonial-carousel{
+  display:block!important;position:relative!important;overflow-x:auto!important;overflow-y:hidden!important;
+  width:100%!important;max-width:100%!important;scroll-snap-type:x mandatory!important;
+  scroll-behavior:smooth!important;-webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-x:contain!important;touch-action:pan-x pan-y!important;
+  scrollbar-width:none!important;mask-image:none!important;cursor:grab!important;
+}
+.teacher-gallery::-webkit-scrollbar,.testimonial-carousel::-webkit-scrollbar{display:none!important}
+.teacher-gallery.is-dragging,.testimonial-carousel.is-dragging{cursor:grabbing!important;scroll-behavior:auto!important;user-select:none!important}
+.teacher-track,.testimonial-track{
+  display:flex!important;flex-flow:row nowrap!important;align-items:stretch!important;
+  width:max-content!important;min-width:max-content!important;max-width:none!important;
+  justify-content:flex-start!important;transform:none!important;animation:none!important;
+  will-change:auto!important;
+}
+.teacher-track{gap:16px!important}
+.testimonial-track{gap:18px!important}
+.teacher-card{flex:0 0 clamp(245px,30vw,320px)!important;width:clamp(245px,30vw,320px)!important;max-width:none!important}
+.video-testimonial-card{flex:0 0 clamp(270px,38vw,410px)!important;width:clamp(270px,38vw,410px)!important;max-width:none!important}
+.manual-carousel-dots{display:flex;justify-content:center;align-items:center;gap:8px;padding:12px 0 2px;width:100%}
+.manual-carousel-dot{appearance:none;-webkit-appearance:none;border:0;padding:0;width:7px;height:7px;min-width:7px;border-radius:999px;background:#78694d;opacity:.7;cursor:pointer;transition:width .2s ease,background .2s ease,opacity .2s ease}
+.manual-carousel-dot[aria-current="true"]{width:21px;background:#d7b56d;opacity:1}
+.manual-carousel-dot:focus-visible{outline:2px solid #f0dca5;outline-offset:4px}
+.teacher-photo{height:auto!important;aspect-ratio:4/3!important;min-height:0!important;padding:0!important;display:block!important;overflow:hidden!important}
+.teacher-photo:before,.teacher-photo:after{display:none!important}
+.teacher-photo img{display:block!important;width:100%!important;height:100%!important;aspect-ratio:4/3!important;object-fit:cover!important;object-position:center!important;min-height:0!important}
+.testimonial-thumbnail-wrap{width:100%!important;height:auto!important;aspect-ratio:16/9!important;overflow:hidden!important}
+.testimonial-thumbnail{width:100%!important;height:100%!important;aspect-ratio:16/9!important;background-size:cover!important;background-position:center!important}
+.testimonial-thumbnail-wrap iframe{display:block;width:100%;height:100%;aspect-ratio:16/9;border:0}
+@media(max-width:600px){
+ .teacher-card{flex-basis:78vw!important;width:78vw!important}
+ .video-testimonial-card{flex-basis:84vw!important;width:84vw!important}
+ .teacher-track{gap:12px!important}.testimonial-track{gap:12px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .teacher-gallery,.testimonial-carousel{scroll-behavior:auto!important}
+ .manual-carousel-dot{transition:none}
+}
+</style>
 
 </body>
 </html>
