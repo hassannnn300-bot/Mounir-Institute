@@ -584,6 +584,105 @@
 @media(max-width:600px){#step-content .option{animation-delay:calc(var(--option-index,0)*45ms)}#step-content .option:after{right:8px;top:8px}}
 @media(prefers-reduced-motion:reduce){#step-content.step-enter,#step-content .question,#step-content .hint,#step-content .option,#step-count:before{animation:none!important}#step-content .option,#step-content .option:after,#step-content .option .symbol{transition:none!important}}
 </style>
+
+<style id="mobile-experience-polish">
+/* Mobile-first comfort pass: no squeezed content, clear rhythm, and forgiving tap targets */
+html{scroll-padding-top:18px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{overflow-x:clip}
+img,video,iframe,svg,canvas{max-width:100%}
+img{height:auto}
+button,a,input,select,textarea{-webkit-tap-highlight-color:transparent}
+button,a{touch-action:manipulation}
+:where(.wrap,.section,.journey,.price-card,.feature,.review-card,.teacher-card,.video-testimonial-card,.video-slot,.method-step,.diploma-incentive){min-width:0}
+:where(p,li,h1,h2,h3,h4,.label,.intro,.hint,.note,.price-card,.feature,.review-card,.teacher-card){overflow-wrap:anywhere}
+:where(input,textarea,select){min-width:0;max-width:100%}
+:where(button,a,input,select,textarea):focus-visible{outline:2px solid var(--gold2,#f0dca5);outline-offset:3px}
+@media(max-width:760px){
+  .wrap{width:min(calc(100% - 36px),var(--max,1120px))}
+  .section{padding:42px 0}
+  .section h2{font-size:clamp(1.85rem,7.2vw,2.55rem);line-height:1.13;text-wrap:balance}
+  .intro{font-size:.97rem;line-height:1.7}
+  .hero{gap:24px;padding:28px 0 34px}
+  .hero h1{font-size:clamp(2.45rem,10.3vw,3.65rem);line-height:1.04;text-wrap:balance;margin:13px 0 16px}
+  .hero p{font-size:1rem;line-height:1.7}
+  .hero-actions{gap:10px;margin:22px 0}
+  .hero-actions .cta{min-height:48px}
+  .cta{min-height:46px;line-height:1.25;white-space:normal;text-align:center}
+  .proof{line-height:1.5}
+  .features,.pricing,.video-grid,.review-grid{grid-template-columns:minmax(0,1fr);gap:14px}
+  .feature,.price-card,.review-card{padding:20px;border-radius:10px}
+  .price-card h3{line-height:1.35}
+  .price{font-size:2.15rem}
+  .journey{padding:24px 18px;margin-inline:auto}
+  .question{font-size:clamp(1.65rem,7vw,2.1rem);text-wrap:balance}
+  .hint{font-size:.94rem;line-height:1.65;margin-bottom:20px}
+  .options{gap:11px}
+  .option{min-width:0;min-height:72px;padding:14px 13px;border-radius:9px;align-items:center}
+  .option .label{font-size:.92rem;line-height:1.45;overflow-wrap:anywhere}
+  .option .symbol{flex:0 0 32px;width:32px;height:32px}
+  .form-actions{gap:12px;margin-top:24px}
+  .form-actions .cta{flex:1;min-width:0;padding:13px 12px}
+  .diploma-incentive{grid-template-columns:minmax(0,1fr)!important;gap:15px!important;padding:21px!important}
+  .diploma-incentive>div:first-child{justify-self:start}
+  .diploma-incentive h3{font-size:clamp(1.35rem,6vw,1.8rem)!important;line-height:1.2}
+  .instructor{gap:25px!important}
+  .instructor-media{width:100%;max-width:360px;margin-inline:auto}
+  .portrait-arch{height:clamp(360px,105vw,440px)}
+  .instructor ul{padding-left:20px}
+  .instructor li{line-height:1.65;margin:12px 0}
+  .method-section{padding:48px 0}
+  .method-intro{margin-bottom:30px}
+  .method-timeline{gap:22px;padding-left:0}
+  .method-step{padding:20px!important}
+  .vsl-frame{width:100%;aspect-ratio:16/9}
+  .vsl-inner strong{font-size:clamp(.9rem,4vw,1.15rem);text-align:center;padding:0 10px}
+  .vsl-inner span{font-size:.65rem;letter-spacing:.12em;text-align:center}
+  .teacher-gallery,.testimonial-carousel,.video-carousel,.review-carousel{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#78613a transparent;mask-image:none!important}
+  .teacher-track,.testimonial-track,.video-track,.review-track{animation:none!important;transform:none!important;width:max-content;max-width:none;display:flex;flex-wrap:nowrap;gap:14px;padding:4px 2px 16px}
+  .teacher-loop-copy,.testimonial-loop-copy{display:contents}
+  .teacher-card,.video-testimonial-card,.video-slot,.review-card{flex:0 0 min(84vw,330px);width:min(84vw,330px);max-width:330px;scroll-snap-align:start}
+  .teacher-photo{height:clamp(220px,68vw,270px);object-fit:cover;object-position:center}
+  .video-testimonial-card{overflow:hidden}
+  .testimonial-thumbnail-wrap{width:100%;aspect-ratio:16/9;overflow:hidden}
+  .testimonial-thumbnail{width:100%;height:100%;min-height:0}
+  .thumbnail-logo{width:auto;height:auto;max-width:100%;max-height:42px;object-fit:contain}
+  .review-carousel .review-card{width:min(84vw,330px);min-height:0}
+  .footer-inner{gap:12px;line-height:1.7}
+}
+@media(max-width:480px){
+  .wrap{width:calc(100% - 32px)}
+  .nav{align-items:center;gap:8px}
+  .brand-logo{max-width:min(34vw,118px);height:auto;max-height:60px;object-fit:contain}
+  .nav a.cta{white-space:normal;max-width:45%;line-height:1.25;text-align:center;padding:10px 11px}
+  .hero-art{min-height:185px;max-height:215px}
+  .hero-actions .cta{width:100%}
+  .options{grid-template-columns:minmax(0,1fr)}
+  .option{min-height:64px;padding:13px 14px}
+  .journey{padding:22px 15px}
+  .progress{margin:18px 0 24px}
+  .form-actions .cta{font-size:.9rem}
+  .section{padding:38px 0}
+  .features{gap:12px}
+  .feature,.price-card,.review-card{padding:18px}
+  .portrait-arch{height:clamp(350px,112vw,410px)}
+  .method-timeline:before{left:17px}
+  .teacher-card,.video-testimonial-card,.video-slot,.review-card{flex-basis:min(88vw,315px);width:min(88vw,315px)}
+  .diploma-incentive .eyebrow{font-size:.68rem;letter-spacing:.14em!important}
+}
+@media(max-width:360px){
+  .wrap{width:calc(100% - 28px)}
+  .brand-logo{max-width:90px;max-height:52px}
+  .nav a.cta{font-size:.72rem;padding:9px}
+  .hero h1{font-size:2.25rem}
+  .form-actions{gap:8px}
+  .form-actions .cta{padding:12px 8px;font-size:.84rem}
+  .teacher-card,.video-testimonial-card,.video-slot,.review-card{flex-basis:88vw;width:88vw}
+}
+@media(prefers-reduced-motion:reduce){
+  .teacher-track,.testimonial-track,.video-track,.review-track{animation:none!important;transform:none!important}
+  .teacher-gallery,.testimonial-carousel,.video-carousel,.review-carousel{scroll-behavior:auto}
+}
+</style>
 </head>
 <body>
 
