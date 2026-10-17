@@ -1314,5 +1314,54 @@ if(new URLSearchParams(location.search).get("return")==="options"){try{const sav
 }
 </style>
 
+<style id="natural-photo-canvas-fit">
+/* Match each photo canvas to its own source proportions: no bars, distortion or forced cropping. */
+#teachers .teacher-photo{
+  height:auto!important;
+  aspect-ratio:auto!important;
+  min-height:0!important;
+  padding:0!important;
+  display:block!important;
+  overflow:hidden!important;
+  background:#11100d!important;
+}
+#teachers .teacher-photo img{
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+  max-height:none!important;
+  aspect-ratio:auto!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  transform:none!important;
+}
+#teachers .teacher-card:hover img{transform:none!important}
+</style>
+<script id="natural-photo-canvas-fit-controller">
+(function(){
+  function fitPhotos(){
+    document.querySelectorAll('#teachers .teacher-photo img').forEach(img=>{
+      const fit=()=>{
+        if(!img.naturalWidth||!img.naturalHeight)return;
+        const box=img.closest('.teacher-photo');
+        if(!box)return;
+        const ratio=img.naturalWidth+'/'+img.naturalHeight;
+        box.style.aspectRatio=ratio;
+        box.style.height='auto';
+        img.style.aspectRatio=ratio;
+        img.style.width='100%';
+        img.style.height='auto';
+        img.style.objectFit='contain';
+      };
+      if(img.complete)fit();
+      else img.addEventListener('load',fit,{once:true});
+      img.addEventListener('error',()=>{const box=img.closest('.teacher-photo');if(box)box.style.background='transparent';},{once:true});
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fitPhotos);else fitPhotos();
+})();
+</script>
+
 </body>
 </html>
