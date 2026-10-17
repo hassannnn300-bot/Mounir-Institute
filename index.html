@@ -879,21 +879,22 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
 
 
 <style id="logo-with-inline-wordmark">
-/* Larger standalone emblem; brand name sits beside it on one horizontal line. */
-.site-topbar .topbar-logo{display:flex!important;align-items:center!important;gap:0!important;flex:none!important}
-.site-topbar .topbar-logo img{width:170px!important;height:104px!important;max-width:none!important;max-height:none!important;object-fit:contain!important}
-.site-topbar .topbar-brand-name{display:block!important;white-space:nowrap!important;flex:none!important;flex-direction:row!important;border:0!important;border-left:1px solid rgba(215,181,109,.65)!important;padding:0 0 0 15px!important;margin:0 0 0 -14px!important;min-height:0!important;gap:0!important;font-family:Georgia,"Times New Roman",serif!important;font-size:21px!important;font-weight:400!important;line-height:1.1!important;letter-spacing:.025em!important;color:#ead8ae!important}
+/* Use a square image box for the circular seal, then place the wordmark beside it. */
+.site-topbar .topbar-logo{display:flex!important;align-items:center!important;gap:10px!important;flex:none!important;min-width:0!important}
+.site-topbar .topbar-logo img{display:block!important;width:112px!important;height:112px!important;max-width:none!important;max-height:none!important;object-fit:contain!important;flex:0 0 112px!important}
+.site-topbar .topbar-brand-name{display:block!important;white-space:nowrap!important;flex:none!important;flex-direction:row!important;border:0!important;border-left:1px solid rgba(215,181,109,.65)!important;padding:0 0 0 14px!important;margin:0!important;min-height:0!important;gap:0!important;font-family:Georgia,"Times New Roman",serif!important;font-size:21px!important;font-weight:400!important;line-height:1.1!important;letter-spacing:.025em!important;color:#ead8ae!important}
 .site-topbar .topbar-brand-name span{display:inline!important;font:inherit!important;letter-spacing:inherit!important;text-transform:none!important;color:inherit!important}
 .site-topbar .topbar-brand-name span+span:before{content:" ";white-space:pre}
-.site-topbar .topbar-inner{min-height:88px!important;gap:16px!important}
+.site-topbar .topbar-inner{min-height:96px!important;gap:16px!important}
 @media(max-width:760px){
- .site-topbar .topbar-inner{min-height:70px!important;gap:7px!important}
- .site-topbar .topbar-logo img{width:108px!important;height:72px!important}
- .site-topbar .topbar-brand-name{font-size:15px!important;padding-left:9px!important;margin-left:-8px!important;letter-spacing:0!important}
+ .site-topbar .topbar-inner{min-height:74px!important;gap:7px!important}
+ .site-topbar .topbar-logo{gap:5px!important}
+ .site-topbar .topbar-logo img{width:70px!important;height:70px!important;flex-basis:70px!important}
+ .site-topbar .topbar-brand-name{font-size:15px!important;padding-left:8px!important;letter-spacing:0!important}
 }
 @media(max-width:390px){
- .site-topbar .topbar-logo img{width:91px!important;height:65px!important}
- .site-topbar .topbar-brand-name{font-size:13px!important;padding-left:7px!important;margin-left:-6px!important}
+ .site-topbar .topbar-logo img{width:60px!important;height:60px!important;flex-basis:60px!important}
+ .site-topbar .topbar-brand-name{font-size:13px!important;padding-left:7px!important}
 }
 </style>
 
