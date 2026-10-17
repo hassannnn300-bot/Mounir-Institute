@@ -1933,47 +1933,109 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 <script>
 (function(){const photo=new Image();photo.onload=function(){if(photo.naturalWidth&&photo.naturalHeight)document.documentElement.style.setProperty('--hassan-photo-ratio',photo.naturalWidth+' / '+photo.naturalHeight)};photo.src='/IMG_8642.jpeg?v=3';})();
 </script>
-<style id="testimonial-playback-loop-fix">
-.student-video-dialog{border:1px solid #b99a5b;border-radius:12px;background:#11100d;color:#f7f4ec;padding:0;width:min(92vw,940px);max-width:940px;max-height:90dvh;box-shadow:0 25px 100px #000c}
-.student-video-dialog::backdrop{background:rgba(0,0,0,.86)}
-.student-video-dialog-head{display:flex;justify-content:space-between;align-items:center;padding:13px 17px;border-bottom:1px solid #5d4c2e;color:#f0dca5}
-.student-video-dialog-head button{border:1px solid #7d6943;border-radius:5px;background:#1c1811;color:#f7f4ec;font-size:19px;cursor:pointer;padding:5px 12px}
-.student-video-dialog-body{aspect-ratio:16/9;width:100%;background:#080808}
-.student-video-dialog-body iframe{display:block;border:0;width:100%;height:100%}
-.teacher-gallery,.testimonial-carousel{scroll-snap-type:none!important;scroll-behavior:auto!important}
-.teacher-track,.testimonial-track{animation:none!important;transform:none!important}
-.teacher-gallery .loop-clone,.testimonial-carousel .loop-clone{pointer-events:none}
-.teacher-gallery.is-dragging,.testimonial-carousel.is-dragging{user-select:none}
+<style id="calm-instagram-carousel-and-video-player">
+/* Quiet, native swipe carousels: no auto-animation, zoom effects, or scroll-jacking. */
+.teacher-gallery,.testimonial-carousel{
+ display:block!important;position:relative!important;width:100%!important;max-width:100%!important;
+ overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;
+ scroll-behavior:auto!important;-webkit-overflow-scrolling:touch!important;overscroll-behavior-x:contain!important;
+ touch-action:pan-x pan-y!important;scrollbar-width:none!important;mask-image:none!important;cursor:grab!important;
+}
+.teacher-gallery::-webkit-scrollbar,.testimonial-carousel::-webkit-scrollbar{display:none!important}
+.teacher-gallery.is-dragging,.testimonial-carousel.is-dragging{cursor:grabbing!important;user-select:none!important}
+.teacher-track,.testimonial-track{
+ display:flex!important;flex-flow:row nowrap!important;align-items:stretch!important;justify-content:flex-start!important;
+ width:max-content!important;min-width:max-content!important;max-width:none!important;transform:none!important;
+ animation:none!important;transition:none!important;will-change:auto!important;
+}
+.teacher-track{gap:16px!important}.testimonial-track{gap:18px!important}
+.teacher-card{scroll-snap-align:start!important;scroll-snap-stop:always!important;flex:0 0 clamp(245px,30vw,320px)!important;width:clamp(245px,30vw,320px)!important}
+.video-testimonial-card{scroll-snap-align:start!important;scroll-snap-stop:always!important;flex:0 0 clamp(270px,38vw,410px)!important;width:clamp(270px,38vw,410px)!important}
+.teacher-card:hover,.video-testimonial-card:hover{transform:none!important;box-shadow:inherit!important}
+.loop-clone{pointer-events:auto!important}
+.carousel-dots{display:flex;justify-content:center;align-items:center;gap:7px;width:100%;padding:13px 0 3px}
+.carousel-dots button{appearance:none;border:0;padding:0;width:6px;height:6px;min-width:6px;border-radius:99px;background:#796b50;opacity:.65;cursor:pointer}
+.carousel-dots button[aria-current="true"]{width:19px;background:#d7b56d;opacity:1}
+.carousel-dots button:focus-visible{outline:2px solid #f0dca5;outline-offset:4px}
+.student-video-dialog{border:1px solid #b99a5b;border-radius:10px;background:#11100d;color:#f7f4ec;padding:0;width:min(94vw,900px);max-width:900px;max-height:90dvh;box-shadow:0 16px 60px #0009;overflow:hidden}
+.student-video-dialog::backdrop{background:rgba(0,0,0,.82)}
+.student-video-dialog-head{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;border-bottom:1px solid #5d4c2e;color:#f0dca5}
+.student-video-dialog-head button{border:1px solid #7d6943;border-radius:5px;background:#1c1811;color:#f7f4ec;font-size:18px;cursor:pointer;padding:4px 11px}
+.student-video-dialog-body{width:100%;aspect-ratio:16/9;background:#050505}
+.student-video-dialog-body iframe{display:block!important;width:100%!important;height:100%!important;border:0!important;aspect-ratio:auto!important;max-width:none!important}
+@media(max-width:600px){.teacher-card{flex-basis:78vw!important;width:78vw!important}.video-testimonial-card{flex-basis:84vw!important;width:84vw!important}}
+@media(prefers-reduced-motion:reduce){.teacher-gallery,.testimonial-carousel{scroll-behavior:auto!important}}
 </style>
-<script id="seamless-manual-carousel">
+<script id="stable-video-modal-and-infinite-swipe-carousel">
 (function(){
- const configs=[['.teacher-gallery','.teacher-track','.teacher-card'],['.testimonial-carousel','.testimonial-track','.video-testimonial-card']];
- function setup(){
- configs.forEach(([selector,trackSelector,cardSelector])=>{
-  const viewport=document.querySelector(selector);if(!viewport||viewport.dataset.loopReady)return;
-  const track=viewport.querySelector(trackSelector);if(!track)return;
-  track.querySelectorAll('.testimonial-loop-copy,[aria-hidden="true"]').forEach(el=>el.remove());
-  const originals=Array.from(track.querySelectorAll(':scope > '+cardSelector));if(!originals.length)return;
-  viewport.dataset.loopReady='1';viewport.tabIndex=0;viewport.setAttribute('aria-label',(selector.includes('teacher')?'Learning journey photos':'Student testimonials')+'. Scroll in either direction to continue browsing.');
-  const makeClone=card=>{const clone=card.cloneNode(true);clone.classList.add('loop-clone');clone.setAttribute('aria-hidden','true');clone.querySelectorAll('button,a,iframe').forEach(el=>{el.tabIndex=-1;if(el.tagName==='IFRAME')el.remove()});return clone};
-  const before=document.createDocumentFragment(),after=document.createDocumentFragment();
-  originals.forEach(card=>{before.append(makeClone(card));after.append(makeClone(card))});
-  track.prepend(before);track.append(after);
-  let segment=0,adjusting=false;
-  function measure(){segment=originals[0].offsetLeft-track.firstElementChild.offsetLeft;}
-  measure();viewport.scrollLeft=segment;
-  function normalize(){if(adjusting||!segment)return;const x=viewport.scrollLeft;if(x<segment*.5||x>segment*1.5){adjusting=true;viewport.scrollLeft=x+(x<segment*.5?segment:-segment);adjusting=false}}
-  viewport.addEventListener('scroll',normalize,{passive:true});
-  window.addEventListener('resize',()=>{const old=segment;measure();viewport.scrollLeft+=segment-old},{passive:true});
-  let startX=0,startScroll=0,dragging=false,moved=false;
-  viewport.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0||e.target.closest('button,a,iframe'))return;dragging=true;moved=false;startX=e.clientX;startScroll=viewport.scrollLeft;viewport.classList.add('is-dragging')});
-  window.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-startX;if(Math.abs(dx)>5)moved=true;if(moved)viewport.scrollLeft=startScroll-dx});
-  window.addEventListener('pointerup',()=>{dragging=false;viewport.classList.remove('is-dragging')});
-  viewport.addEventListener('click',e=>{if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
-  viewport.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();viewport.scrollBy({left:(e.key==='ArrowRight'?1:-1)*originals[0].getBoundingClientRect().width,behavior:'smooth'})}});
+ const dialog=document.createElement('dialog');
+ dialog.className='student-video-dialog';
+ dialog.setAttribute('aria-label','Student testimonial video');
+ dialog.innerHTML='<div class="student-video-dialog-head"><strong>Student experience</strong><button type="button" aria-label="Close video">✕</button></div><div class="student-video-dialog-body"></div>';
+ document.body.append(dialog);
+ const player=dialog.querySelector('.student-video-dialog-body');
+ function stopVideo(){player.replaceChildren();}
+ function closeVideo(){if(dialog.open)dialog.close();stopVideo();}
+ dialog.querySelector('button').addEventListener('click',closeVideo);
+ dialog.addEventListener('click',e=>{if(e.target===dialog)closeVideo()});
+ dialog.addEventListener('close',stopVideo);
+ document.addEventListener('click',e=>{
+  const button=e.target.closest('.testimonial-thumbnail[data-video]');if(!button)return;
+  const frame=document.createElement('iframe');
+  frame.src=button.dataset.video;frame.title=button.dataset.title||'Student testimonial';
+  frame.allow='autoplay; encrypted-media; picture-in-picture';frame.allowFullscreen=true;
+  frame.referrerPolicy='strict-origin-when-cross-origin';
+  player.replaceChildren(frame);
+  if(!dialog.open)dialog.showModal();
  });
+ document.querySelectorAll('.testimonial-thumbnail[data-thumb]').forEach(button=>{
+  button.style.setProperty('--student-face','url("'+button.dataset.thumb+'")');
+  const image=new Image();image.onload=()=>button.classList.add('has-face');image.src=button.dataset.thumb;
+ });
+ const configs=[
+  {viewport:'.teacher-gallery',track:'.teacher-track',card:'.teacher-card',label:'Learning journey photos'},
+  {viewport:'.testimonial-carousel',track:'.testimonial-track',card:'.video-testimonial-card',label:'Student video testimonials'}
+ ];
+ function init(){
+  configs.forEach(cfg=>{
+   const view=document.querySelector(cfg.viewport),track=view&&view.querySelector(cfg.track);
+   if(!view||!track||view.dataset.instagramCarousel==='ready')return;
+   view.dataset.instagramCarousel='ready';
+   track.querySelectorAll('.testimonial-loop-copy,[aria-hidden="true"]').forEach(el=>el.remove());
+   const originals=Array.from(track.querySelectorAll(':scope > '+cfg.card));
+   if(!originals.length)return;
+   const cloneGroup=()=>{const frag=document.createDocumentFragment();originals.forEach(card=>{const c=card.cloneNode(true);c.classList.add('loop-clone');c.setAttribute('aria-hidden','true');c.querySelectorAll('iframe').forEach(f=>f.remove());frag.append(c)});return frag};
+   track.prepend(cloneGroup());track.append(cloneGroup());
+   const dots=document.createElement('div');dots.className='carousel-dots';dots.setAttribute('role','group');dots.setAttribute('aria-label',cfg.label+' navigation');
+   const dotButtons=originals.map((card,i)=>{const b=document.createElement('button');b.type='button';b.setAttribute('aria-label','Show '+cfg.label+' '+(i+1));b.setAttribute('aria-current',i===0?'true':'false');b.addEventListener('click',()=>{view.scrollLeft=originals[i].offsetLeft;});dots.append(b);return b});
+   view.insertAdjacentElement('afterend',dots);view.tabIndex=0;view.setAttribute('aria-label',cfg.label+'. Swipe to browse; the carousel loops.');
+   let segment=0,settleTimer=0,adjusting=false;
+   function measure(){segment=originals[0].offsetLeft-track.firstElementChild.offsetLeft;}
+   function activeDot(){
+    const center=view.scrollLeft+view.clientWidth/2;let nearest=0,dist=Infinity;
+    originals.forEach((card,i)=>{const d=Math.abs(card.offsetLeft+card.offsetWidth/2-center);if(d<dist){dist=d;nearest=i}});
+    dotButtons.forEach((b,i)=>b.setAttribute('aria-current',i===nearest?'true':'false'));
+   }
+   function normalize(){
+    if(adjusting||!segment)return;
+    let x=view.scrollLeft,changed=false;
+    while(x<segment-2){x+=segment;changed=true}
+    while(x>=2*segment-2){x-=segment;changed=true}
+    if(changed){adjusting=true;view.scrollLeft=x;adjusting=false}
+    activeDot();
+   }
+   function onScroll(){clearTimeout(settleTimer);activeDot();settleTimer=setTimeout(normalize,100)}
+   view.addEventListener('scroll',onScroll,{passive:true});
+   requestAnimationFrame(()=>{measure();view.scrollLeft=segment;activeDot()});
+   window.addEventListener('resize',()=>{const old=segment;measure();if(old&&segment)view.scrollLeft=view.scrollLeft+(segment-old);activeDot()},{passive:true});
+   let down=false,startX=0,startScroll=0,moved=false;
+   view.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse'||e.button!==0||e.target.closest('button,a'))return;down=true;moved=false;startX=e.clientX;startScroll=view.scrollLeft});
+   window.addEventListener('pointermove',e=>{if(!down)return;const dx=e.clientX-startX;if(Math.abs(dx)>6)moved=true;if(moved)view.scrollLeft=startScroll-dx});
+   window.addEventListener('pointerup',()=>{down=false;if(moved)setTimeout(()=>{moved=false},0)});
+   view.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const card=originals[0];view.scrollBy({left:(e.key==='ArrowRight'?1:-1)*(card.getBoundingClientRect().width+18),behavior:'auto'});setTimeout(normalize,120)}});
+  });
  }
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',setup);else setup();
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 </script></body>
 </html>
