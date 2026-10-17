@@ -1315,7 +1315,7 @@ if(new URLSearchParams(location.search).get("return")==="options"){try{const sav
 </style>
 
 <style id="uniform-teacher-photo-crop">
-/* Slightly taller, uniform canvases preserve more of each teacher's head and face. */
+/* Uniform 5:4 photo canvases with custom face positioning for the two portraits that need a lower crop. */
 #teachers .teacher-photo{
   width:100%!important;
   height:auto!important;
@@ -1337,9 +1337,12 @@ if(new URLSearchParams(location.search).get("return")==="options"){try{const sav
   object-position:center 35%!important;
   transform:none!important;
 }
+/* Sheikh Ahmed Nuaina and Sheikh Haj Al Hindawi Al Azhari: move the image down within the frame. */
+#teachers .teacher-card:nth-child(2) .teacher-photo img,
+#teachers .teacher-card:nth-child(4) .teacher-photo img{
+  object-position:center 60%!important;
+}
 #teachers .teacher-card:hover img{transform:none!important}
-</style>
-
 </style>
 
 </body>
