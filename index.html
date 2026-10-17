@@ -1655,5 +1655,53 @@ if(new URLSearchParams(location.search).get("return")==="options"){try{const sav
 <script id="navigation-dropdown-behaviour">
 (()=>{const menus=[...document.querySelectorAll('.site-topbar .topbar-dropdown')];const closeAll=(except)=>menus.forEach(menu=>{if(menu!==except)menu.open=false});menus.forEach(menu=>{menu.addEventListener('mouseenter',()=>{closeAll(menu);menu.open=true});menu.addEventListener('mouseleave',()=>{menu.open=false});menu.querySelector('summary').addEventListener('click',()=>{closeAll(menu)});menu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menu.open=false}));});document.addEventListener('pointerdown',event=>{if(!event.target.closest('.site-topbar .topbar-dropdown'))closeAll()});document.addEventListener('keydown',event=>{if(event.key==='Escape')closeAll()});})();
 </script>
+
+<style id="compact-one-size-refinement">
+/* Bring the layout together and keep the wordmark on one consistent size. */
+:root{--space-section:clamp(30px,4vw,48px)!important}
+.section{padding:var(--space-section) 0!important}
+.section h2{margin:5px 0 9px!important}
+.section .intro{margin-top:5px!important}
+p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
+.hero{gap:clamp(18px,2.8vw,34px)!important;padding:clamp(24px,3.4vw,40px) 0!important}
+.hero h1{margin:8px 0 12px!important}
+.hero-actions{margin:15px 0!important;gap:8px!important}
+.proof{margin-top:14px!important;gap:8px 12px!important}
+.features,.pricing{gap:11px!important;margin-top:17px!important}
+.feature,.price-card{padding:19px!important}
+.feature h3,.price-card h3{margin:5px 0 7px!important}
+.feature p,.price-card p{margin:5px 0!important}
+.journey{padding:clamp(18px,3vw,28px)!important}
+.question{margin:0 0 8px!important}
+.hint{margin:5px 0 12px!important}
+.options{gap:8px!important}
+.option{padding:12px!important}
+.site-topbar .topbar-inner{min-height:68px!important;padding:4px 16px!important;gap:12px!important}
+.site-topbar .topbar-logo{gap:9px!important;white-space:nowrap!important}
+.site-topbar .topbar-logo img{width:68px!important;height:60px!important;flex:0 0 68px!important}
+.site-topbar .topbar-brand-name{font-size:16px!important;font-weight:750!important;line-height:1!important;letter-spacing:-.04em!important;padding-left:10px!important;white-space:nowrap!important}
+.site-topbar .topbar-brand-name span{font-size:inherit!important;font-weight:inherit!important;line-height:inherit!important;letter-spacing:inherit!important}
+.site-topbar .topbar-links{gap:clamp(8px,1.2vw,16px)!important}
+.site-topbar .topbar-links>a,.site-topbar .topbar-dropdown>summary{font-size:11px!important}
+.footer-inner{gap:8px 16px!important}
+@media(max-width:760px){
+ :root{--space-section:32px!important}
+ .section{padding:32px 0!important}
+ .hero{gap:18px!important;padding:22px 0 28px!important}
+ .site-topbar .topbar-inner{min-height:58px!important;padding:4px 10px!important;gap:7px!important}
+ .site-topbar .topbar-logo{gap:6px!important}
+ .site-topbar .topbar-logo img{width:47px!important;height:47px!important;flex-basis:47px!important}
+ .site-topbar .topbar-brand-name{font-size:13px!important;padding-left:7px!important;letter-spacing:-.04em!important}
+ .site-topbar .topbar-links{gap:6px!important}
+ .site-topbar .topbar-links>a,.site-topbar .topbar-dropdown>summary{font-size:10px!important}
+ .site-topbar .topbar-cta{font-size:10px!important;padding:7px 9px!important}
+ .feature,.price-card{padding:16px!important}
+ .journey{padding:18px 13px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .polish-reveal,.hero .eyebrow,.hero h1,.hero p,.hero .hero-actions,.hero .proof{animation:none!important;transition:none!important}
+}
+</style>
+
 </body>
 </html>
