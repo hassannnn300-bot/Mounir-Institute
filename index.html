@@ -2037,6 +2037,14 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
+</script><style id="portrait-exact-photo-fit-final">
+/* Frame follows the source photo's proportions rather than forcing a tall empty canvas. */
+#approach .instructor-media .portrait-arch{width:100%!important;max-width:620px!important;height:auto!important;min-height:0!important;aspect-ratio:16/9!important;border-radius:8px!important;overflow:hidden!important;margin-inline:auto!important;padding:0!important}
+#approach .instructor-media .portrait-arch .instructor-portrait{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;background-image:url('/IMG_8642.jpeg?v=2')!important;background-size:cover!important;background-position:center center!important;background-repeat:no-repeat!important;border-radius:6px!important}
+#approach .instructor-media .portrait-arch:before{inset:7px!important}
+</style>
+<script id="portrait-exact-native-ratio">
+(()=>{const frame=document.querySelector('#approach .instructor-media .portrait-arch');if(!frame)return;const img=new Image();img.onload=()=>{if(img.naturalWidth&&img.naturalHeight)frame.style.setProperty('aspect-ratio',img.naturalWidth+' / '+img.naturalHeight,'important')};img.src='/IMG_8642.jpeg?v=2';})();
 </script></body>
 </html>
 <style id="refined-header-spacing">
