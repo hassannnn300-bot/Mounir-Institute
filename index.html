@@ -2021,3 +2021,75 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
   }
 }
 </style>
+
+
+<style id="canonical-header-consistency">
+/* One canonical header style across every section/page, matching the landing-page header. */
+.site-topbar{
+  font-family:var(--font-ui,Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif)!important;
+  background:#0b0a08!important;border-bottom:1px solid #57452966!important;
+}
+.site-topbar .topbar-inner{
+  width:100%!important;max-width:1160px!important;min-height:78px!important;
+  margin:0 auto!important;padding:5px 22px!important;
+  display:flex!important;align-items:center!important;gap:clamp(12px,2vw,24px)!important;
+}
+.site-topbar .topbar-logo{
+  display:flex!important;align-items:center!important;gap:12px!important;
+  flex:none!important;min-width:0!important;text-decoration:none!important;
+}
+.site-topbar .topbar-logo img{
+  display:block!important;width:76px!important;height:68px!important;
+  min-width:76px!important;max-width:76px!important;max-height:68px!important;
+  flex:0 0 76px!important;object-fit:contain!important;object-position:center!important;
+  margin:0!important;mix-blend-mode:normal!important;
+}
+.site-topbar .topbar-brand-name{
+  display:flex!important;flex-direction:column!important;align-items:flex-start!important;
+  justify-content:center!important;gap:2px!important;
+  height:auto!important;min-height:0!important;width:auto!important;min-width:0!important;
+  margin:0!important;padding:0 0 0 12px!important;
+  border:0!important;border-left:1px solid rgba(215,181,109,.6)!important;
+  color:#e8d3a0!important;font-family:var(--font-ui,Inter,ui-sans-serif,system-ui,sans-serif)!important;
+  font-size:17px!important;font-weight:750!important;letter-spacing:-.045em!important;
+  line-height:1.1!important;text-align:left!important;text-transform:none!important;white-space:nowrap!important;
+}
+.site-topbar .topbar-brand-name span{
+  display:block!important;width:auto!important;font:inherit!important;
+  font-size:inherit!important;font-weight:inherit!important;letter-spacing:inherit!important;
+  line-height:inherit!important;text-align:left!important;text-transform:none!important;color:inherit!important;
+}
+.site-topbar .topbar-brand-name span+span:before{content:none!important}
+.site-topbar .topbar-links{
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  gap:clamp(10px,1.6vw,22px)!important;margin-left:auto!important;
+}
+.site-topbar .topbar-links>a,
+.site-topbar .topbar-dropdown>summary{
+  font-family:var(--font-ui,Inter,ui-sans-serif,system-ui,sans-serif)!important;
+  font-size:12px!important;font-weight:700!important;letter-spacing:-.01em!important;
+  line-height:1.35!important;color:#e9e0ce!important;text-decoration:none!important;
+}
+.site-topbar .topbar-cta{
+  font-family:var(--font-ui,Inter,ui-sans-serif,system-ui,sans-serif)!important;
+  font-size:12px!important;font-weight:800!important;border-radius:6px!important;padding:11px 15px!important;
+}
+.site-topbar .topbar-menu{font-family:var(--font-ui,Inter,ui-sans-serif,system-ui,sans-serif)!important;border-radius:10px!important}
+.site-topbar .topbar-menu a{font-family:inherit!important;font-size:12px!important;font-weight:600!important}
+@media(max-width:760px){
+ .site-topbar .topbar-inner{min-height:65px!important;padding:6px 12px!important;gap:8px!important}
+ .site-topbar .topbar-logo{gap:8px!important}
+ .site-topbar .topbar-logo img{width:55px!important;height:55px!important;min-width:55px!important;max-width:55px!important;max-height:55px!important;flex-basis:55px!important}
+ .site-topbar .topbar-brand-name{font-size:13px!important;letter-spacing:-.035em!important;padding-left:8px!important;gap:1px!important}
+ .site-topbar .topbar-links{gap:6px!important}
+ .site-topbar .topbar-links>a,.site-topbar .topbar-dropdown>summary{font-size:10px!important;font-weight:700!important}
+ .site-topbar .topbar-cta{font-size:10px!important;padding:7px 9px!important}
+}
+@media(max-width:390px){
+ .site-topbar .topbar-inner{padding-left:9px!important;padding-right:9px!important;gap:6px!important}
+ .site-topbar .topbar-logo img{width:48px!important;height:48px!important;min-width:48px!important;max-width:48px!important;max-height:48px!important;flex-basis:48px!important}
+ .site-topbar .topbar-brand-name{font-size:11px!important;padding-left:6px!important}
+ .site-topbar .topbar-links{gap:5px!important}
+ .site-topbar .topbar-links>a,.site-topbar .topbar-dropdown>summary{font-size:9px!important}
+}
+</style>
