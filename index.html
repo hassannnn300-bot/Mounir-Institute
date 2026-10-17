@@ -2010,9 +2010,23 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 .site-topbar .topbar-logo{gap:2px!important}
 .site-topbar .topbar-logo img{margin:0!important}
 .site-topbar .topbar-brand-name{
- border-left:1px solid rgba(215,181,109,.45)!important;
+ position:relative!important;
+ border-left:0!important;
  padding-left:7px!important;
  margin-left:1px!important;
+}
+.site-topbar .topbar-brand-name:before{
+ content:""!important;
+ position:absolute!important;
+ left:0!important;
+ top:50%!important;
+ transform:translateY(-50%)!important;
+ height:24px!important;
+ width:1px!important;
+ background:rgba(215,181,109,.45)!important;
+}
+@media(max-width:760px){
+ .site-topbar .topbar-brand-name:before{height:20px!important}
 }
 @media(max-width:760px){
  .site-topbar .topbar-logo{gap:1px!important}
