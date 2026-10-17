@@ -794,6 +794,25 @@ button,a{touch-action:manipulation}
   .method-card p{font-size:.88rem!important;line-height:1.55!important}
 }
 </style>
+
+<style id="centered-progression-copy">
+/* Keep the two key messages centred and clearly separated on every screen. */
+.hero .hero-promise{max-width:760px;margin:10px auto 0!important;text-align:center!important}
+.hero-promise-main,.hero-promise-sub{display:block}
+.hero-promise-main{font-size:clamp(1.05rem,2.1vw,1.35rem);line-height:1.3;margin-bottom:7px}
+.hero-promise-sub{font-size:1rem;line-height:1.5;color:var(--muted);font-weight:500}
+.method-section .method-intro{text-align:center!important;margin-left:auto!important;margin-right:auto!important}
+.method-section .method-intro h2,.method-section .method-intro p{text-align:center!important;margin-left:auto!important;margin-right:auto!important}
+@media(max-width:600px){
+ .hero .hero-promise{max-width:34rem;margin:8px auto 0!important}
+ .hero-promise-main{font-size:1.08rem}
+ .hero-promise-sub{font-size:.92rem}
+ .method-section .method-intro{margin-bottom:24px!important}
+ .method-section .method-intro h2{max-width:100%;text-wrap:balance}
+ .method-section .method-intro p{max-width:30rem}
+}
+</style>
+
 </head>
 <body>
 
@@ -802,7 +821,7 @@ button,a{touch-action:manipulation}
 <div>
 
 <h1>From student to <span class="gold">teacher.</span></h1>
-<p class="hero-promise"><span class="gold">Become a master in just 18 months.</span> Learn with a dedicated group that stays together.</p>
+<p class="hero-promise"><span class="gold hero-promise-main">Become a master in just 18 months.</span><span class="hero-promise-sub">Learn with a dedicated group that stays together.</span></p>
 <div class="hero-actions"><a class="cta" href="#journey">Discover Your Learning Path <span aria-hidden="true">→</span></a><a class="cta secondary" href="#programmes">View programmes</a></div>
 
 </div>
