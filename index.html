@@ -1703,5 +1703,57 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 }
 </style>
 
+
+<style id="stacked-brand-and-centred-logo-refinement">
+/* Elegant two-line wordmark with the emblem visually centred beside it. */
+.site-topbar .topbar-logo{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+}
+.site-topbar .topbar-logo img{
+  display:block!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  align-self:center!important;
+}
+.site-topbar .topbar-brand-name{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:1px!important;
+  margin-left:0!important;
+  padding-left:0!important;
+  white-space:normal!important;
+  line-height:1!important;
+  letter-spacing:.025em!important;
+}
+.site-topbar .topbar-brand-name span{
+  display:block!important;
+  white-space:nowrap!important;
+  line-height:1.02!important;
+}
+.site-topbar .topbar-brand-name span:first-child{
+  font-size:clamp(19px,1.8vw,23px)!important;
+  font-weight:600!important;
+}
+.site-topbar .topbar-brand-name span:last-child{
+  font-size:clamp(13px,1.25vw,16px)!important;
+  font-weight:400!important;
+  letter-spacing:.17em!important;
+  text-transform:uppercase!important;
+}
+@media(max-width:760px){
+  .site-topbar .topbar-logo{gap:5px!important}
+  .site-topbar .topbar-logo img{
+    width:66px!important;height:58px!important;flex-basis:66px!important;
+  }
+  .site-topbar .topbar-brand-name span:first-child{font-size:16px!important}
+  .site-topbar .topbar-brand-name span:last-child{font-size:11px!important;letter-spacing:.14em!important}
+}
+</style>
+
 </body>
 </html>
