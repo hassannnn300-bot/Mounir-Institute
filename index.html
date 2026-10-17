@@ -842,7 +842,12 @@ button,a{touch-action:manipulation}
 .method-section .method-timeline::before,.method-timeline::before,.method-step::after{content:none!important;display:none!important;background:none!important}
 /* Refined invitation beneath the portrait. */
 .portrait-social .connect-title{font-family:Georgia,'Times New Roman',serif!important;font-size:clamp(1.12rem,2.2vw,1.45rem)!important;font-weight:400!important;font-style:italic;letter-spacing:.015em!important;line-height:1.4!important;text-transform:none!important;color:var(--gold2)!important;margin-bottom:17px!important}
-</style></head>
+</style>
+<style id="transparent-logo-presentation">
+/* Let the black in the existing logo asset disappear into the midnight page. */
+img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-logo{mix-blend-mode:screen!important;background:transparent!important}
+</style>
+</head>
 <body>
 
 <main>
