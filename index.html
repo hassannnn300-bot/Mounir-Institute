@@ -1995,3 +1995,29 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 </style>
 
 <!-- Trigger fresh Git-connected deployment for the latest saved site changes. -->
+
+
+<style id="portrait-frame-fill-fix">
+/* Fill Hassan's portrait frame edge-to-edge: no contain letterboxing or dark empty bands. */
+.instructor-media .portrait-arch{
+  overflow:hidden!important;
+  background:#090909!important;
+}
+.instructor-media .portrait-arch .instructor-portrait{
+  width:100%!important;height:100%!important;min-height:0!important;
+  background-image:url("/IMG_8642.jpeg?v=2")!important;
+  background-size:cover!important;background-position:center 32%!important;
+  background-repeat:no-repeat!important;background-color:transparent!important;
+  border-radius:inherit!important;
+  -webkit-mask-image:none!important;mask-image:none!important;
+}
+.instructor-media .portrait-arch .instructor-portrait:after{
+  content:none!important;display:none!important;background:none!important;
+}
+@media(max-width:760px){
+  .instructor-media .portrait-arch{height:clamp(390px,112vw,470px)!important}
+  .instructor-media .portrait-arch .instructor-portrait{
+    background-size:cover!important;background-position:center 30%!important;
+  }
+}
+</style>
