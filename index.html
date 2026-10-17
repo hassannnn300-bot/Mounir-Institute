@@ -835,13 +835,6 @@ button,a{touch-action:manipulation}
 @media(prefers-reduced-motion:reduce){.price-card,.plan-card{transition:none!important}}
 </style>
 
-<style id="offer-lift-independent-fix">
-/* translate operates independently of the reveal animation's transform. */
-.price-card,.plan-card{translate:0 0;transition:translate .25s ease,box-shadow .25s ease,border-color .25s ease!important;will-change:translate}
-@media(hover:hover){.price-card:hover,.plan-card:hover{translate:0 -10px!important;box-shadow:0 22px 42px #000a,0 0 24px #d7b56d30!important;border-color:var(--gold)!important;z-index:5}}
-.price-card:focus-within,.plan-card:focus-within,.price-card.is-selected,.plan-card.is-selected{translate:0 -10px!important;box-shadow:0 22px 42px #000a,0 0 24px #d7b56d30!important;border-color:var(--gold)!important;z-index:5}
-@media(prefers-reduced-motion:reduce){.price-card,.plan-card{transition:none!important}}
-</style>
 </head>
 <body>
 
