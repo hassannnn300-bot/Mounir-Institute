@@ -2005,6 +2005,17 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 }
 </style>
 
+
+<style id="portrait-native-aspect-ratio">
+/* Match the frame to the photograph's intrinsic dimensions, on all screen sizes. */
+.instructor-media .portrait-arch{width:min(100%,480px)!important;height:auto!important;aspect-ratio:var(--hassan-photo-ratio, 4 / 5)!important;min-height:0!important;border-radius:8px!important;overflow:hidden!important;background:transparent!important;clip-path:none!important}
+.instructor-media .portrait-arch .instructor-portrait{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;background-image:url("/IMG_8642.jpeg?v=3")!important;background-size:100% 100%!important;background-position:center!important;background-repeat:no-repeat!important;background-color:transparent!important;border-radius:inherit!important;mask-image:none!important;-webkit-mask-image:none!important}
+.instructor-media .portrait-arch .instructor-portrait:after{content:none!important;display:none!important}
+@media(max-width:760px){.instructor-media .portrait-arch{width:min(100%,440px)!important;height:auto!important;aspect-ratio:var(--hassan-photo-ratio, 4 / 5)!important}}
+</style>
+<script>
+(function(){const photo=new Image();photo.onload=function(){if(photo.naturalWidth&&photo.naturalHeight)document.documentElement.style.setProperty('--hassan-photo-ratio',photo.naturalWidth+' / '+photo.naturalHeight)};photo.src='/IMG_8642.jpeg?v=3';})();
+</script>
 </body>
 </html>
 <style id="refined-header-spacing">
