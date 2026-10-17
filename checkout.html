@@ -375,5 +375,16 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
 </script>
 <script id="navigation-dropdown-behaviour">
 (()=>{const menus=[...document.querySelectorAll('.site-topbar .topbar-dropdown')];const closeAll=(except)=>menus.forEach(menu=>{if(menu!==except)menu.open=false});menus.forEach(menu=>{menu.addEventListener('mouseenter',()=>{closeAll(menu);menu.open=true});menu.addEventListener('mouseleave',()=>{menu.open=false});menu.querySelector('summary').addEventListener('click',()=>{closeAll(menu)});menu.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{menu.open=false}));});document.addEventListener('pointerdown',event=>{if(!event.target.closest('.site-topbar .topbar-dropdown'))closeAll()});document.addEventListener('keydown',event=>{if(event.key==='Escape')closeAll()});})();
-</script></body>
+</script><style id="shared-homepage-header-exact-final">
+/* Identical branding across every page: same asset, divider, typography and sizing. */
+.site-topbar .topbar-logo{display:flex!important;align-items:center!important;gap:1px!important;text-decoration:none!important;flex:none!important}
+.site-topbar .topbar-logo img{display:block!important;width:70px!important;height:64px!important;min-width:70px!important;max-width:70px!important;max-height:64px!important;flex:0 0 70px!important;object-fit:contain!important;object-position:center!important;margin:0!important;mix-blend-mode:normal!important}
+.site-topbar .topbar-brand-name{display:flex!important;flex-direction:column!important;align-items:flex-start!important;justify-content:center!important;gap:2px!important;width:auto!important;height:auto!important;min-height:48px!important;margin:0!important;padding:0 0 0 11px!important;border:0!important;border-left:1px solid rgba(215,181,109,.65)!important;white-space:nowrap!important;text-align:left!important;text-transform:none!important;color:#e8d3a0!important}
+.site-topbar .topbar-brand-name span{display:block!important;width:auto!important;text-align:left!important;white-space:nowrap!important;color:#e8d3a0!important}
+.site-topbar .topbar-brand-name span:first-child{font-family:Georgia,'Times New Roman',serif!important;font-size:22px!important;font-weight:400!important;letter-spacing:0!important;line-height:1.05!important;text-transform:none!important}
+.site-topbar .topbar-brand-name span:last-child{font-family:Inter,ui-sans-serif,system-ui,sans-serif!important;font-size:12px!important;font-weight:400!important;letter-spacing:.15em!important;line-height:1.1!important;text-transform:uppercase!important}
+.site-topbar .topbar-brand-name span+span:before{content:none!important}
+@media(max-width:390px){.site-topbar .topbar-logo img{width:58px!important;height:56px!important;min-width:58px!important;max-width:58px!important;max-height:56px!important;flex-basis:58px!important}.site-topbar .topbar-brand-name{padding-left:8px!important}.site-topbar .topbar-brand-name span:first-child{font-size:19px!important}.site-topbar .topbar-brand-name span:last-child{font-size:10px!important}}
+</style>
+</body>
 </html>
