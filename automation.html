@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090909">
+<title>Instagram Automations · Mounir Institute</title>
+<style>
+:root{color-scheme:dark;--bg:#080909;--panel:#111211;--panel2:#171713;--line:#302a1b;--gold:#d6b56d;--gold2:#f2dfad;--muted:#a9a69c;--text:#f6f3eb;--green:#91d4a4;--red:#e8a6a6}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 85% -15%,#4b391b55,transparent 38%),radial-gradient(ellipse at -20% 45%,#20201955,transparent 40%),var(--bg);color:var(--text);font:15px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}a{color:inherit}.shell{max-width:1220px;margin:auto;padding:26px 22px 56px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:26px;border-bottom:1px solid #ffffff12}.brand{display:flex;align-items:center;gap:13px}.brand img{width:46px;height:46px;object-fit:contain;border-radius:50%}.brand b{display:block;letter-spacing:.14em;font-size:12px}.brand span{color:var(--gold);font-size:11px;letter-spacing:.17em;text-transform:uppercase}.toplinks{display:flex;gap:12px;align-items:center}.link{border:1px solid #ffffff22;padding:9px 13px;border-radius:11px;text-decoration:none;color:#ded9cd;font-size:13px}.eyebrow{font-size:11px;letter-spacing:.19em;text-transform:uppercase;color:var(--gold);font-weight:700}.hero{padding:38px 0 28px;display:flex;justify-content:space-between;gap:25px;align-items:flex-end}.hero h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.045em;line-height:1.08;margin:9px 0 12px;max-width:720px}.hero p{color:var(--muted);max-width:650px;margin:0}.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid #8c7544;border-radius:99px;padding:8px 12px;color:#e9d7a7;font-size:12px;white-space:nowrap;background:#d6b56d0b}.dot{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 12px #d6b56d77}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:16px}.card{background:linear-gradient(145deg,#171714f5,#0e0f0ef7);border:1px solid #d6b56d28;border-radius:18px;padding:20px;box-shadow:0 16px 40px #0002;position:relative;overflow:hidden}.card:before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,#d6b56d66,transparent);pointer-events:none}.span8{grid-column:span 8}.span4{grid-column:span 4}.span6{grid-column:span 6}.span12{grid-column:span 12}.cardhead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}.card h2{font-size:16px;margin:0;letter-spacing:-.01em}.sub{font-size:12px;color:var(--muted);margin-top:3px}.status{font-size:11px;color:var(--muted);border:1px solid #ffffff20;padding:5px 8px;border-radius:7px}.metric{font-size:30px;line-height:1.1;font-weight:650;letter-spacing:-.04em}.metriclabel{font-size:12px;color:var(--muted);margin-top:7px}.metricgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.metricbox{border:1px solid #ffffff10;border-radius:13px;background:#ffffff03;padding:16px}.metricbox .metric{font-size:25px}.empty{border:1px dashed #76623a66;border-radius:13px;padding:19px;color:var(--muted);font-size:13px;background:#d6b56d05}.empty strong{display:block;color:#e8dfca;margin-bottom:5px}.btn{appearance:none;border:1px solid #8d7545;background:linear-gradient(135deg,#f0d99f,#c4a258);color:#17130a;border-radius:11px;padding:11px 15px;font:inherit;font-weight:700;font-size:13px;text-decoration:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;transition:transform .18s,box-shadow .18s,filter .18s}.btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px #d6b56d25;filter:brightness(1.04)}.btn.secondary{background:#ffffff06;color:#eee5d1;border-color:#ffffff24}.btn:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}.actions{display:flex;gap:9px;flex-wrap:wrap}.flow{display:flex;align-items:stretch;gap:9px;margin:14px 0 18px}.step{flex:1;min-width:0;padding:14px 12px;border-radius:12px;background:linear-gradient(145deg,#d6b56d0d,#ffffff03);border:1px solid #d6b56d28}.stepnum{color:var(--gold);font-size:10px;letter-spacing:.12em;font-weight:800}.step strong{display:block;font-size:13px;margin:6px 0 4px}.step span{display:block;font-size:11px;color:var(--muted)}.arrow{align-self:center;color:#8f7a4e}.field{display:grid;gap:7px;margin:13px 0}.field label{font-size:12px;color:#d8d0bd}.field input,.field textarea,.field select{width:100%;border:1px solid #ffffff22;background:#090a09;color:var(--text);border-radius:10px;padding:11px 12px;font:inherit;font-size:13px;outline:none}.field input:focus,.field textarea:focus,.field select:focus{border-color:#c9a75f;box-shadow:0 0 0 3px #d6b56d13}.field textarea{min-height:98px;resize:vertical}.field small{color:#918b7e;font-size:11px}.checklist{display:grid;gap:11px}.check{display:flex;align-items:flex-start;gap:10px;color:#d7d1c4;font-size:13px}.check input{accent-color:#d6b56d;margin-top:4px}.check span{display:block;color:var(--muted);font-size:11px;margin-top:2px}.note{padding:12px 13px;border-radius:11px;background:#d6b56d0b;border:1px solid #d6b56d24;color:#cfc4ab;font-size:12px;margin-top:14px}.notice{display:none;border:1px solid #477b55;background:#132117;color:#b9e4c4;padding:11px 13px;border-radius:10px;margin-top:12px;font-size:12px}.previewbubble{max-width:92%;background:#24241f;border:1px solid #ffffff12;padding:12px 14px;border-radius:4px 14px 14px 14px;color:#f3eee3;font-size:13px;white-space:pre-wrap}.previewlabel{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin:12px 0 7px}.foot{color:#777267;text-align:center;font-size:11px;padding-top:30px}.gold{color:var(--gold2)}@media(max-width:760px){.shell{padding:17px 13px 35px}.top{align-items:flex-start}.toplinks .link:first-child{display:none}.hero{display:block;padding:28px 0 22px}.hero .pill{margin-top:18px}.span8,.span4,.span6,.span12{grid-column:span 12}.metricgrid{grid-template-columns:1fr 1fr}.metricbox:last-child{grid-column:span 2}.flow{flex-direction:column}.arrow{transform:rotate(90deg);align-self:center}.card{padding:16px}.brand img{width:39px;height:39px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="top">
+ <div class="brand"><img src="/assets/images/IMG_9031.PNG" alt="Mounir Institute logo"><div><b>MOUNIR INSTITUTE</b><span>Growth automation</span></div></div>
+ <nav class="toplinks"><a class="link" href="/">← Main website</a><a class="link" href="/assessment.html">Questionnaire ↗</a></nav>
+</header>
+<section class="hero">
+ <div><div class="eyebrow">Instagram · Lead conversion</div><h1>Turn conversations into <span class="gold">student journeys.</span></h1><p>Your control room for CTA-triggered replies, qualified leads and the Maqamaat Student Journey Questionnaire.</p></div>
+ <div class="pill"><span class="dot"></span><span id="connectionLabel">Instagram not connected</span></div>
+</section>
+<section class="grid">
+ <article class="card span8">
+  <div class="cardhead"><div><h2>Automation overview</h2><div class="sub">Your first conversion flow</div></div><span class="status" id="modeStatus">SETUP MODE</span></div>
+  <div class="metricgrid">
+   <div class="metricbox"><div class="metric" id="activeCount">0</div><div class="metriclabel">Automations active in this browser</div></div>
+   <div class="metricbox"><div class="metric">—</div><div class="metriclabel">Questionnaire completions</div></div>
+   <div class="metricbox"><div class="metric">—</div><div class="metriclabel">Leads captured</div></div>
+  </div>
+  <div class="note">This is the initial dashboard prototype. Live Instagram events and lead counts will appear only after Meta authorisation, webhook setup and secure storage are configured.</div>
+ </article>
+ <article class="card span4">
+  <div class="cardhead"><div><h2>Instagram connection</h2><div class="sub">Official Meta authorisation</div></div><span class="status">REQUIRED</span></div>
+  <p style="color:var(--muted);font-size:13px;margin:0 0 15px">Connect a professional Instagram Creator or Business account through Meta. Never enter your Instagram password here.</p>
+  <a class="btn" href="https://developers.facebook.com/apps/" target="_blank" rel="noreferrer">Open Meta Developers ↗</a>
+  <div class="note">Connection is not active yet. Meta app credentials, permissions, callback URL and webhook verification must be configured before DMs can be sent automatically.</div>
+ </article>
+ <article class="card span12">
+  <div class="cardhead"><div><h2>Build your first automation</h2><div class="sub">Keyword CTA → friendly DM → questionnaire</div></div><span class="status">DRAFT</span></div>
+  <div class="flow">
+   <div class="step"><div class="stepnum">STEP 01</div><strong>Trigger</strong><span>Person messages the keyword or starts a conversation.</span></div><div class="arrow">→</div>
+   <div class="step"><div class="stepnum">STEP 02</div><strong>Reply naturally</strong><span>Send a warm, relevant message within Meta's allowed messaging window.</span></div><div class="arrow">→</div>
+   <div class="step"><div class="stepnum">STEP 03</div><strong>Share questionnaire</strong><span>Invite them to discover the right Maqamaat learning path.</span></div><div class="arrow">→</div>
+   <div class="step"><div class="stepnum">STEP 04</div><strong>Track & hand over</strong><span>Record lead progress and route questions to a human.</span></div>
+  </div>
+  <div class="grid">
+   <div class="span6">
+    <div class="field"><label for="keyword">Trigger keyword</label><input id="keyword" maxlength="40" value="MAQAM" placeholder="e.g. MAQAM"><small>Use a short word people can easily comment or message.</small></div>
+    <div class="field"><label for="questionnaire">Questionnaire URL</label><input id="questionnaire" type="url" value="https://mounir-institute.vercel.app/assessment.html"><small>Update this if your live funnel uses a different address.</small></div>
+    <div class="field"><label for="reply">First automated DM</label><textarea id="reply">Assalamu alaykum! 🌙 Thank you for your interest in learning Qur'an recitation Maqamaat with Mounir Institute.
+
+We've made a short questionnaire to help you find the right next step. You can begin here:</textarea></div>
+    <div class="field"><label for="cta">Call-to-action text</label><input id="cta" maxlength="90" value="Begin your learning journey →"></div>
+    <div class="actions"><button class="btn" id="saveDraft">Save draft in this browser</button><button class="btn secondary" id="previewBtn">Preview message</button><button class="btn secondary" id="copyBtn">Copy setup summary</button></div>
+    <div class="notice" id="notice" role="status"></div>
+   </div>
+   <div class="span6">
+    <div class="previewlabel">Message preview</div>
+    <div style="border:1px solid #ffffff18;border-radius:16px;padding:15px;background:#0b0c0b;min-height:250px">
+     <div style="display:flex;gap:9px;align-items:center;border-bottom:1px solid #ffffff12;padding-bottom:12px;margin-bottom:13px"><div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#f0d99f,#79602b);display:grid;place-items:center;color:#17130a;font-weight:800;font-size:10px">MI</div><div><strong style="font-size:12px">Mounir Institute</strong><div style="font-size:10px;color:#9b9587">Automated preview · not sent</div></div></div>
+     <div class="previewbubble" id="previewText"></div>
+     <a id="previewLink" href="https://mounir-institute.vercel.app/assessment.html" target="_blank" rel="noreferrer" style="display:inline-block;margin:10px 0 0 8%;padding:10px 13px;border-radius:10px;background:linear-gradient(135deg,#f0d99f,#c4a258);color:#17130a;text-decoration:none;font-size:12px;font-weight:800">Begin your learning journey →</a>
+     <div style="font-size:10px;color:#777267;margin-top:15px">Preview only. No Instagram message is sent from this page.</div>
+    </div>
+    <div class="note">Good practice: tell people when they are interacting with automation, respect stop requests immediately, and avoid unsolicited bulk DMs.</div>
+   </div>
+  </div>
+ </article>
+ <article class="card span6">
+  <div class="cardhead"><div><h2>Go-live checklist</h2><div class="sub">Required before this can message real people</div></div><span class="status">0 / 5</span></div>
+  <div class="checklist">
+   <label class="check"><input type="checkbox" data-check="account"><div>Professional Instagram account<span>Creator or Business account with messaging enabled.</span></div></label>
+   <label class="check"><input type="checkbox" data-check="app"><div>Meta developer app<span>Configure Instagram messaging and OAuth products.</span></div></label>
+   <label class="check"><input type="checkbox" data-check="permissions"><div>Permissions approved<span>Request required messaging permissions and App Review for production use.</span></div></label>
+   <label class="check"><input type="checkbox" data-check="webhook"><div>Secure webhook & storage<span>HTTPS callback, event signature verification, encrypted tokens and persistent lead database.</span></div></label>
+   <label class="check"><input type="checkbox" data-check="test"><div>End-to-end test<span>Test a real opt-in conversation, questionnaire link and stop/human handover paths.</span></div></label>
+  </div>
+ </article>
+ <article class="card span6">
+  <div class="cardhead"><div><h2>Recommended first CTA</h2><div class="sub">Use consistently across Reels and Stories</div></div></div>
+  <div class="empty"><strong>“Comment MAQAM and I’ll send you the next step.”</strong>Keep the CTA clear. When someone engages, respond only through a Meta-supported flow and within the platform's rules.</div>
+  <div class="field"><label>Questionnaire destination</label><div class="actions"><a class="btn secondary" href="/assessment.html">Open questionnaire ↗</a><button class="btn secondary" id="copyUrl">Copy questionnaire URL</button></div></div>
+  <div class="note">Instagram's API requires user-initiated messaging for normal DM conversations; comment-to-private-reply has separate eligibility and limits. We will implement only triggers supported by your account and Meta's approved permissions. <a href="https://www.postman.com/meta/instagram/documentation/6yqw8pt/instagram-api" target="_blank" rel="noreferrer" class="gold">Read Meta's API documentation ↗</a></div>
+ </article>
+</section>
+<footer class="foot">Mounir Institute · Private lead-conversion workspace · Drafts are stored locally in this browser only.</footer>
+</div>
+<script>
+(function(){
+ const $=id=>document.getElementById(id);
+ const fields=['keyword','questionnaire','reply','cta'];
+ const key='mi-instagram-automation-draft-v1';
+ function notify(message){const n=$('notice');n.textContent=message;n.style.display='block';clearTimeout(notify.t);notify.t=setTimeout(()=>n.style.display='none',3500)}
+ function updatePreview(){const reply=$('reply').value.trim();$('previewText').textContent=reply;$('previewLink').href=$('questionnaire').value.trim()||'#';$('previewLink').textContent=$('cta').value.trim()||'Begin your learning journey →'}
+ function save(){const data={};fields.forEach(k=>data[k]=$(k).value);localStorage.setItem(key,JSON.stringify(data));updatePreview();notify('Draft saved in this browser. It has not been connected to Instagram.')}
+ try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(saved)fields.forEach(k=>{if(typeof saved[k]==='string')$(k).value=saved[k]})}catch(e){}
+ fields.forEach(k=>$(k).addEventListener('input',updatePreview));updatePreview();
+ $('saveDraft').addEventListener('click',save);
+ $('previewBtn').addEventListener('click',()=>{updatePreview();notify('Preview refreshed. No message was sent.')});
+ $('copyBtn').addEventListener('click',async()=>{const summary='Mounir Institute Instagram automation draft\nKeyword: '+$('keyword').value+'\nQuestionnaire: '+$('questionnaire').value+'\nCTA: '+$('cta').value+'\n\nDM:\n'+$('reply').value;try{await navigator.clipboard.writeText(summary);notify('Setup summary copied.')}catch(e){notify('Clipboard unavailable. Select and copy the message fields manually.')}});
+ $('copyUrl').addEventListener('click',async()=>{try{await navigator.clipboard.writeText($('questionnaire').value);notify('Questionnaire URL copied.')}catch(e){notify('Copy unavailable. URL: '+$('questionnaire').value)}});
+ const checks=[...document.querySelectorAll('[data-check]')];function count(){const n=checks.filter(c=>c.checked).length;document.querySelector('.card.span6 .status').textContent=n+' / '+checks.length;localStorage.setItem('mi-instagram-setup-checks',JSON.stringify(checks.map(c=>c.checked)))}try{const vals=JSON.parse(localStorage.getItem('mi-instagram-setup-checks')||'[]');checks.forEach((c,i)=>c.checked=!!vals[i])}catch(e){}checks.forEach(c=>c.addEventListener('change',count));count();
+})();
+</script>
+</body>
+</html>
