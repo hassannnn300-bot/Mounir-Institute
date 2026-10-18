@@ -1391,7 +1391,13 @@ function showResults(){
  count.textContent="Your results";
  next.hidden=true;
  content.innerHTML='<div class="success results-panel"><div class="eyebrow">Your learning path</div><h3>'+readiness+'</h3><div class="personal-guidance"><div class="eyebrow">Your main goal</div><h3>'+goal+'</h3><p class="hint">'+goalAdvice+'</p><p class="fineprint">'+ageNote+'</p></div><div class="personal-guidance"><div class="eyebrow">Recommended next step</div><h3>'+path.title+'</h3><div class="plan-price">'+path.price+'</div><p class="hint">'+path.detail+'</p><p class="fineprint">'+regionNote+'</p></div><p class="hint">For an actual recitation assessment, <a href="assessment.html">submit a recording for review →</a></p><p class="hint">Questions? Email <a href="mailto:info@mounirinstitute.com">info@mounirinstitute.com</a>.</p></div>';
- content.querySelector(".success").insertAdjacentHTML("beforeend",'<div class="results-next"><p class="hint">Your answers are saved on this device only. To send a Founding Class request, use the email application link in the next step and press Send; completing this questionnaire alone does not submit an application or reserve a place.</p></div>');
+ content.querySelector(".success").insertAdjacentHTML("beforeend",'<div class="results-next"><h3>Request a Founding Class place</h3><p class="hint">Apply free of charge. No payment is taken now. Your application is not a confirmed place.</p><div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input id="application-website" tabindex="-1" autocomplete="off"></label></div><button class="cta" type="button" id="submit-founding">Send my application →</button><p class="fineprint" id="application-status" role="status" aria-live="polite"></p></div>');
+ const submit=content.querySelector("#submit-founding"),status=content.querySelector("#application-status");
+ submit.addEventListener("click",async()=>{
+  submit.disabled=true;submit.textContent="Submitting…";status.textContent="Saving your application securely…";
+  try{const response=await fetch("/api/founding-application",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...answers,website:content.querySelector("#application-website").value})});const result=await response.json();if(!response.ok)throw new Error(result.error||"Submission failed. Please try again.");status.textContent=result.message;submit.textContent="Application received ✓";}
+  catch(error){status.textContent=error.message+" If this continues, email info@mounirinstitute.com.";submit.disabled=false;submit.textContent="Retry application →";}
+ });
 }
 function showVsl(){
  count.textContent="Explore your options";bar.style.width="100%";nav.hidden=true;
