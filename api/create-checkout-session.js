@@ -83,7 +83,7 @@ export default async function handler(req, res) {
     const requestedEmail=typeof body.email==="string"?body.email.trim().toLowerCase():"";
     if(!requestedEmail)return res.status(400).json({error:"Complete the Founding Class application first."});
     try {
-      const lookup=await fetch(process.env.SUPABASE_URL.replace(/\\/$/,"")+"/rest/v1/founding_applications?email=eq."+encodeURIComponent(requestedEmail)+"&select=id,status,presale_interest&limit=1",{headers:{apikey:process.env.SUPABASE_SERVICE_ROLE_KEY,Authorization:"Bearer "+process.env.SUPABASE_SERVICE_ROLE_KEY}});
+      const lookup=await fetch(process.env.SUPABASE_URL.replace(/\/$/,"")+"/rest/v1/founding_applications?email=eq."+encodeURIComponent(requestedEmail)+"&select=id,status,presale_interest&limit=1",{headers:{apikey:process.env.SUPABASE_SERVICE_ROLE_KEY,Authorization:"Bearer "+process.env.SUPABASE_SERVICE_ROLE_KEY}});
       if(!lookup.ok)return res.status(503).json({error:"Could not verify your application."});
       const rows=await lookup.json();if(!rows.length||!rows[0].presale_interest)return res.status(403).json({error:"Please complete the Founding Class presale application before paying."});
       if(["declined","withdrawn"].includes(rows[0].status))return res.status(403).json({error:"This application is not eligible for presale payment."});
