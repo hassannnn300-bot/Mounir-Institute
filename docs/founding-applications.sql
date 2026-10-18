@@ -5,7 +5,8 @@ create table if not exists public.founding_applications (
  name text not null, email text not null unique, phone text not null,
  region text not null, age text not null, goal text not null,
  format text not null, start text not null,
- presale_interest boolean not null default false,\n status text not null default 'requested' check (status in ('requested','reviewing','offered','confirmed','declined','withdrawn'))
+ presale_interest boolean not null default false,
+ status text not null default 'requested' check (status in ('requested','reviewing','offered','confirmed','declined','withdrawn'))
 );
 alter table public.founding_applications enable row level security;
 -- No anonymous access: server-side service role only.
