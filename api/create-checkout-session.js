@@ -66,7 +66,7 @@ export default async function handler(req, res) {
       mode: "subscription",
       description: "All eight Maqamaat lessons, two online lessons each week, private student community, daily quizzes and games."
     },
-    founding_presale: {name: "Founding Class — £50 Presale Reservation", amount: 5000, mode: "payment", description: "One-time £50 presale payment credited towards the first month if your Founding Class place is accepted. Not a recurring subscription; confirmation follows review."},
+    founding_presale: {name: "Founding Class Place Reservation", amount: 5000, mode: "payment", description: "One-time £50 place-reservation payment, credited towards the first month if accepted. Refundable at any time on request. Not a recurring subscription; confirmation follows review."},
     mentoring: {
       name: "1-to-1 Learning with Qari Hassan Mounir",
       amount: 15000,
@@ -114,7 +114,8 @@ export default async function handler(req, res) {
   if (email) params.set("customer_email", email);
   params.set("billing_address_collection", "auto");
   params.set("allow_promotion_codes", "true");
-  params.set("metadata[plan]", body.plan);\n  if(body.plan==="founding_presale")params.set("metadata[reservation_status]","pending_review");
+  params.set("metadata[plan]", body.plan);
+  if(body.plan==="founding_presale")params.set("metadata[reservation_status]","pending_review");
   params.set("metadata[site]", "mounir-institute");
 
   try {
