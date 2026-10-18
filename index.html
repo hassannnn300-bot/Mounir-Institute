@@ -1369,7 +1369,7 @@ function animateResultsUnlock(){
 }
 function showResults(){
  try{localStorage.setItem("mounir_questionnaire_answers",JSON.stringify(answers));}catch(e){}
- funnelStage="results";count.textContent="Your results";bar.style.width="100%";nav.hidden=false;back.hidden=true;next.textContent="Explore your next steps →";next.disabled=false;
+ funnelStage="results";count.textContent="Your results";bar.style.width="100%";nav.hidden=true;back.hidden=true;next.hidden=true;next.disabled=true;
  const goal=answers.goal||"Learn Maqamaat from the beginning";
  const format=answers.format||"I’m not sure yet";
  const goalAdvice={
@@ -1390,7 +1390,7 @@ function showResults(){
  count.textContent="Your results";
  next.hidden=true;
  content.innerHTML='<div class="success results-panel"><div class="eyebrow">Your learning path</div><h3>'+readiness+'</h3><div class="personal-guidance"><div class="eyebrow">Your main goal</div><h3>'+goal+'</h3><p class="hint">'+goalAdvice+'</p><p class="fineprint">'+ageNote+'</p></div><div class="personal-guidance"><div class="eyebrow">Recommended next step</div><h3>'+path.title+'</h3><div class="plan-price">'+path.price+'</div><p class="hint">'+path.detail+'</p><p class="fineprint">'+regionNote+'</p></div><p class="hint">For an actual recitation assessment, <a href="assessment.html">submit a recording for review →</a></p><p class="hint">Questions? Email <a href="mailto:info@mounirinstitute.com">info@mounirinstitute.com</a>.</p></div>';
- content.querySelector(".success").insertAdjacentHTML("beforeend",'<div class="results-next"><h3>Secure your Founding Class place</h3><p class="hint">Pay £50 upfront to request a presale reservation. Once accepted, this payment is credited towards your first month. Your £50/month subscription begins only when the programme launches and classes are running, with your separate authorisation. Payment alone does not confirm enrolment.</p><div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input id="application-website" tabindex="-1" autocomplete="off"></label></div><button class="cta" type="button" id="submit-founding">Secure my place for £50 →</button><p class="fineprint" id="application-status" role="status" aria-live="polite"></p></div>');
+ content.querySelector(".success").insertAdjacentHTML("beforeend",'<div class="results-next"><h3>Secure your Founding Class place</h3><p class="hint">Pay £50 upfront to request a presale reservation. Once accepted, this payment is credited towards your first month. Your £50/month subscription begins only when the programme launches and classes are running, with your separate authorisation. Payment alone does not confirm enrolment.</p><div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input id="application-website" tabindex="-1" autocomplete="off"></label></div><button class="cta" type="button" id="submit-founding">Secure My Place</button><p class="fineprint" id="application-status" role="status" aria-live="polite"></p></div>');
  const submit=content.querySelector("#submit-founding"),status=content.querySelector("#application-status");
  submit.addEventListener("click",async()=>{
   submit.disabled=true;submit.textContent="Preparing your reservation…";status.textContent="Saving your details before secure checkout…";
@@ -1398,9 +1398,8 @@ function showResults(){
    const response=await fetch("/api/founding-application",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...answers,presale_interest:true,website:content.querySelector("#application-website").value})});
    const result=await response.json();if(!response.ok)throw new Error(result.error||"We could not save your details.");
    try{sessionStorage.setItem("mounir_checkout_email",answers.email);localStorage.setItem("mounir_checkout_email",answers.email);}catch(e){}
-   status.textContent="Your details were saved. Continue to Stripe to complete the one-time £50 presale payment.";submit.textContent="Continue to secure £50 checkout →";submit.disabled=false;
-   submit.onclick=()=>{location.href="checkout.html?plan=founding_presale";};
-   submit.replaceWith(submit.cloneNode(true));const go=content.querySelector("#submit-founding");go.addEventListener("click",()=>{location.href="checkout.html?plan=founding_presale";});
+   status.textContent="Your details were saved. Opening secure checkout…";
+   window.location.href="checkout.html?plan=founding_presale";
   }catch(error){status.textContent=error.message;submit.disabled=false;submit.textContent="Try again →";}
  });
 }
