@@ -10,7 +10,7 @@ export default async function handler(req,res){
  for(const key of fields){if(typeof data[key]!=='string'||!data[key].trim()||data[key].length>500)return res.status(400).json({error:'Please complete all required fields.'});}
  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email))return res.status(400).json({error:'Please enter a valid email address.'});
  const record=Object.fromEntries(fields.map(k=>[k,data[k].trim()]));
- record.email=record.email.toLowerCase();record.status='requested';
+ record.email=record.email.toLowerCase();record.status='requested';record.presale_interest=data.presale_interest===true;
  try{
   const url=process.env.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/founding_applications?on_conflict=email';
   const response=await fetch(url,{method:'POST',headers:{'apikey':process.env.SUPABASE_SERVICE_ROLE_KEY,'Authorization':'Bearer '+process.env.SUPABASE_SERVICE_ROLE_KEY,'Content-Type':'application/json','Prefer':'resolution=ignore-duplicates,return=representation'},body:JSON.stringify(record)});
