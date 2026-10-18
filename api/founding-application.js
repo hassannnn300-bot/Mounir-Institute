@@ -13,8 +13,8 @@ export default async function handler(req,res){
  record.email=record.email.toLowerCase();record.status='requested';record.presale_interest=data.presale_interest===true;
  try{
   const url=process.env.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/founding_applications?on_conflict=email';
-  const response=await fetch(url,{method:'POST',headers:{'apikey':process.env.SUPABASE_SERVICE_ROLE_KEY,'Authorization':'Bearer '+process.env.SUPABASE_SERVICE_ROLE_KEY,'Content-Type':'application/json','Prefer':'resolution=ignore-duplicates,return=representation'},body:JSON.stringify(record)});
-  if(!response.ok){console.error('Application persistence failed',response.status);return res.status(502).json({error:'We could not save your request. Please try again.'});}
+  const response=await fetch(url,{method:'POST',headers:{'apikey':process.env.SUPABASE_SERVICE_ROLE_KEY,'Authorization':'Bearer '+process.env.SUPABASE_SERVICE_ROLE_KEY,'Content-Type':'application/json','Prefer':'resolution=merge-duplicates,return=representation'},body:JSON.stringify(record)});
+  if(!response.ok){const detail=await response.text();console.error('Application persistence failed',response.status,detail.slice(0,1200));return res.status(502).json({error:'We could not save your request. Please try again, or email info@mounirinstitute.com if this continues.'});}
   const rows=await response.json();
   if(!rows.length)return res.status(409).json({error:'This email already has a request. Contact info@mounirinstitute.com if you need to update it.'});
   return res.status(201).json({ok:true,message:'Your request has been received. This is not a confirmed place; we will contact you with enrolment details.'});
