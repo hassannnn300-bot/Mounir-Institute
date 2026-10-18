@@ -2130,6 +2130,21 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 <script id="dropdown-hover-stability-v4">
 (()=>{const menus=[...document.querySelectorAll('.site-topbar .topbar-dropdown')];let hovered=null;const closeOthers=except=>menus.forEach(m=>{if(m!==except)m.open=false});menus.forEach(m=>{m.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovered=m;closeOthers(m);m.open=true}});m.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){if(hovered===m)hovered=null;m.open=false}});m.addEventListener('toggle',()=>{if(m.open)closeOthers(m)});m.querySelectorAll('.topbar-menu a').forEach(a=>a.addEventListener('click',()=>{m.open=false}));});document.addEventListener('pointerdown',e=>{if(!e.target.closest('.site-topbar .topbar-dropdown'))menus.forEach(m=>m.open=false)});document.addEventListener('keydown',e=>{if(e.key==='Escape')menus.forEach(m=>m.open=false)})})();
 </script>
+<style id="testimonial-type-spacing-refinement">
+#testimonials .testimonials-head{margin-bottom:clamp(22px,3vw,34px)!important}
+#testimonials .testimonials-head h2{font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(30px,4vw,44px)!important;font-weight:400!important;letter-spacing:-.025em!important;line-height:1.16!important;margin:8px 0 0!important}
+#testimonials .testimonials-head .eyebrow{font-size:10px!important;letter-spacing:.17em!important;line-height:1.5!important;text-transform:uppercase!important}
+#testimonials .testimonial-card-caption{padding:15px 17px 18px!important;display:flex!important;flex-direction:column!important;gap:5px!important}
+#testimonials .testimonial-card-caption .eyebrow{font-family:Inter,Arial,sans-serif!important;font-size:9px!important;letter-spacing:.16em!important;line-height:1.5!important;text-transform:uppercase!important;color:#c7ad79!important;margin:0!important}
+#testimonials .testimonial-card-caption h3{font-family:Georgia,"Times New Roman",serif!important;font-size:clamp(18px,1.7vw,21px)!important;font-weight:400!important;letter-spacing:-.01em!important;line-height:1.35!important;margin:0!important;color:#f0e7d5!important}
+#testimonials .testimonial-card-caption h3 span{font-family:Inter,Arial,sans-serif!important;font-size:11px!important;font-weight:400!important;letter-spacing:.025em!important;line-height:1.5!important;color:#d7b56d!important}
+#testimonials .thumbnail-result{font-family:Georgia,"Times New Roman",serif!important;font-weight:400!important;letter-spacing:.055em!important;line-height:1.15!important}
+#testimonials .thumbnail-result strong{font-weight:600!important;letter-spacing:.035em!important}
+#testimonials .thumbnail-subtitle{font-family:Inter,Arial,sans-serif!important;font-size:9px!important;font-weight:400!important;letter-spacing:.17em!important;line-height:1.5!important}
+#testimonials .thumbnail-name{font-family:Georgia,"Times New Roman",serif!important;font-weight:400!important;letter-spacing:.015em!important;line-height:1.15!important}
+#testimonials .thumbnail-bottomline{font-family:Inter,Arial,sans-serif!important;font-size:8px!important;font-weight:400!important;letter-spacing:.14em!important;line-height:1.5!important}
+@media(max-width:600px){#testimonials .testimonial-card-caption{padding:12px 13px 15px!important;gap:4px!important}#testimonials .testimonial-card-caption h3{font-size:18px!important}#testimonials .testimonial-card-caption h3 span{font-size:10px!important}#testimonials .thumbnail-subtitle{font-size:8px!important;letter-spacing:.12em!important}#testimonials .thumbnail-bottomline{font-size:7px!important;letter-spacing:.1em!important}}
+</style>
 </body>
 
 
