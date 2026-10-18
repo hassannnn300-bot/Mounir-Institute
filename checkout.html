@@ -263,22 +263,22 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
 <body>
 <header class="site-topbar" id="top"><div class="topbar-inner"><a class="topbar-logo" href="index.html#top" aria-label="Mounir Institute home"><img src="/assets/FC8AA526-0245-40EA-8E99-F30B74C9E950.png" alt="Mounir Institute"><span class="topbar-brand-name"><span>Mounir</span><span>Institute</span></span></a><nav class="topbar-links" aria-label="Main navigation"><a href="index.html#top">Home</a><details class="topbar-dropdown"><summary>Discover <span aria-hidden="true">⌄</span></summary><div class="topbar-menu"><a href="index.html#approach">Our approach</a><a href="index.html#teachers">Learning journey</a><a href="index.html#testimonials">Student stories</a></div></details><details class="topbar-dropdown"><summary>Courses <span aria-hidden="true">⌄</span></summary><div class="topbar-menu"><a href="index.html#programmes">Explore our programmes</a><a href="index.html#journey">Find your learning path</a><a href="assessment.html">Apply for 1-to-1 mentoring</a></div></details><a href="index.html#faq">FAQs</a></nav><a class="topbar-cta" href="index.html#journey">Get started <span aria-hidden="true">→</span></a></div></header>
 <main>
-  <div class="eyebrow">Your journey starts here · Secure checkout</div>
-  <h1>Invest in your <em style="color:var(--light)">recitation.</em></h1>
-  <p class="intro">Enrol securely with Stripe.</p>
+  <div class="eyebrow" id="checkout-eyebrow">Your journey starts here · Secure checkout</div>
+  <h1 id="checkout-title">Invest in your <em style="color:var(--light)">recitation.</em></h1>
+  <p class="intro" id="checkout-intro">Enrol securely with Stripe.</p>
   <div class="layout">
     <section class="panel">
       <div class="number">01 / Your details & payment</div>
-      <h2 style="margin-top:7px">Complete your enrolment</h2>
-      <p class="note">Your contact details are carried over from the questionnaire, so you can continue without entering your email again.</p>
+      <h2 style="margin-top:7px" id="details-heading">Complete your enrolment</h2>
+      <p class="note" id="details-copy">Your contact details are carried over from the questionnaire, so you can continue without entering your email again.</p>
       <div class="divider"></div>
-      <h2 style="margin-top:7px">Secure payment details</h2>
-      <p class="note">Pay securely below.</p>
+      <h2 style="margin-top:7px" id="payment-heading">Secure payment details</h2>
+      <p class="note" id="payment-copy">Pay securely below.</p>
       <div id="status" class="status" role="status" aria-live="polite"></div>
       <div id="embedded-checkout"></div>
       <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
       <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
-      <p class="fine">Payments are securely processed by Stripe.</p>
+      <p class="fine">Payments are securely processed by Stripe. Reservation payments are refundable at any time on request.</p>
     </section>
     <aside class="panel summary">
       <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
@@ -297,7 +297,8 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   const plans = {
     recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your pace.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
     monthly: {name:"Monthly Learning",desc:"Live lessons and community.",price:"£50",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£50 today, then £50 monthly until cancelled."},
-    founding_presale: {name:"Founding Class — Presale Reservation",desc:"£50 paid upfront and credited towards your first month if your place is accepted. Application review and confirmation still apply.",price:"£50",period:"one-time presale",features:["£50 credit towards your first month on acceptance","No recurring charge starts today","Place subject to application review and confirmation","Presale payment does not itself confirm enrolment"],renewal:"One-time £50 presale payment. No subscription starts today. If accepted, this amount is credited to the first month."},\n    mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£150",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£150 today, then £150 monthly until cancelled."}
+    founding_presale: {name:"Founding Class Place Reservation",desc:"Reserve your place with a one-time £50 payment. If accepted, it is credited towards your first month. Your monthly membership only begins when the programme launches and classes are running, with your separate authorisation.",price:"£50",period:"one-time reservation",features:["£50 credited towards your first month if accepted","No recurring payment starts today","Place remains subject to application review and confirmation","Request a full refund at any time"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund at any time by emailing info@mounirinstitute.com."},
+    mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£150",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£150 today, then £150 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
   const planKey = Object.prototype.hasOwnProperty.call(plans,key) ? key : "recorded";
@@ -307,6 +308,16 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   let checkoutMounted = false;
   let savedEmail = "";
   try { savedEmail = (sessionStorage.getItem("mounir_checkout_email") || localStorage.getItem("mounir_checkout_email") || "").trim(); } catch(e) {}
+  if(planKey === "founding_presale") {
+    document.getElementById("checkout-eyebrow").textContent = "Founding Class · Reserve your place";
+    document.getElementById("checkout-title").innerHTML = 'Reserve your <em style="color:var(--light)">place.</em>';
+    document.getElementById("checkout-intro").textContent = "Secure your place request with Stripe. Your £50 payment is refundable at any time on request.";
+    document.getElementById("details-heading").textContent = "Reserve your place";
+    document.getElementById("details-copy").textContent = "Your details have been carried over from the questionnaire. Payment requests a reservation and does not itself confirm enrolment.";
+    document.getElementById("payment-heading").textContent = "Secure reservation payment";
+    document.getElementById("payment-copy").textContent = "Pay £50 once today. No monthly subscription starts now.";
+    button.textContent = "Load secure reservation payment →";
+  }
   document.getElementById("plan-name").textContent = plan.name;
   document.getElementById("plan-desc").textContent = plan.desc;
   document.getElementById("price").innerHTML = plan.price + ' <small>' + plan.period + '</small>';
@@ -315,7 +326,8 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   document.getElementById("features").replaceChildren(...plan.features.map(text => {const li=document.createElement("li");li.textContent=text;return li;}));
   if(planKey !== "recorded") document.getElementById("total-label").textContent = "Due today";
   function showStatus(message){status.textContent=message;status.classList.add("show");}
-  if(planKey==="recorded"){const emailField=document.createElement("input");emailField.type="email";emailField.id="direct-checkout-email";emailField.placeholder="Your email address";emailField.autocomplete="email";emailField.required=true;emailField.value=savedEmail;emailField.setAttribute("aria-label","Email address for your purchase");emailField.style.cssText="display:block;width:100%;padding:13px;margin:14px 0;background:#171510;border:1px solid #806b45;border-radius:6px;color:#f6e8cb;font:inherit";button.before(emailField);}\n  button.addEventListener("click", async () => {
+  if(planKey==="recorded"){const emailField=document.createElement("input");emailField.type="email";emailField.id="direct-checkout-email";emailField.placeholder="Your email address";emailField.autocomplete="email";emailField.required=true;emailField.value=savedEmail;emailField.setAttribute("aria-label","Email address for your purchase");emailField.style.cssText="display:block;width:100%;padding:13px;margin:14px 0;background:#171510;border:1px solid #806b45;border-radius:6px;color:#f6e8cb;font:inherit";button.before(emailField);}
+  button.addEventListener("click", async () => {
     if(checkoutMounted) return;
     const email = planKey==="recorded" ? document.getElementById("direct-checkout-email").value.trim() : savedEmail;
     if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
@@ -329,7 +341,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       return;
     }
     button.disabled = true;
-    button.textContent = "Preparing secure checkout…";
+    button.textContent = planKey === "founding_presale" ? "Preparing secure reservation…" : "Preparing secure checkout…";
     status.classList.remove("show");
     let checkoutStage = "Contacting checkout service";
     try {
@@ -364,7 +376,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       checkout.mount("#embedded-checkout");
       checkoutMounted = true;
       button.hidden = true;
-      showStatus("Secure payment form ready. Complete your payment below.");
+      showStatus(planKey === "founding_presale" ? "Secure reservation payment ready. You can request a refund at any time by emailing info@mounirinstitute.com." : "Secure payment form ready. Complete your payment below.");
     } catch (error) {
       showStatus(checkoutStage + ": " + (error.message || "Could not load secure checkout. Please try again."));
       button.disabled = false;
