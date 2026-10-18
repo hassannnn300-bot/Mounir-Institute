@@ -66,6 +66,7 @@ export default async function handler(req, res) {
       mode: "subscription",
       description: "All eight Maqamaat lessons, two online lessons each week, private student community, daily quizzes and games."
     },
+    founding_presale: {name: "Founding Class — £50 Presale Reservation", amount: 5000, mode: "payment", description: "One-time £50 presale payment credited towards the first month if your Founding Class place is accepted. Not a recurring subscription; confirmation follows review."},
     mentoring: {
       name: "1-to-1 Learning with Qari Hassan Mounir",
       amount: 15000,
@@ -76,6 +77,18 @@ export default async function handler(req, res) {
 
   const plan = plans[body && body.plan];
   if (!plan) return res.status(400).json({ error: "Please select a valid learning plan." });
+
+  if (body && body.plan === "founding_presale") {
+    if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return res.status(503).json({error:"Presale reservations are not yet available. Please apply for a place first."});
+    const requestedEmail=typeof body.email==="string"?body.email.trim().toLowerCase():"";
+    if(!requestedEmail)return res.status(400).json({error:"Complete the Founding Class application first."});
+    try {
+      const lookup=await fetch(process.env.SUPABASE_URL.replace(/\\/$/,"")+"/rest/v1/founding_applications?email=eq."+encodeURIComponent(requestedEmail)+"&select=id,status,presale_interest&limit=1",{headers:{apikey:process.env.SUPABASE_SERVICE_ROLE_KEY,Authorization:"Bearer "+process.env.SUPABASE_SERVICE_ROLE_KEY}});
+      if(!lookup.ok)return res.status(503).json({error:"Could not verify your application."});
+      const rows=await lookup.json();if(!rows.length||!rows[0].presale_interest)return res.status(403).json({error:"Please complete the Founding Class presale application before paying."});
+      if(["declined","withdrawn"].includes(rows[0].status))return res.status(403).json({error:"This application is not eligible for presale payment."});
+    }catch(e){return res.status(503).json({error:"Application verification is unavailable. No payment was started."});}
+  }
 
   const email = typeof body.email === "string" ? body.email.trim().slice(0, 254) : "";
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
@@ -101,7 +114,7 @@ export default async function handler(req, res) {
   if (email) params.set("customer_email", email);
   params.set("billing_address_collection", "auto");
   params.set("allow_promotion_codes", "true");
-  params.set("metadata[plan]", body.plan);
+  params.set("metadata[plan]", body.plan);\n  if(body.plan==="founding_presale")params.set("metadata[reservation_status]","pending_review");
   params.set("metadata[site]", "mounir-institute");
 
   try {
