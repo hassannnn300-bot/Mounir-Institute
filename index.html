@@ -2094,9 +2094,7 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 @media(max-width:390px){.site-topbar .topbar-logo img{width:42px!important;height:42px!important;min-width:42px!important;max-width:42px!important;max-height:42px!important;flex-basis:42px!important}.site-topbar .topbar-brand-name span:first-child{font-size:14px!important}.site-topbar .topbar-brand-name span:last-child{font-size:8px!important}}
 @media(prefers-reduced-motion:reduce){.site-topbar .topbar-menu,.site-topbar .topbar-menu a,.site-topbar .topbar-dropdown>summary span{transition:none!important}}
 </style>
-<script id="unified-dropdown-behaviour">
-(()=>{const menus=[...document.querySelectorAll('.site-topbar .topbar-dropdown')];const closeAll=except=>menus.forEach(m=>{if(m!==except)m.open=false});menus.forEach(m=>{m.addEventListener('toggle',()=>{if(m.open)closeAll(m)});m.querySelectorAll('.topbar-menu a').forEach(a=>a.addEventListener('click',()=>{m.open=false}));});document.addEventListener('pointerdown',e=>{if(!e.target.closest('.site-topbar .topbar-dropdown'))closeAll()});document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeAll();if(document.activeElement?.closest('.topbar-dropdown'))document.activeElement.closest('.topbar-dropdown').querySelector('summary')?.focus()}})})();
-</script>
+
 <style id="unified-brand-polish-v3">
 /* Final shared logo geometry and understated two-tone gold wordmark. */
 .site-topbar .topbar-logo{display:flex!important;align-items:center!important;gap:5px!important;flex:0 0 auto!important}
@@ -2121,6 +2119,17 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 @media(prefers-reduced-motion:reduce){.site-topbar .topbar-brand-name span:first-child{animation:none!important}}
 </style>
 <style id="four-principles-centered-copy">#method .method-card p{text-align:center!important;margin-left:auto!important;margin-right:auto!important;text-wrap:balance!important}</style>
+<style id="dropdown-interaction-polish-v4">
+.site-topbar .topbar-dropdown>summary span{font-size:0!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;width:13px!important;height:13px!important;margin-left:5px!important;transform:none!important;transition:none!important}
+.site-topbar .topbar-dropdown>summary span::after{content:""!important;display:block!important;width:5px!important;height:5px!important;border-right:1.5px solid currentColor!important;border-bottom:1.5px solid currentColor!important;transform:translateY(-2px) rotate(45deg)!important;transition:transform .2s ease,color .2s ease!important}
+.site-topbar .topbar-dropdown[open]>summary span{transform:none!important}
+.site-topbar .topbar-dropdown[open]>summary span::after{transform:translateY(1px) rotate(225deg)!important}
+.site-topbar .topbar-dropdown>.topbar-menu{top:100%!important;margin-top:0!important}
+.site-topbar .topbar-dropdown>.topbar-menu::before{content:""!important;position:absolute!important;left:0!important;right:0!important;top:-8px!important;height:8px!important}
+</style>
+<script id="dropdown-hover-stability-v4">
+(()=>{const menus=[...document.querySelectorAll('.site-topbar .topbar-dropdown')];let hovered=null;const closeOthers=except=>menus.forEach(m=>{if(m!==except)m.open=false});menus.forEach(m=>{m.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){hovered=m;closeOthers(m);m.open=true}});m.addEventListener('pointerleave',e=>{if(e.pointerType==='mouse'||e.pointerType==='pen'){if(hovered===m)hovered=null;m.open=false}});m.addEventListener('toggle',()=>{if(m.open)closeOthers(m)});m.querySelectorAll('.topbar-menu a').forEach(a=>a.addEventListener('click',()=>{m.open=false}));});document.addEventListener('pointerdown',e=>{if(!e.target.closest('.site-topbar .topbar-dropdown'))menus.forEach(m=>m.open=false)});document.addEventListener('keydown',e=>{if(e.key==='Escape')menus.forEach(m=>m.open=false)})})();
+</script>
 </body>
 
 
