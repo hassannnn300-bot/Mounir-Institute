@@ -315,13 +315,13 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   document.getElementById("features").replaceChildren(...plan.features.map(text => {const li=document.createElement("li");li.textContent=text;return li;}));
   if(planKey !== "recorded") document.getElementById("total-label").textContent = "Due today";
   function showStatus(message){status.textContent=message;status.classList.add("show");}
-  button.addEventListener("click", async () => {
+  if(planKey==="recorded"){const emailField=document.createElement("input");emailField.type="email";emailField.id="direct-checkout-email";emailField.placeholder="Your email address";emailField.autocomplete="email";emailField.required=true;emailField.value=savedEmail;emailField.setAttribute("aria-label","Email address for your purchase");emailField.style.cssText="display:block;width:100%;padding:13px;margin:14px 0;background:#171510;border:1px solid #806b45;border-radius:6px;color:#f6e8cb;font:inherit";button.before(emailField);}\n  button.addEventListener("click", async () => {
     if(checkoutMounted) return;
-    const email = savedEmail;
+    const email = planKey==="recorded" ? document.getElementById("direct-checkout-email").value.trim() : savedEmail;
     if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
-      showStatus("Your questionnaire details weren’t carried over. Please return to the questionnaire and continue from your results.");
+      showStatus(planKey==="recorded"?"Please enter a valid email address to receive your purchase details.":"Your application details weren’t carried over. Please return to the questionnaire and continue from your results.");
       const link = document.createElement("a");
-      link.href = "./";
+      link.href = "index.html#journey";
       link.className = "small-link";
       link.textContent = "Return to questionnaire →";
       status.appendChild(document.createElement("br"));
