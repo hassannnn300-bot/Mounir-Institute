@@ -79,14 +79,14 @@ export default async function handler(req, res) {
     },
     monthly: {
       name: "Monthly Learning",
-      amount: 5000,
+      amount: 15900,
       mode: "subscription",
       description: "All eight Maqamaat lessons, two online lessons each week, private student community, daily quizzes and games."
     },
     founding_presale: {name: "Founding Class Place Reservation", amount: 5000, mode: "payment", description: "One-time £50 place-reservation payment, credited towards the first month if accepted. Refundable at any time on request. Not a recurring subscription; confirmation follows review."},
     mentoring: {
       name: "1-to-1 Learning with Qari Hassan Mounir",
-      amount: 15000,
+      amount: 29900,
       mode: "subscription",
       description: "Monthly learning, all eight Maqamaat lessons, two online lessons each week, community and individual mentoring."
     }
