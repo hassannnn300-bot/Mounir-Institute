@@ -78,6 +78,10 @@ export default async function handler(req, res) {
   const plan = plans[body && body.plan];
   if (!plan) return res.status(400).json({ error: "Please select a valid learning plan." });
 
+  let reservationId=null;
+  const db=(process.env.SUPABASE_URL||"").replace(/\/$/,"")+"/rest/v1";
+  const auth={apikey:process.env.SUPABASE_SERVICE_ROLE_KEY,Authorization:"Bearer "+process.env.SUPABASE_SERVICE_ROLE_KEY,"Content-Type":"application/json"};
+  async function release(){if(reservationId)await fetch(db+"/founding_reservations?id=eq."+reservationId+"&state=eq.held",{method:"PATCH",headers:auth,body:JSON.stringify({state:"released"})});}
   if (body && body.plan === "founding_presale") {
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return res.status(503).json({error:"Presale reservations are not yet available. Please apply for a place first."});
     const requestedEmail=typeof body.email==="string"?body.email.trim().toLowerCase():"";
@@ -87,6 +91,13 @@ export default async function handler(req, res) {
       if(!lookup.ok)return res.status(503).json({error:"Could not verify your application."});
       const rows=await lookup.json();if(!rows.length||!rows[0].presale_interest)return res.status(403).json({error:"Please complete the Founding Class presale application before paying."});
       if(["declined","withdrawn"].includes(rows[0].status))return res.status(403).json({error:"This application is not eligible for presale payment."});
+      const hold=await fetch(db+"/rpc/hold_founding_place",{method:"POST",headers:auth,body:JSON.stringify({p_application_id:rows[0].id})});
+      if(!hold.ok)return res.status(503).json({error:"Reservations are not configured. No payment was started."});
+      const seat=(await hold.json())[0];
+      if(!seat||seat.result==="full")return res.status(409).json({error:"All 30 places are taken. Enrolment is closed."});
+      if(seat.result==="existing")return res.status(409).json({error:"You already have a reservation in progress. Please contact info@mounirinstitute.com."});
+      if(seat.result!=="held")return res.status(403).json({error:"This application is not eligible."});
+      reservationId=seat.reservation_id;
     }catch(e){return res.status(503).json({error:"Application verification is unavailable. No payment was started."});}
   }
 
@@ -115,7 +126,7 @@ export default async function handler(req, res) {
   params.set("billing_address_collection", "auto");
   params.set("allow_promotion_codes", "true");
   params.set("metadata[plan]", body.plan);
-  if(body.plan==="founding_presale")params.set("metadata[reservation_status]","pending_review");
+  if(reservationId){params.set("metadata[reservation_id]",reservationId);params.set("expires_at",String(Math.floor(Date.now()/1000)+1800));}
   params.set("metadata[site]", "mounir-institute");
 
   try {
@@ -129,8 +140,13 @@ export default async function handler(req, res) {
     });
     const session = await stripeResponse.json();
     if (!stripeResponse.ok) {
+      await release();
       console.error("Stripe session creation failed:", session.error && session.error.message);
       return res.status(502).json({ error: "Stripe could not start checkout. Please try again in a moment." });
+    }
+    if(reservationId){
+      const link=await fetch(db+"/founding_reservations?id=eq."+reservationId+"&state=eq.held",{method:"PATCH",headers:auth,body:JSON.stringify({stripe_session_id:session.id})});
+      if(!link.ok){await release();await fetch("https://api.stripe.com/v1/checkout/sessions/"+session.id+"/expire",{method:"POST",headers:{Authorization:"Bearer "+secretKey.trim()}});return res.status(503).json({error:"Could not secure reservation. No payment was started."});}
     }
     return res.status(200).json({
       clientSecret: session.client_secret,
@@ -138,6 +154,7 @@ export default async function handler(req, res) {
       plan: body.plan
     });
   } catch (error) {
+    try{await release();}catch(e){console.error("Could not release reservation hold");}
     console.error("Stripe request failed:", error && error.message);
     return res.status(502).json({ error: "Unable to connect to secure checkout. Please try again." });
   }
