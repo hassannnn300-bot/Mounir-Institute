@@ -7,17 +7,34 @@ export default async function handler(req, res) {
   }
 
   const origin = req.headers.origin;
-  const allowedOrigin = process.env.SITE_URL || "https://mounir-institute-hassannnn300-7147.vercel.app";
+  const canonicalOrigin = "https://mounir-institute-hassannnn300-7147.vercel.app";
+  const configuredSiteUrl = (process.env.SITE_URL || canonicalOrigin).trim();
   let baseUrl;
   try {
-    baseUrl = new URL(allowedOrigin).origin;
-    if (origin && new URL(origin).origin !== baseUrl) {
-      return res.status(403).json({ error: "Request origin not allowed." });
+    baseUrl = new URL(configuredSiteUrl).origin;
+    // Allow the live production URL and the institute's known domain aliases.
+    // SITE_URL controls Stripe's return URL, but an outdated value must not block
+    // requests made from the current production site.
+    const allowedOrigins = new Set([
+      canonicalOrigin,
+      "https://mounir-institute.vercel.app",
+      "https://mounirinstitute.com",
+      "https://www.mounirinstitute.com",
+      baseUrl
+    ]);
+    if (origin) {
+      let requestOrigin;
+      try { requestOrigin = new URL(origin).origin; } catch { requestOrigin = ""; }
+      if (!allowedOrigins.has(requestOrigin)) {
+        return res.status(403).json({ error: "Request origin not allowed." });
+      }
     }
+    // Always send customers back to the canonical live site, avoiding stale SITE_URL aliases.
+    baseUrl = canonicalOrigin;
   } catch (error) {
     console.error("Invalid SITE_URL configuration:", error && error.message);
     return res.status(503).json({
-      error: "Checkout configuration issue: Vercel's SITE_URL must be a full valid URL, for example https://mounir-institute.vercel.app (without quotes or extra spaces)."
+      error: "Checkout configuration issue: Vercel's SITE_URL must be a full valid URL, for example https://mounir-institute-hassannnn300-7147.vercel.app (without quotes or extra spaces)."
     });
   }
 
