@@ -1300,7 +1300,7 @@ function render(){
  const s=steps[index];count.textContent="Question "+(index+1)+" of "+steps.length;bar.style.width=((index+1)/(steps.length+1)*100)+"%";nav.hidden=false;
  content.classList.remove("step-enter");content.innerHTML='<h3 class="question">'+s.title+'</h3><p class="hint">'+s.hint+'</p><div class="options" role="group" aria-label="'+s.title+'">'+s.options.map((o,i)=>'<button type="button" class="option" style="--option-index:'+i+'" aria-pressed="'+(answers[s.key]===o[0]?'true':'false')+'" data-value="'+i+'"><span class="symbol">'+o[1]+'</span><span class="label">'+o[0]+'</span></button>').join('')+'</div>';void content.offsetWidth;content.classList.add("step-enter");
  content.querySelectorAll(".option").forEach((b,i)=>b.addEventListener("click",()=>{answers[s.key]=s.options[i][0];content.querySelectorAll(".option").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");next.disabled=false;}));
- next.textContent=index===steps.length-1?"Get my results →":"Continue →";next.disabled=!answers[s.key];back.disabled=index===0;
+ next.textContent=index===steps.length-1?"Continue to your details →":"Continue →";next.disabled=!answers[s.key];back.disabled=index===0;
 }
 function details(){
   count.textContent="Your details";bar.style.width="100%";nav.hidden=false;next.disabled=true;next.textContent="Next Step →";
@@ -1327,6 +1327,8 @@ function emailDraftLink(){
  return "mailto:info@mounirinstitute.com?subject="+subject+"&body="+body;
 }
 let funnelStage="";
+let verifiedDetails=false;
+function hasVerifiedDetails(){return verifiedDetails&&!!answers.name&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email||"")&&/^\+[1-9]\d{7,14}$/.test(answers.phone||"");}
 function done(){
  answers.name=content.querySelector("#full-name").value.trim();answers.email=content.querySelector("#email").value.trim();answers.phone=content.querySelector("#phone").value.replace(/[\s().-]/g,"");
  count.textContent="Watch the video";bar.style.width="100%";nav.hidden=true;
@@ -1369,6 +1371,7 @@ function animateResultsUnlock(){
  funnelStage="";back.hidden=false;showResults();
 }
 function showResults(){
+ if(!hasVerifiedDetails()){infoStep=true;details();return;}
  try{localStorage.setItem("mounir_questionnaire_answers",JSON.stringify(answers));}catch(e){}
  funnelStage="results";count.textContent="Your results";bar.style.width="100%";nav.hidden=false;back.hidden=false;next.hidden=true;next.disabled=true;
  const goal=answers.goal||"Learn Maqamaat from the beginning";
@@ -1405,6 +1408,7 @@ function showResults(){
  });
 }
 function showVsl(){
+ if(!hasVerifiedDetails()){infoStep=true;details();return;}
  count.textContent="Explore your options";bar.style.width="100%";nav.hidden=true;
  const mailBase="mailto:info@mounirinstitute.com?subject=";
  const mailFor=(plan)=>mailBase+encodeURIComponent("Mounir Institute — "+plan+" enquiry")+"&body="+encodeURIComponent("Assalamu alaikum Mounir Institute,\n\nI'd like to enquire about: "+plan+".\n\nName: "+(answers.name||"") +"\nEmail: "+(answers.email||"")+"\nWhatsApp: "+(answers.phone||"")+"\nMain goal: "+(answers.goal||"")+"\nPreferred format: "+(answers.format||"")+"\nReady to start: "+(answers.start||"")+"\n");
@@ -1418,7 +1422,7 @@ function showVsl(){
 document.getElementById("begin").addEventListener("click",()=>{index=0;steps.forEach(step=>answers[step.key]="");render()});
 back.addEventListener("click",()=>{if(infoStep){infoStep=false;index=steps.length-1;render()}else if(index>0){index--;render()}else{index=-1;nav.hidden=true;count.textContent="Welcome";bar.style.width="0";content.innerHTML='<h3 class="question">Your recitation journey starts here.</h3><p class="hint">Answer five quick questions to find your next step.</p><button class="cta" id="begin">Begin My Journey →</button>';document.getElementById("begin").addEventListener("click",()=>{index=0;render()})}});
 let infoStep=false;
-next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){animateResultsUnlock();return;}if(funnelStage==="results"){funnelStage="";showVsl();return;}if(index<steps.length-1){index++;render()}else if(!infoStep){infoStep=true;details()}else{const name=content.querySelector("#full-name"),email=content.querySelector("#email"),confirmEmail=content.querySelector("#confirm-email"),country=content.querySelector("#country-code"),phone=content.querySelector("#phone");if(!name||!email||!confirmEmail||!country||!phone||!name.value.trim()||!email.validity.valid||!email.value.trim()||!confirmEmail.validity.valid||email.value.trim().toLowerCase()!==confirmEmail.value.trim().toLowerCase())return;const digits=phone.value.replace(/\D/g,"");const full=(country.value||"")+digits;if(!/^\+[1-9]\d{7,14}$/.test(full)||digits.length<5)return;answers.name=name.value.trim();answers.email=email.value.trim();answers.phone=full;showResults()}});
+next.addEventListener("click",()=>{if(funnelStage==="short-vsl"){animateResultsUnlock();return;}if(funnelStage==="results"){funnelStage="";showVsl();return;}if(index<steps.length-1){index++;render()}else if(!infoStep){infoStep=true;details()}else{const name=content.querySelector("#full-name"),email=content.querySelector("#email"),confirmEmail=content.querySelector("#confirm-email"),country=content.querySelector("#country-code"),phone=content.querySelector("#phone");if(!name||!email||!confirmEmail||!country||!phone||!name.value.trim()||!email.validity.valid||!email.value.trim()||!confirmEmail.validity.valid||email.value.trim().toLowerCase()!==confirmEmail.value.trim().toLowerCase())return;const digits=phone.value.replace(/\D/g,"");const full=(country.value||"")+digits;if(!/^\+[1-9]\d{7,14}$/.test(full)||digits.length<5)return;answers.name=name.value.trim();answers.email=email.value.trim();answers.phone=full;verifiedDetails=true;showResults()}});
 
 })();
 </script>
