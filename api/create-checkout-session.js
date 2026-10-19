@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   }
 
   const origin = req.headers.origin;
-  const allowedOrigin = process.env.SITE_URL || "https://mounir-institute.vercel.app";
+  const allowedOrigin = process.env.SITE_URL || "https://mounir-institute-hassannnn300-7147.vercel.app";
   let baseUrl;
   try {
     baseUrl = new URL(allowedOrigin).origin;
