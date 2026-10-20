@@ -1462,6 +1462,8 @@ function showResults(){
  });
 }
 function showVsl(){
+ // Keep the learning-options sales page in the source, but skip it in the live journey.
+ details();return;
  if(!hasVerifiedDetails()){infoStep=true;details();return;}
  count.textContent="Explore your options";bar.style.width="100%";nav.hidden=true;
  const mailBase="mailto:info@mounirinstitute.com?subject=";
