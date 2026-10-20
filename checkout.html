@@ -268,7 +268,17 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   <h1 id="checkout-title">Invest in your <em style="color:var(--light)">recitation.</em></h1>
   <p class="intro" id="checkout-intro">Enrol securely with Stripe.</p>
   <div class="layout checkout-layout">
-    <section class="panel">
+    <aside class="panel summary">
+      <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
+      <h2 class="plan-title" id="plan-name">Recorded Maqamaat Lessons</h2>
+      <p class="note" id="plan-desc">Learn at your pace.</p>
+      <div class="price" id="price">£250 <small>one-time</small></div>
+      <ul id="features"></ul>
+      <div class="total"><span id="total-label">Due today</span><strong id="total">£250</strong></div>
+      <p class="note" id="renewal">One-time payment. No recurring charge.</p>
+      <div class="divider"></div><a class="small-link" href="index.html#programmes">← Return to choose another option</a>
+    </aside>
+        <section class="panel">
       <div class="number">01 / Your details & payment</div>
       <h2 style="margin-top:7px" id="details-heading">Complete your enrolment</h2>
       <p class="note" id="details-copy">Your contact details are carried over from the questionnaire, so you can continue without entering your email again.</p>
@@ -281,16 +291,6 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
       <p class="fine">Payments are securely processed by Stripe. Reservation payments are covered by our 7-day money-back guarantee.</p>
     </section>
-    <aside class="panel summary">
-      <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
-      <h2 class="plan-title" id="plan-name">Recorded Maqamaat Lessons</h2>
-      <p class="note" id="plan-desc">Learn at your pace.</p>
-      <div class="price" id="price">£250 <small>one-time</small></div>
-      <ul id="features"></ul>
-      <div class="total"><span id="total-label">Due today</span><strong id="total">£250</strong></div>
-      <p class="note" id="renewal">One-time payment. No recurring charge.</p>
-      <div class="divider"></div><a class="small-link" href="index.html#programmes">← Return to choose another option</a>
-    </aside>
   </div>
 </main>
 <script>
@@ -298,7 +298,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   const plans = {
     recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your pace.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
     monthly: {name:"Monthly Learning",desc:"Live lessons and community.",price:"£159",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£159 today, then £159 monthly until cancelled."},
-    founding_presale: {name:"Maqamaat Intensive Place Reservation",desc:"30 places only, first come, first served. Pay £50 to reserve yours. It goes towards your first month. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£50",period:"one-time reservation",features:["Only 30 places, first come, first served","No recurring payment starts today","£50 credited towards your first month","7-day money-back guarantee — request a refund within 7 days of purchase"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund within 7 days of purchase under our 7-day money-back guarantee by emailing info@mounirinstitute.com."},
+    founding_presale: {name:"Maqamaat Intensive Place Reservation",desc:"30 places only, first come, first served. Pay £50 to reserve yours. It goes towards your first month. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£50",period:"one-time reservation",features:["30 places only, first come, first served","No recurring payment starts today","£50 credited towards your first month","Covered by our 7-day money-back guarantee"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund within 7 days of purchase under our 7-day money-back guarantee by emailing info@mounirinstitute.com."},
     mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£299",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£299 today, then £299 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
@@ -317,7 +317,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
     document.getElementById("details-copy").textContent = "Only 30 places. £50 secures your reservation, subject to availability.";
     document.getElementById("payment-heading").textContent = "Secure reservation payment";
     document.getElementById("payment-copy").textContent = "Pay £50 once today. No monthly subscription starts now.";
-    button.textContent = "Load secure reservation payment →";
+    button.textContent = "Reserve your place →";
   }
   document.getElementById("plan-name").textContent = plan.name;
   document.getElementById("plan-desc").textContent = plan.desc;
@@ -342,7 +342,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       return;
     }
     button.disabled = true;
-    button.textContent = planKey === "founding_presale" ? "Preparing secure reservation…" : "Preparing secure checkout…";
+    button.textContent = planKey === "founding_presale" ? "Securing your reservation…" : "Preparing secure checkout…";
     status.classList.remove("show");
     let checkoutStage = "Contacting checkout service";
     try {
@@ -381,7 +381,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
     } catch (error) {
       showStatus(checkoutStage + ": " + (error.message || "Could not load secure checkout. Please try again."));
       button.disabled = false;
-      button.textContent = "Try secure checkout again →";
+      button.textContent = planKey === "founding_presale" ? "Try reserving your place again →" : "Try secure checkout again →";
     }
   });
 })();
