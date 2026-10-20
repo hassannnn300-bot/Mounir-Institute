@@ -279,7 +279,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       <div id="embedded-checkout"></div>
       <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
       <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
-      <p class="fine">Payments are securely processed by Stripe. Reservation payments are refundable at any time on request.</p>
+      <p class="fine">Payments are securely processed by Stripe. Reservation payments are covered by our 7-day money-back guarantee.</p>
     </section>
     <aside class="panel summary">
       <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
@@ -298,7 +298,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   const plans = {
     recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your pace.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
     monthly: {name:"Monthly Learning",desc:"Live lessons and community.",price:"£159",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£159 today, then £159 monthly until cancelled."},
-    founding_presale: {name:"Maqamaat Intensive Place Reservation",desc:"30 places only, first come, first served. Pay £50 to reserve yours. It goes towards your first month. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£50",period:"one-time reservation",features:["Only 30 places, first come, first served","No recurring payment starts today","£50 credited towards your first month","Request a full refund at any time"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund at any time by emailing info@mounirinstitute.com."},
+    founding_presale: {name:"Maqamaat Intensive Place Reservation",desc:"30 places only, first come, first served. Pay £50 to reserve yours. It goes towards your first month. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£50",period:"one-time reservation",features:["Only 30 places, first come, first served","No recurring payment starts today","£50 credited towards your first month","7-day money-back guarantee — request a refund within 7 days of purchase"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund within 7 days of purchase under our 7-day money-back guarantee by emailing info@mounirinstitute.com."},
     mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£299",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£299 today, then £299 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
@@ -312,7 +312,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   if(planKey === "founding_presale") {
     document.getElementById("checkout-eyebrow").textContent = "Maqamaat Intensive · Reserve your place";
     document.getElementById("checkout-title").innerHTML = 'Reserve your <em style="color:var(--light)">place.</em>';
-    document.getElementById("checkout-intro").textContent = "Pay £50 to reserve one of 30 places. First come, first served. Refund available anytime.";
+    document.getElementById("checkout-intro").textContent = "Pay £50 to reserve one of 30 places. First come, first served. Covered by our 7-day money-back guarantee.";
     document.getElementById("details-heading").textContent = "Reserve your place";
     document.getElementById("details-copy").textContent = "Only 30 places. £50 secures your reservation, subject to availability.";
     document.getElementById("payment-heading").textContent = "Secure reservation payment";
@@ -377,7 +377,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       checkout.mount("#embedded-checkout");
       checkoutMounted = true;
       button.hidden = true;
-      showStatus(planKey === "founding_presale" ? "Secure reservation payment ready. You can request a refund at any time by emailing info@mounirinstitute.com." : "Secure payment form ready. Complete your payment below.");
+      showStatus(planKey === "founding_presale" ? "Secure reservation payment ready. You can request a refund within 7 days of purchase under our 7-day money-back guarantee by emailing info@mounirinstitute.com." : "Secure payment form ready. Complete your payment below.");
     } catch (error) {
       showStatus(checkoutStage + ": " + (error.message || "Could not load secure checkout. Please try again."));
       button.disabled = false;
@@ -827,7 +827,7 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 <footer class="footer mi-footer" id="contact"><div class="wrap">
 <img class="mi-footer-logo" src="/assets/FC8AA526-0245-40EA-8E99-F30B74C9E950.png" alt="Mounir Institute logo" loading="lazy">
 <h2 class="mi-footer-title">MOUNIR INSTITUTE</h2>
-<p class="mi-footer-tag">Learn the Maqamaat. Master your recitation. Inspire the next generation.</p><p class="mi-footer-tag">Refunds are available at any time on request.</p>
+<p class="mi-footer-tag">Learn the Maqamaat. Master your recitation. Inspire the next generation.</p><p class="mi-footer-tag">Our 7-day money-back guarantee gives you peace of mind.</p>
 <div class="mi-footer-socials" aria-label="Social media">
 <a href="https://www.instagram.com/hassanmounirofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.5-3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg></a>
 <a href="https://www.tiktok.com/@hassanmounirofficial" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.7 2c.3 2.5 1.7 4 4.3 4.2v3.3a9 9 0 0 1-4.3-1.1v6.5c0 4.3-3.1 7.1-7.1 7.1a7 7 0 0 1-7-7c0-4.3 3.5-7.4 8-7v3.5c-2.6-.7-4.6 1-4.6 3.5a3.5 3.5 0 0 0 7 0V2h3.7z"/></svg></a>
