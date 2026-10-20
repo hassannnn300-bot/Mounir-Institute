@@ -298,7 +298,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   const plans = {
     recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your pace.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
     monthly: {name:"Monthly Learning",desc:"Live lessons and community.",price:"£159",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£159 today, then £159 monthly until cancelled."},
-    founding_presale: {name:"Founding Class Place Reservation",desc:"30 places only, first come, first served. Pay £50 to reserve yours. It goes towards your first month. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£50",period:"one-time reservation",features:["Only 30 places, first come, first served","No recurring payment starts today","£50 credited towards your first month","Request a full refund at any time"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund at any time by emailing info@mounirinstitute.com."},
+    founding_presale: {name:"Maqamaat Intensive Place Reservation",desc:"30 places only, first come, first served. Pay £50 to reserve yours. It goes towards your first month. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£50",period:"one-time reservation",features:["Only 30 places, first come, first served","No recurring payment starts today","£50 credited towards your first month","Request a full refund at any time"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund at any time by emailing info@mounirinstitute.com."},
     mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£299",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£299 today, then £299 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
@@ -310,7 +310,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   let savedEmail = "";
   try { savedEmail = (sessionStorage.getItem("mounir_checkout_email") || localStorage.getItem("mounir_checkout_email") || "").trim(); } catch(e) {}
   if(planKey === "founding_presale") {
-    document.getElementById("checkout-eyebrow").textContent = "Founding Class · Reserve your place";
+    document.getElementById("checkout-eyebrow").textContent = "Maqamaat Intensive · Reserve your place";
     document.getElementById("checkout-title").innerHTML = 'Reserve your <em style="color:var(--light)">place.</em>';
     document.getElementById("checkout-intro").textContent = "Pay £50 to reserve one of 30 places. First come, first served. Refund available anytime.";
     document.getElementById("details-heading").textContent = "Reserve your place";
