@@ -5,7 +5,7 @@ export default async function handler(req,res){
  if(req.method!=='POST'){res.setHeader('Allow','POST');return res.status(405).json({error:'Method not allowed'});}
  if(!process.env.SUPABASE_URL||!process.env.SUPABASE_SERVICE_ROLE_KEY)return res.status(503).json({error:'Applications are not configured yet. Please email info@mounirinstitute.com.'});
  const data=req.body||{};
- const base=process.env.SUPABASE_URL.replace(/\\/$/,'')+'/rest/v1/founding_applications';
+ const base=process.env.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/founding_applications';
  const headers={'apikey':process.env.SUPABASE_SERVICE_ROLE_KEY,'Authorization':'Bearer '+process.env.SUPABASE_SERVICE_ROLE_KEY};
  async function duplicates(email,phone){const query=new URLSearchParams({select:'email,phone',or:`(email.eq.${JSON.stringify(email)},phone.eq.${JSON.stringify(phone)})`,limit:'5'});const response=await fetch(base+'?'+query,{headers});if(!response.ok)throw new Error('Duplicate lookup failed');const rows=await response.json();return {email:rows.some(x=>x.email===email),phone:rows.some(x=>x.phone===phone)};}
  if(data.action==='check_duplicates'){const email=String(data.email||'').trim().toLowerCase(),phone=String(data.phone||'').trim();if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!/^\+[1-9]\d{7,14}$/.test(phone))return res.status(400).json({error:'Enter a valid email and phone number.'});try{return res.status(200).json(await duplicates(email,phone))}catch(e){return res.status(503).json({error:'Could not verify details. Please try again.'})}}
