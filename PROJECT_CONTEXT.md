@@ -20,7 +20,7 @@ These details are taken from index.html in this repository. Recheck that file an
 | Programme | Current website description |
 | --- | --- |
 | Recorded Maqamaat Lessons | £250 one-time; eight video modules and vocal and breathing drills; self-paced, with no live classes, community, or private mentoring. |
-| Maqamaat Intensive | £159 per month from launch; eight modules, two live classes weekly from launch, a private student community, daily quizzes and games, and a founding student welcome pack. The page currently says there are 30 founding places. |
+| Maqamaat Intensive | £159 per month from launch; eight modules, two live classes weekly from launch, a private student community, daily quizzes and games, and a founding student welcome pack. The page currently says there are 30 founding places, held with a £25 Applied Maqamaat holding payment. |
 | Private Mentorship | Includes the Intensive features, a recitation assessment, a tailored learning plan, and four private lessons each month with Hassan Mounir. The page says entry is limited and subject to assessment and approval. |
 | Diploma in Applied Maqamaat | The page describes an 18-month programme and says the diploma is awarded by Mounir Institute on completion. |
 

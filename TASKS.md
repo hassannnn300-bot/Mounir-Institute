@@ -8,3 +8,4 @@ Status here is a hand-maintained coordination aid. Update it when work is verifi
 - [ ] Recheck the prices, launch wording, place limits, and programme terms in index.html before changing public copy or checkout behaviour.
 - [ ] Ask the repository owner for the co-partner’s exact GitHub username if write access is wanted. The current public visibility already allows anyone to view the repository.
 - [ ] Keep the shared notes in README.md, PROJECT_CONTEXT.md, DECISIONS.md, TASKS.md, and AI_HANDOFF.md current as decisions and verified work change.
+- [ ] Refund the £25 holding payment in Stripe when an applicant is declined or decides not to go ahead. Nothing does this automatically yet; the Stripe webhook only marks a place as paid.

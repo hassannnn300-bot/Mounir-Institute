@@ -1,4 +1,4 @@
-// Founding Class application endpoint. Configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel.
+// Applied Maqamaat application endpoint. Configure SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in Vercel.
 // Create the applications table using the SQL in docs/founding-applications.sql.
 export default async function handler(req,res){
  res.setHeader('Cache-Control','no-store');
