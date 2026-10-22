@@ -1,4 +1,4 @@
--- Run in Supabase SQL Editor before enabling Founding Class checkout.
+-- Run in Supabase SQL Editor before enabling Applied Maqamaat checkout.
 -- Atomic capacity allocation: 30 paid/active checkout reservations maximum.
 create table if not exists public.founding_reservations (
  id uuid primary key default gen_random_uuid(),

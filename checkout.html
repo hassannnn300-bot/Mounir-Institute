@@ -289,7 +289,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       <div id="embedded-checkout"></div>
       <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
       <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
-      <p class="fine">Payments are securely processed by Stripe. Reservation payments are covered by our 7-day money-back guarantee.</p>
+      <p class="fine">Payments are securely processed by Stripe. Every purchase has a 7-day money-back guarantee.</p>
     </section>
   </div>
 </main>
@@ -298,7 +298,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   const plans = {
     recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your pace.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
     monthly: {name:"Monthly Learning",desc:"Live lessons and community.",price:"£159",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£159 today, then £159 monthly until cancelled."},
-    founding_presale: {name:"Maqamaat Intensive Place Reservation",desc:"30 places only, first come, first served. Pay £50 to reserve yours. It goes towards your first month. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£50",period:"one-time reservation",features:["30 places only, first come, first served","No recurring payment starts today","£50 credited towards your first month","Covered by our 7-day money-back guarantee"],renewal:"One-time £50 reservation payment. No subscription starts today. You can request a refund within 7 days of purchase under our 7-day money-back guarantee by emailing info@mounirinstitute.com."},
+    founding_presale: {name:"Applied Maqamaat Place Reservation",desc:"30 places only, first come, first served. £25 holds your place while we review your application, and comes off your first month if you start. £159/month begins at launch, only with your authorisation. Once full, enrolment closes.",price:"£25",period:"one-time holding payment",features:["30 places only, first come, first served","No recurring payment starts today","£25 comes off your first month if you start","Refunded in full if you're not offered a place or don't go ahead"],renewal:"One-time £25 holding payment. No subscription starts today. If you're not offered a place, or you decide not to go ahead before your first month starts, it's refunded in full. Email info@mounirinstitute.com."},
     mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£299",period:"per month",features:["Everything in Monthly Learning","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£299 today, then £299 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
@@ -310,13 +310,13 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   let savedEmail = "";
   try { savedEmail = (sessionStorage.getItem("mounir_checkout_email") || localStorage.getItem("mounir_checkout_email") || "").trim(); } catch(e) {}
   if(planKey === "founding_presale") {
-    document.getElementById("checkout-eyebrow").textContent = "Maqamaat Intensive · Reserve your place";
+    document.getElementById("checkout-eyebrow").textContent = "Applied Maqamaat · Reserve your place";
     document.getElementById("checkout-title").innerHTML = 'Reserve your <em style="color:var(--light)">place.</em>';
-    document.getElementById("checkout-intro").textContent = "Pay £50 to reserve one of 30 places. First come, first served. Covered by our 7-day money-back guarantee.";
+    document.getElementById("checkout-intro").textContent = "Pay £25 to hold one of 30 places. First come, first served. Refunded in full if you don't go ahead.";
     document.getElementById("details-heading").textContent = "Reserve your place";
-    document.getElementById("details-copy").textContent = "Only 30 places. £50 secures your reservation, subject to availability.";
+    document.getElementById("details-copy").textContent = "Only 30 places. £25 holds your place, subject to availability.";
     document.getElementById("payment-heading").textContent = "Secure reservation payment";
-    document.getElementById("payment-copy").textContent = "Pay £50 once today. No monthly subscription starts now.";
+    document.getElementById("payment-copy").textContent = "Pay £25 once today. No monthly subscription starts now.";
     button.textContent = "Reserve your place →";
   }
   document.getElementById("plan-name").textContent = plan.name;

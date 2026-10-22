@@ -83,7 +83,7 @@ export default async function handler(req, res) {
       mode: "subscription",
       description: "All eight Maqamaat lessons, two online lessons each week, private student community, daily quizzes and games."
     },
-    founding_presale: {name: "Founding Class Place Reservation", amount: 5000, mode: "payment", description: "One-time £50 place-reservation payment, credited towards the first month if accepted. Refundable at any time on request. Not a recurring subscription; confirmation follows review."},
+    founding_presale: {name: "Applied Maqamaat Place Reservation", amount: 2500, mode: "payment", description: "£25 holding payment for an Applied Maqamaat place. Comes off your first month if you start. Refunded in full if you're not offered a place or decide not to go ahead. Not a subscription."},
     mentoring: {
       name: "1-to-1 Learning with Qari Hassan Mounir",
       amount: 29900,
@@ -102,11 +102,11 @@ export default async function handler(req, res) {
   if (body && body.plan === "founding_presale") {
     if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) return res.status(503).json({error:"Presale reservations are not yet available. Please apply for a place first."});
     const requestedEmail=typeof body.email==="string"?body.email.trim().toLowerCase():"";
-    if(!requestedEmail)return res.status(400).json({error:"Complete the Founding Class application first."});
+    if(!requestedEmail)return res.status(400).json({error:"Complete the Applied Maqamaat application first."});
     try {
       const lookup=await fetch(process.env.SUPABASE_URL.replace(/\/$/,"")+"/rest/v1/founding_applications?email=eq."+encodeURIComponent(requestedEmail)+"&select=id,status,presale_interest&limit=1",{headers:{apikey:process.env.SUPABASE_SERVICE_ROLE_KEY,Authorization:"Bearer "+process.env.SUPABASE_SERVICE_ROLE_KEY}});
       if(!lookup.ok)return res.status(503).json({error:"Could not verify your application."});
-      const rows=await lookup.json();if(!rows.length||!rows[0].presale_interest)return res.status(403).json({error:"Please complete the Founding Class presale application before paying."});
+      const rows=await lookup.json();if(!rows.length||!rows[0].presale_interest)return res.status(403).json({error:"Please complete the Applied Maqamaat application before paying."});
       if(["declined","withdrawn"].includes(rows[0].status))return res.status(403).json({error:"This application is not eligible for presale payment."});
       const hold=await fetch(db+"/rpc/hold_founding_place",{method:"POST",headers:auth,body:JSON.stringify({p_application_id:rows[0].id})});
       if(!hold.ok)return res.status(503).json({error:"Reservations are not configured. No payment was started."});

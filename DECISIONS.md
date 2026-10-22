@@ -7,6 +7,11 @@
 - The user wants valid submissions to be allowed to reuse the same email address and phone number. The exact duplicate-record, update, and abuse-prevention behaviour remains undecided and must be checked against the current data model before implementation.
 - Website programme details and prices are recorded as a snapshot from index.html, not as permanent business decisions. Recheck them before publishing claims.
 
+## 2026-10-22
+
+- The intake is called Applied Maqamaat, not the Founding Class.
+- The place payment is a £25 holding payment (was £50). It comes off the first month if the student starts. It is refunded in full if the applicant is not offered a place, or decides not to go ahead before their first month starts. It is not covered by, or limited to, the 7-day money-back guarantee.
+
 ## Open questions
 
 - Does the co-partner need view access only, or permission to edit the repository?
