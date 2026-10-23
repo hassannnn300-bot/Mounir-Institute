@@ -83,7 +83,7 @@ export default async function handler(req, res) {
       mode: "subscription",
       description: "All eight Maqamaat lessons, two online lessons each week, private student community, daily quizzes and games."
     },
-    founding_presale: {name: "Founding Class Place Reservation", amount: 5000, mode: "payment", description: "One-time £50 place-reservation payment, credited towards the first month if accepted. Refundable at any time on request. Not a recurring subscription; confirmation follows review."},
+    founding_presale: {name: "Founding Class Place Reservation", amount: 2500, mode: "payment", description: "One-time £25 place-reservation payment, credited towards the first month if accepted. Refundable at any time on request. Not a recurring subscription; confirmation follows review."},
     mentoring: {
       name: "1-to-1 Learning with Qari Hassan Mounir",
       amount: 29900,
