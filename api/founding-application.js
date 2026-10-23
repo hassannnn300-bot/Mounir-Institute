@@ -9,7 +9,7 @@ export default async function handler(req,res){
  const headers={'apikey':process.env.SUPABASE_SERVICE_ROLE_KEY,'Authorization':'Bearer '+process.env.SUPABASE_SERVICE_ROLE_KEY};
  if(data.action==='check_duplicates'){
   const email=String(data.email||'').trim().toLowerCase(),phone=String(data.phone||'').trim();
-  if(!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)||!/^\\+[1-9]\\d{7,14}$/.test(phone))return res.status(400).json({error:'Enter a valid email and phone number.'});
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||!/^\+[1-9]\d{7,14}$/.test(phone))return res.status(400).json({error:'Enter a valid email and phone number.'});
   return res.status(200).json({email:false,phone:false});
  }
 
@@ -22,7 +22,7 @@ export default async function handler(req,res){
  try{
   const url=base;
   const response=await fetch(url,{method:'POST',headers:{'apikey':process.env.SUPABASE_SERVICE_ROLE_KEY,'Authorization':'Bearer '+process.env.SUPABASE_SERVICE_ROLE_KEY,'Content-Type':'application/json','Prefer':'return=representation'},body:JSON.stringify(record)});
-if(!response.ok){const detail=await response.text();console.error('Application persistence failed',response.status,detail.slice(0,1200));return res.status(502).json({error:'We could not save your request. Please try again, or email info@mounirinstitute.com if this continues.'});}
+  if(!response.ok){const detail=await response.text();console.error('Application persistence failed',response.status,detail.slice(0,1200));return res.status(502).json({error:'We could not save your request. Please try again, or email info@mounirinstitute.com if this continues.'});}
   const rows=await response.json();
   if(!rows.length)return res.status(502).json({error:'We could not confirm that your request was saved. Please try again.'});
   return res.status(201).json({ok:true,message:'Your request has been received. This is not a confirmed place; we will contact you with enrolment details.'});
