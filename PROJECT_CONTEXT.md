@@ -1,6 +1,6 @@
 # Project context
 
-Last reviewed against the repository’s main branch on 2026-10-21. Treat this as a snapshot of the current website copy and repository structure, not as a guarantee that live prices or availability are unchanged.
+Last reviewed against the repository’s main branch on 2026-10-28. Treat this as a snapshot of the current website copy and repository structure, not as a guarantee that live prices or availability are unchanged.
 
 ## What the project is
 
@@ -20,7 +20,7 @@ These details are taken from index.html in this repository. Recheck that file an
 | Programme | Current website description |
 | --- | --- |
 | Recorded Maqamaat Lessons | £250 one-time; eight video modules and vocal and breathing drills; self-paced, with no live classes, community, or private mentoring. |
-| Maqamaat Intensive | £159 per month from launch; eight modules, two live classes weekly from launch, a private student community, daily quizzes and games, and a founding student welcome pack. The page currently says there are 30 founding places. |
+| Maqamaat Intensive | £159 per month from launch; eight modules, two live classes weekly from launch, a private student community, daily quizzes and games, and a founding student welcome pack. The page currently says there are 30 places on the Applied Maqamaat intake, each held with a £25 holding payment that comes off the first month if the student starts and is refunded in full if they are not offered a place or decide not to go ahead. |
 | Private Mentorship | Includes the Intensive features, a recitation assessment, a tailored learning plan, and four private lessons each month with Hassan Mounir. The page says entry is limited and subject to assessment and approval. |
 | Diploma in Applied Maqamaat | The page describes an 18-month programme and says the diploma is awarded by Mounir Institute on completion. |
 
@@ -35,5 +35,7 @@ Inspect the current source before describing implementation details. File names 
 ## User-reported needs to carry forward
 
 A prior user report said they could not proceed after filling in the questionnaire detail form. They also asked for the same email address and phone number to be reusable for multiple submissions when the submitted details are correct.
+
+On 23 October 2026 the application endpoint was changed to accept repeat email addresses and phone numbers, and docs/founding-applications.sql now drops the database uniqueness rule on email. Whether that SQL has been run against the live Supabase project has not been verified; see TASKS.md.
 
 This is a reported requirement, not a verified diagnosis or confirmation that the current code still has the issue. See TASKS.md before changing validation or record-handling behaviour.
