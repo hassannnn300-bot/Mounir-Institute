@@ -30,6 +30,8 @@ Prices, launch wording, capacity, and programme terms can change. Do not treat t
 
 This is a multi-page HTML website. The main page is index.html; assessment.html contains the assessment/questionnaire experience; checkout.html and checkout-success.html cover checkout; waiting-list.html is also present. The api/ directory contains JavaScript endpoints for founding applications, checkout session creation/status, and a Stripe webhook. The docs/ directory contains SQL setup files for application data. vercel.json configures Vercel routing/deployment.
 
+The owners' page admin/refunds.html, backed by api/admin-holding-payments.js, lists and refunds the £25 holding payments; api/stripe-webhook.js records payments and refunds in the founding_reservations table (SQL in docs/).
+
 Inspect the current source before describing implementation details. File names alone do not prove the runtime behaviour or the current production configuration.
 
 ## User-reported needs to carry forward

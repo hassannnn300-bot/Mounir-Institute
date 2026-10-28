@@ -152,7 +152,12 @@ export default async function handler(req, res) {
   params.set("billing_address_collection", "auto");
   params.set("allow_promotion_codes", "true");
   params.set("metadata[plan]", body.plan);
-  if(reservationId){params.set("metadata[reservation_id]",reservationId);params.set("expires_at",String(Math.floor(Date.now()/1000)+1800));}
+  if(reservationId){
+    params.set("metadata[reservation_id]",reservationId);
+    params.set("payment_intent_data[metadata][reservation_id]",reservationId);
+    params.set("payment_intent_data[metadata][plan]","founding_presale");
+    params.set("expires_at",String(Math.floor(Date.now()/1000)+1800));
+  }
   params.set("metadata[site]", "mounir-institute");
   if (body.plan === "recorded") {
     const consentAt = new Date().toISOString();

@@ -9,6 +9,7 @@
 - Pull request #1 from Taaha's fork is superseded by the applied-maqamaat-wording branch, which applies the same wording on top of the 23 October changes.
 - The £250 recorded course is digital content supplied straight away. Checkout asks for a separate, unticked acknowledgement (immediate access requested; 14-day cancellation right ends once access begins), records it in Stripe metadata, and the 7-day money-back guarantee still applies.
 - mounirinstitute.com and www.mounirinstitute.com point at Vercel; www is the main address and the root redirects to it. The GoDaddy Website Builder record was replaced.
+- Holding payments are refunded by the owners from /admin/refunds.html, with a reason of not offered a place (declined) or withdrew. The page is protected by a shared ADMIN_API_TOKEN rather than user accounts, which is enough for two owners; move it to the learning platform's owner login when applications live there.
 
 ## 2026-10-21
 

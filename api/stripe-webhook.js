@@ -10,14 +10,41 @@ export default async function handler(req,res){
  const expected=createHmac("sha256",process.env.STRIPE_WEBHOOK_SECRET).update(stamp+"."+body.toString()).digest("hex");
  if(!parts.v1||parts.v1.length!==expected.length||!timingSafeEqual(Buffer.from(parts.v1),Buffer.from(expected)))return res.status(400).end();
  let event;try{event=JSON.parse(body.toString());}catch{return res.status(400).end();}
- const session=event.data?.object,id=session?.metadata?.reservation_id;
- if(!id)return res.status(200).json({received:true});
- const base=process.env.SUPABASE_URL.replace(/\/$/,"")+"/rest/v1/founding_reservations?id=eq."+encodeURIComponent(id)+"&stripe_session_id=eq."+encodeURIComponent(session.id)+"&state=eq.held";
+ const object=(event.data&&event.data.object)||{};
+ const base=process.env.SUPABASE_URL.replace(/\/$/,"")+"/rest/v1/founding_reservations?";
  const headers={apikey:process.env.SUPABASE_SERVICE_ROLE_KEY,Authorization:"Bearer "+process.env.SUPABASE_SERVICE_ROLE_KEY,"Content-Type":"application/json",Prefer:"return=minimal"};
- let state=null;
- if(event.type==="checkout.session.completed"&&session.payment_status==="paid")state={state:"paid",paid_at:new Date().toISOString()};
- if(event.type==="checkout.session.async_payment_succeeded")state={state:"paid",paid_at:new Date().toISOString()};
- if(event.type==="checkout.session.expired"||event.type==="checkout.session.async_payment_failed")state={state:"released"};
- if(state){const response=await fetch(base,{method:"PATCH",headers,body:JSON.stringify(state)});if(!response.ok)return res.status(500).end();}
+ async function patch(filter,values){const response=await fetch(base+filter,{method:"PATCH",headers,body:JSON.stringify(values)});return response.ok;}
+ const paymentIntentOf=o=>typeof o.payment_intent==="string"?o.payment_intent:(o.payment_intent&&o.payment_intent.id)||null;
+
+ // Checkout sessions carry the reservation id in their metadata.
+ if(event.type==="checkout.session.completed"||event.type==="checkout.session.async_payment_succeeded"){
+  const id=object.metadata&&object.metadata.reservation_id;
+  if(id&&(event.type==="checkout.session.async_payment_succeeded"||object.payment_status==="paid")){
+   const values={state:"paid",paid_at:new Date().toISOString()};
+   const paymentIntent=paymentIntentOf(object);if(paymentIntent)values.stripe_payment_intent_id=paymentIntent;
+   const filter="id=eq."+encodeURIComponent(id)+"&stripe_session_id=eq."+encodeURIComponent(object.id)+"&state=eq.held";
+   let ok=await patch(filter,values);
+   // Until docs/founding-refunds.sql has been run the payment id column does not exist; still mark the place paid.
+   if(!ok&&values.stripe_payment_intent_id){delete values.stripe_payment_intent_id;ok=await patch(filter,values);}
+   if(!ok)return res.status(500).end();
+  }
+  return res.status(200).json({received:true});
+ }
+ if(event.type==="checkout.session.expired"||event.type==="checkout.session.async_payment_failed"){
+  const id=object.metadata&&object.metadata.reservation_id;
+  if(id&&!await patch("id=eq."+encodeURIComponent(id)+"&stripe_session_id=eq."+encodeURIComponent(object.id)+"&state=eq.held",{state:"released"}))return res.status(500).end();
+  return res.status(200).json({received:true});
+ }
+ // A full refund made anywhere (the owners' page or the Stripe dashboard) marks the reservation refunded, which frees the place.
+ if(event.type==="charge.refunded"){
+  const paymentIntent=paymentIntentOf(object);
+  const fullyRefunded=object.refunded===true||(typeof object.amount_refunded==="number"&&object.amount_refunded>=object.amount);
+  if(paymentIntent&&fullyRefunded){
+   const values={state:"refunded",refunded_at:new Date().toISOString()};
+   const refundId=object.refunds&&object.refunds.data&&object.refunds.data[0]&&object.refunds.data[0].id;if(refundId)values.stripe_refund_id=refundId;
+   if(!await patch("stripe_payment_intent_id=eq."+encodeURIComponent(paymentIntent)+"&state=eq.paid",values))return res.status(500).end();
+  }
+  return res.status(200).json({received:true});
+ }
  return res.status(200).json({received:true});
 }

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Holding payments | Mounir Institute owners</title>
+<style>
+:root{--bg:#090909;--panel:#141310;--line:#57452966;--gold:#d7b56d;--gold2:#f0dca5;--cream:#f7f4ec;--muted:#a9a293;--danger:#e0a3a3;--ok:#9fcfb0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--cream);font:15px/1.55 Inter,ui-sans-serif,system-ui,sans-serif}
+header{padding:22px clamp(16px,4vw,40px);border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:baseline;flex-wrap:wrap}
+header h1{margin:0;font:400 clamp(22px,3vw,30px)/1.2 Georgia,"Times New Roman",serif;color:var(--gold2)}
+header .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+main{max-width:1100px;margin:0 auto;padding:26px clamp(16px,4vw,40px) 60px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin-bottom:18px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+input{width:100%;padding:12px 13px;background:#0f0e0b;border:1px solid #806b45;border-radius:6px;color:var(--cream);font:inherit}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.row input{flex:1 1 260px}
+button{font:inherit;font-weight:700;border-radius:6px;padding:11px 15px;cursor:pointer;border:1px solid var(--gold);background:linear-gradient(115deg,#b48c47,#f0dca5,#c79d54);color:#17120b}
+button.secondary{background:transparent;color:var(--gold2);font-weight:500}
+button:disabled{opacity:.5;cursor:default}
+.note{color:var(--muted);font-size:13px}
+.msg{display:none;margin:12px 0;padding:12px 14px;border-radius:8px;border:1px solid #7d6640;background:#d7b56d0b}
+.msg.show{display:block}
+.msg.error{border-color:#8a4a4a;color:var(--danger)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.badge{display:inline-block;padding:3px 9px;border-radius:999px;font-size:12px;border:1px solid var(--line)}
+.badge.paid{color:var(--ok);border-color:#3e6a4d}
+.badge.refunded{color:var(--muted)}
+.badge.held{color:var(--gold2)}
+.sub{display:block;color:var(--muted);font-size:12px}
+.actions{display:flex;flex-direction:column;gap:8px;min-width:200px}
+.actions button{padding:9px 12px;font-size:13px}
+@media(max-width:760px){thead{display:none}table,tbody,tr,td{display:block;width:100%}tr{border:1px solid var(--line);border-radius:8px;margin-bottom:12px;padding:6px 4px}td{border:0;padding:8px 10px}td::before{content:attr(data-label);display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}}
+</style>
+</head>
+<body>
+<header><span class="eyebrow">Mounir Institute · Owners</span><h1>Applied Maqamaat holding payments</h1></header>
+<main>
+ <section class="panel" id="unlock">
+  <label for="token">Access token</label>
+  <div class="row"><input id="token" type="password" autocomplete="off" placeholder="Paste the owners’ access token"><button id="unlock-button" type="button">Unlock</button></div>
+  <p class="note">The token is the ADMIN_API_TOKEN set in Vercel. It is kept in this tab only and forgotten when the tab closes.</p>
+ </section>
+ <div class="msg" id="message" role="status" aria-live="polite"></div>
+ <section class="panel" id="list" hidden>
+  <div class="row" style="justify-content:space-between;margin-bottom:12px"><p class="note" id="summary" style="margin:0"></p><div class="row"><button class="secondary" id="refresh" type="button">Refresh</button><button class="secondary" id="forget" type="button">Forget token</button></div></div>
+  <table><thead><tr><th>Applicant</th><th>Application</th><th>Payment</th><th>Refund</th><th>Actions</th></tr></thead><tbody id="rows"></tbody></table>
+  <p class="note" style="margin-top:14px">Refunds are made in full through Stripe and usually reach the card within 5 to 10 working days. A refund frees the place straight away. A refund made in the Stripe dashboard is recorded here too, once Stripe sends its webhook.</p>
+ </section>
+</main>
+<script>
+(() => {
+  const API = "/api/admin-holding-payments";
+  const STORE = "mi_admin_token";
+  const tokenInput = document.getElementById("token");
+  const unlockPanel = document.getElementById("unlock");
+  const listPanel = document.getElementById("list");
+  const rowsBody = document.getElementById("rows");
+  const message = document.getElementById("message");
+  const summary = document.getElementById("summary");
+  let token = "";
+  try { token = sessionStorage.getItem(STORE) || ""; } catch (e) {}
+
+  function show(text, isError) { message.textContent = text; message.classList.toggle("error", !!isError); message.classList.add("show"); }
+  function hideMessage() { message.classList.remove("show"); }
+  function when(value) { if (!value) return ""; const d = new Date(value); return isNaN(d) ? "" : d.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }); }
+  function cell(label, ...children) { const td = document.createElement("td"); td.dataset.label = label; children.forEach(c => td.append(c)); return td; }
+  function sub(text) { const s = document.createElement("span"); s.className = "sub"; s.textContent = text; return s; }
+  function badge(state) { const b = document.createElement("span"); b.className = "badge " + state; b.textContent = state === "paid" ? "Paid" : state === "refunded" ? "Refunded" : "Hold, unpaid"; return b; }
+
+  async function api(method, body) {
+    const headers = { Authorization: "Bearer " + token };
+    if (body) headers["Content-Type"] = "application/json";
+    const response = await fetch(API, { method, headers, body: body ? JSON.stringify(body) : undefined });
+    let data = {};
+    try { data = await response.json(); } catch (e) {}
+    if (response.status === 401) throw Object.assign(new Error("That token was not accepted."), { unauthorised: true });
+    if (!response.ok) throw new Error(data.error || ("The server replied with HTTP " + response.status + "."));
+    return data;
+  }
+
+  function render(reservations) {
+    rowsBody.replaceChildren();
+    const paid = reservations.filter(r => r.state === "paid").length;
+    const refunded = reservations.filter(r => r.state === "refunded").length;
+    summary.textContent = reservations.length + " holding payment" + (reservations.length === 1 ? "" : "s") + " · " + paid + " paid · " + refunded + " refunded";
+    if (!reservations.length) {
+      const tr = document.createElement("tr"); const td = cell("", "No holding payments yet."); td.colSpan = 5; tr.append(td); rowsBody.append(tr); return;
+    }
+    reservations.forEach(r => {
+      const a = r.applicant || {};
+      const tr = document.createElement("tr");
+      tr.append(cell("Applicant", a.name || "Unknown", sub(a.email || "")));
+      tr.append(cell("Application", a.status || "", sub(a.appliedAt ? "Applied " + when(a.appliedAt) : "")));
+      tr.append(cell("Payment", badge(r.state), sub(r.paidAt ? "Paid " + when(r.paidAt) : "Hold created " + when(r.createdAt))));
+      const refundText = r.state === "refunded" ? (r.refundReason === "withdrawn" ? "Withdrew" : "Not offered a place") : "";
+      tr.append(cell("Refund", refundText, sub(r.refundedAt ? when(r.refundedAt) + (r.stripeRefundId ? " · " + r.stripeRefundId : "") : "")));
+      const actions = document.createElement("div"); actions.className = "actions";
+      if (r.state === "paid") {
+        actions.append(refundButton(r, a, "declined", "Refund · not offered a place"), refundButton(r, a, "withdrawn", "Refund · withdrew"));
+      } else {
+        actions.append(sub(r.state === "refunded" ? "Nothing more to do" : "Nothing paid yet"));
+      }
+      tr.append(cell("Actions", actions));
+      rowsBody.append(tr);
+    });
+  }
+
+  function refundButton(r, a, reason, label) {
+    const b = document.createElement("button"); b.type = "button"; b.textContent = label;
+    b.addEventListener("click", async () => {
+      const why = reason === "withdrawn" ? "they withdrew" : "they were not offered a place";
+      if (!confirm("Refund the £25 holding payment to " + (a.name || "this applicant") + " (" + (a.email || "no email") + ") because " + why + "?\n\nThis cannot be undone.")) return;
+      b.disabled = true; hideMessage();
+      try {
+        const result = await api("POST", { reservation_id: r.reservationId, reason });
+        show(result.alreadyRefunded ? "That payment had already been refunded." : "Refunded. Stripe refund " + (result.refundId || "recorded") + ". The place is free again.");
+        await load();
+      } catch (error) {
+        show(error.message, true); b.disabled = false; if (error.unauthorised) lock();
+      }
+    });
+    return b;
+  }
+
+  async function load() {
+    try {
+      const data = await api("GET");
+      render(data.reservations || []);
+      listPanel.hidden = false; unlockPanel.hidden = true;
+    } catch (error) {
+      show(error.message, true); if (error.unauthorised) lock();
+    }
+  }
+  function lock() { token = ""; try { sessionStorage.removeItem(STORE); } catch (e) {} listPanel.hidden = true; unlockPanel.hidden = false; }
+
+  document.getElementById("unlock-button").addEventListener("click", () => {
+    token = tokenInput.value.trim();
+    if (!token) { show("Paste the access token first.", true); return; }
+    try { sessionStorage.setItem(STORE, token); } catch (e) {}
+    tokenInput.value = ""; hideMessage(); load();
+  });
+  tokenInput.addEventListener("keydown", e => { if (e.key === "Enter") document.getElementById("unlock-button").click(); });
+  document.getElementById("refresh").addEventListener("click", () => { hideMessage(); load(); });
+  document.getElementById("forget").addEventListener("click", () => { lock(); show("Token forgotten on this device."); });
+  if (token) load();
+})();
+</script>
+</body>
+</html>
