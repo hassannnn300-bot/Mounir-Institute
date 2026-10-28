@@ -7,6 +7,8 @@
 - Student records and recordings are kept for 3 years after a student leaves, and applications that do not lead to a place for 3 years after last contact. This matches the learning platform's privacy policy.
 - The site is hosted on Vercel only. The GitHub Pages workflow was removed because it published a second copy of the site where checkout could not work.
 - Pull request #1 from Taaha's fork is superseded by the applied-maqamaat-wording branch, which applies the same wording on top of the 23 October changes.
+- The £250 recorded course is digital content supplied straight away. Checkout asks for a separate, unticked acknowledgement (immediate access requested; 14-day cancellation right ends once access begins), records it in Stripe metadata, and the 7-day money-back guarantee still applies.
+- mounirinstitute.com and www.mounirinstitute.com point at Vercel; www is the main address and the root redirects to it. The GoDaddy Website Builder record was replaced.
 
 ## 2026-10-21
 

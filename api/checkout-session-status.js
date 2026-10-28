@@ -20,6 +20,8 @@ export default async function handler(req, res) {
       paymentStatus: session.payment_status,
       customerEmail: session.customer_details && session.customer_details.email,
       mode: session.mode,
+      plan: session.metadata && session.metadata.plan ? session.metadata.plan : null,
+      digitalConsent: !!(session.metadata && session.metadata.digital_content_consent === "yes"),
       subscriptionStatus: session.subscription ? "created" : null
     });
   } catch {

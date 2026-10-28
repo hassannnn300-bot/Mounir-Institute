@@ -26,6 +26,7 @@
    heading.textContent="Thank you — checkout complete";
    description.textContent="Your Stripe checkout has been completed.";
    status.textContent=data.customerEmail?"Confirmation email: "+data.customerEmail:"Stripe has confirmed the checkout.";
+   if(data.plan==="recorded"&&data.digitalConsent){const consent=document.createElement("p");consent.id="consent-confirmation";consent.style.cssText="margin-top:14px;font-size:13px;line-height:1.6;color:#a9a293";consent.textContent="You asked for immediate access to the recorded lessons and acknowledged that your 14-day right to cancel ended once access began. Our 7-day money-back guarantee still applies: email info@mounirinstitute.com within 7 days of purchase.";status.after(consent);}
   }else{
    heading.textContent="Payment not completed yet";
    description.textContent="Stripe has not confirmed a completed payment for this session.";

@@ -327,7 +327,16 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   document.getElementById("features").replaceChildren(...plan.features.map(text => {const li=document.createElement("li");li.textContent=text;return li;}));
   if(planKey !== "recorded") document.getElementById("total-label").textContent = "Due today";
   function showStatus(message){status.textContent=message;status.classList.add("show");}
-  if(planKey==="recorded"){const emailField=document.createElement("input");emailField.type="email";emailField.id="direct-checkout-email";emailField.placeholder="Your email address";emailField.autocomplete="email";emailField.required=true;emailField.value=savedEmail;emailField.setAttribute("aria-label","Email address for your purchase");emailField.style.cssText="display:block;width:100%;padding:13px;margin:14px 0;background:#171510;border:1px solid #806b45;border-radius:6px;color:#f6e8cb;font:inherit";button.before(emailField);}
+  // Digital content: the buyer must actively ask for immediate access and accept losing the 14-day cancellation right.
+  const DIGITAL_CONSENT_TEXT = "I ask for immediate access to the recorded lessons as soon as my payment goes through, and I understand that I then lose my 14-day statutory right to cancel. The 7-day money-back guarantee still applies to this purchase.";
+  let consentBox = null;
+  if(planKey==="recorded"){
+    const emailField=document.createElement("input");emailField.type="email";emailField.id="direct-checkout-email";emailField.placeholder="Your email address";emailField.autocomplete="email";emailField.required=true;emailField.value=savedEmail;emailField.setAttribute("aria-label","Email address for your purchase");emailField.style.cssText="display:block;width:100%;padding:13px;margin:14px 0;background:#171510;border:1px solid #806b45;border-radius:6px;color:#f6e8cb;font:inherit";button.before(emailField);
+    const consentLabel=document.createElement("label");consentLabel.id="digital-consent-label";consentLabel.style.cssText="display:flex;gap:11px;align-items:flex-start;margin:4px 0 14px;padding:13px 15px;background:#171510;border:1px solid #806b45;border-radius:6px;color:#f6e8cb;font-size:13px;line-height:1.55;cursor:pointer";
+    consentBox=document.createElement("input");consentBox.type="checkbox";consentBox.id="digital-consent";consentBox.required=true;consentBox.style.cssText="flex:0 0 auto;width:18px;height:18px;margin:2px 0 0;accent-color:#d7b56d;cursor:pointer";
+    const consentText=document.createElement("span");consentText.textContent=DIGITAL_CONSENT_TEXT;
+    consentLabel.append(consentBox,consentText);button.before(consentLabel);
+  }
   button.addEventListener("click", async () => {
     if(checkoutMounted) return;
     const email = planKey==="recorded" ? document.getElementById("direct-checkout-email").value.trim() : savedEmail;
@@ -341,6 +350,11 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       status.appendChild(link);
       return;
     }
+    if(planKey==="recorded" && !(consentBox && consentBox.checked)){
+      showStatus("Please tick the box asking for immediate access to the recorded lessons. We need that request before we can give you access straight away.");
+      if(consentBox) consentBox.focus();
+      return;
+    }
     button.disabled = true;
     button.textContent = planKey === "founding_presale" ? "Securing your reservation…" : "Preparing secure checkout…";
     status.classList.remove("show");
@@ -352,7 +366,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
         response = await fetch(new URL("/api/create-checkout-session", window.location.origin).href, {
           method:"POST",
           headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({plan:planKey,email})
+          body:JSON.stringify(planKey==="recorded" ? {plan:planKey,email,digital_consent:true} : {plan:planKey,email})
         });
       } catch (networkError) {
         throw new Error("Request failed before the server replied (" + (networkError.message || "network error") + "). Check that this page is the deployed https://mounir-institute.vercel.app site and that the latest deployment is Ready.");
@@ -376,6 +390,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       const checkout = await stripe.initEmbeddedCheckout({fetchClientSecret: async () => data.clientSecret});
       checkout.mount("#embedded-checkout");
       checkoutMounted = true;
+      if(consentBox) consentBox.disabled = true;
       button.hidden = true;
       showStatus(planKey === "founding_presale" ? "Secure reservation payment ready. You can request a refund within 7 days of purchase under our 7-day money-back guarantee by emailing info@mounirinstitute.com." : "Secure payment form ready. Complete your payment below.");
     } catch (error) {
