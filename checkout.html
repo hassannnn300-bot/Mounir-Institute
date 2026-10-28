@@ -370,20 +370,20 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
           body:JSON.stringify(planKey==="recorded" ? {plan:planKey,email,digital_consent:true} : {plan:planKey,email})
         });
       } catch (networkError) {
-        throw new Error("Request failed before the server replied (" + (networkError.message || "network error") + "). Check that this page is the deployed https://mounir-institute.vercel.app site and that the latest deployment is Ready.");
+        throw new Error("We could not reach secure checkout. Please check your connection and try again.");
       }
       checkoutStage = "Reading checkout service response";
       let data;
       try {
         data = await response.json();
       } catch (parseError) {
-        throw new Error("The checkout service returned a non-JSON response (HTTP " + response.status + "). This usually means the API route is not deployed correctly.");
+        throw new Error("Secure checkout is briefly unavailable. Please try again in a moment, or email info@mounirinstitute.com.");
       }
       if(!response.ok) throw new Error(data.error || ("Checkout service returned HTTP " + response.status + "."));
       if(!data.clientSecret || !data.publishableKey) throw new Error("Stripe did not return the checkout configuration.");
       checkoutStage = "Checking the Stripe publishable key";
       if (!/^pk_(test|live)_[A-Za-z0-9]+$/.test(data.publishableKey.trim())) {
-        throw new Error("Vercel's STRIPE_PUBLISHABLE_KEY is not a valid publishable-key format. It must start with pk_test_ or pk_live_; do not use an rk_ restricted key.");
+        throw new Error("Secure checkout is not set up correctly. Please email info@mounirinstitute.com and we will help you pay.");
       }
       checkoutStage = "Initialising Stripe embedded checkout";
       const stripe = Stripe(data.publishableKey.trim());
@@ -395,7 +395,8 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       button.hidden = true;
       showStatus("Your payment form is ready below.");
     } catch (error) {
-      showStatus(checkoutStage + ": " + (error.message || "Could not load secure checkout. Please try again."));
+      console.error("Checkout failed at:", checkoutStage);
+      showStatus(error.message || "Could not load secure checkout. Please try again.");
       button.disabled = false;
       button.textContent = planKey === "founding_presale" ? "Try reserving your place again →" : "Try again →";
     }

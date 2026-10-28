@@ -2,8 +2,8 @@
 
 Status here is a hand-maintained coordination aid. Update it when work is verified; do not mark a task complete based only on an assumption.
 
-- [ ] Reproduce the reported issue where the user cannot continue after completing the questionnaire detail form. Check field validation, the continue button state, and the response from the application endpoint.
-- [ ] If the issue is still present, fix the actual failing step and record how it was verified.
+- [x] Reproduce the reported issue where the user cannot continue after completing the questionnaire detail form. Done 28 October 2026: the repeat-email database rule was fixed, and a site-wide bug sweep fixed the related questionnaire problems (see DECISIONS.md). Verified in headless Chrome.
+- [x] If the issue is still present, fix the actual failing step and record how it was verified.
 - [ ] Support multiple valid submissions that reuse the same email address and phone number. First decide the intended record behaviour and verify it against the current schema; do not reject a submission only because its contact details were used before.
 - [ ] Recheck the prices, launch wording, place limits, and programme terms in index.html before changing public copy or checkout behaviour.
 - [ ] Ask the repository owner for the co-partner’s exact GitHub username if write access is wanted. The current public visibility already allows anyone to view the repository.
@@ -19,3 +19,10 @@ Status here is a hand-maintained coordination aid. Update it when work is verifi
 - [x] Run docs/founding-refunds.sql in Supabase. Done 28 October 2026: founding_reservations now allows the refunded state and has the stripe_payment_intent_id, stripe_refund_id, refunded_at and refund_reason columns plus the payment index. No reservation had been paid at that point (one held, three released).
 - [ ] Add the charge.refunded event to the Stripe webhook endpoint.
 - [ ] Test with one Stripe test-mode holding payment: refund it from /admin/refunds.html and check the reservation shows refunded and the place count drops.
+- [ ] After the next real or test-mode payment, check Stripe returns the buyer to https://www.mounirinstitute.com/checkout-success.html (fixed 28 October 2026; before that it sent buyers to a Vercel login page).
+
+Owner decisions raised by the 28 October 2026 bug sweep (not changed):
+- [ ] The questionnaire asks which kind of learning someone wants, but its results always offer the £25 Applied Maqamaat hold, whatever they chose. Decide whether the recorded course or 1-to-1 mentoring should be offered there too.
+- [ ] checkout.html?plan=monthly charges £159 today, while the site says £159 a month from launch; and ?plan=mentoring sells £299 a month without the assessment. Neither is linked from the site. Decide whether to switch them off.
+- [ ] The £299 plan has four names (Private Mentorship, 1-to-1 Mentoring with Hassan Mounir, 1-to-1 Learning with Qari Hassan Mounir, VIP Private Mentorship). Pick one.
+- [ ] thank-you.html is an old Stripe test-mode page that is still live (not linked, marked noindex). Decide whether to delete it.

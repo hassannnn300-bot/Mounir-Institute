@@ -7,7 +7,9 @@ export default async function handler(req, res) {
   }
 
   const origin = req.headers.origin;
-  const canonicalOrigin = "https://mounir-institute-hassannnn300-7147.vercel.app";
+  // Stripe sends customers back here after paying. It must be the public site: the *.vercel.app
+  // deployment address is behind Vercel's login (Deployment Protection), so it cannot be used.
+  const canonicalOrigin = "https://www.mounirinstitute.com";
   const configuredSiteUrl = (process.env.SITE_URL || canonicalOrigin).trim();
   let baseUrl;
   try {
@@ -17,6 +19,7 @@ export default async function handler(req, res) {
     // requests made from the current production site.
     const allowedOrigins = new Set([
       canonicalOrigin,
+      "https://mounir-institute-hassannnn300-7147.vercel.app",
       "https://mounir-institute.vercel.app",
       "https://mounirinstitute.com",
       "https://www.mounirinstitute.com",
@@ -34,7 +37,7 @@ export default async function handler(req, res) {
   } catch (error) {
     console.error("Invalid SITE_URL configuration:", error && error.message);
     return res.status(503).json({
-      error: "Checkout configuration issue: Vercel's SITE_URL must be a full valid URL, for example https://mounir-institute-hassannnn300-7147.vercel.app (without quotes or extra spaces)."
+      error: "Checkout configuration issue: Vercel's SITE_URL must be a full valid URL, for example https://www.mounirinstitute.com (without quotes or extra spaces)."
     });
   }
 
@@ -104,6 +107,11 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: "Please tick the box asking for immediate access to the recorded lessons before continuing." });
   }
 
+  const email = typeof body.email === "string" ? body.email.trim().slice(0, 254) : "";
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return res.status(400).json({ error: "Enter a valid email address." });
+  }
+
   let reservationId=null;
   const db=(process.env.SUPABASE_URL||"").replace(/\/$/,"")+"/rest/v1";
   const auth={apikey:process.env.SUPABASE_SERVICE_ROLE_KEY,Authorization:"Bearer "+process.env.SUPABASE_SERVICE_ROLE_KEY,"Content-Type":"application/json"};
@@ -117,19 +125,35 @@ export default async function handler(req, res) {
       if(!lookup.ok)return res.status(503).json({error:"Could not verify your application."});
       const rows=await lookup.json();if(!rows.length||!rows[0].presale_interest)return res.status(403).json({error:"Please complete the Applied Maqamaat application before paying."});
       if(["declined","withdrawn"].includes(rows[0].status))return res.status(403).json({error:"This application is not eligible for presale payment."});
+      // A visitor who reloads checkout, or redoes the questionnaire, already has an unpaid hold. Clear it so they
+      // can continue, but first ask Stripe whether that earlier checkout was completed, so a payment that is still
+      // being confirmed is never released or charged twice. Every application with this email counts as one person.
+      const appsLookup=await fetch(db+"/founding_applications?email=eq."+encodeURIComponent(requestedEmail)+"&select=id&order=created_at.desc&limit=50",{headers:auth});
+      if(!appsLookup.ok)return res.status(503).json({error:"Could not verify your application."});
+      const appIds=(await appsLookup.json()).map(a=>a.id).filter(id=>/^[0-9a-f-]{36}$/i.test(id));
+      if(appIds.length){
+        const prior=await fetch(db+"/founding_reservations?application_id=in.("+appIds.join(",")+")&state=in.(held,paid)&select=id,state,stripe_session_id",{headers:auth});
+        if(!prior.ok)return res.status(503).json({error:"Could not check your reservation."});
+        const priorRows=await prior.json();
+        if(priorRows.some(r=>r.state==="paid"))return res.status(409).json({error:"You have already paid the £25 holding payment, so your place is reserved. If anything looks wrong, email info@mounirinstitute.com."});
+        for(const r of priorRows){
+          if(r.stripe_session_id){
+            const sessionCheck=await fetch("https://api.stripe.com/v1/checkout/sessions/"+encodeURIComponent(r.stripe_session_id),{headers:{Authorization:"Bearer "+secretKey.trim()}});
+            const session=sessionCheck.ok?await sessionCheck.json():null;
+            if(session&&session.status==="complete")return res.status(409).json({error:"We have received your £25 holding payment and are confirming it. Your place is reserved; there is no need to pay again."});
+            if(session&&session.status==="open")await fetch("https://api.stripe.com/v1/checkout/sessions/"+encodeURIComponent(r.stripe_session_id)+"/expire",{method:"POST",headers:{Authorization:"Bearer "+secretKey.trim()}});
+          }
+          await fetch(db+"/founding_reservations?id=eq."+encodeURIComponent(r.id)+"&state=eq.held",{method:"PATCH",headers:auth,body:JSON.stringify({state:"released"})});
+        }
+      }
       const hold=await fetch(db+"/rpc/hold_founding_place",{method:"POST",headers:auth,body:JSON.stringify({p_application_id:rows[0].id})});
       if(!hold.ok)return res.status(503).json({error:"Reservations are not configured. No payment was started."});
       const seat=(await hold.json())[0];
       if(!seat||seat.result==="full")return res.status(409).json({error:"All 30 places are taken. Enrolment is closed."});
-      if(seat.result==="existing")return res.status(409).json({error:"You already have a reservation in progress. Please contact info@mounirinstitute.com."});
+      if(seat.result==="existing")return res.status(409).json({error:"Your reservation is already being processed. Please wait a minute and try again, or email info@mounirinstitute.com."});
       if(seat.result!=="held")return res.status(403).json({error:"This application is not eligible."});
       reservationId=seat.reservation_id;
     }catch(e){return res.status(503).json({error:"Application verification is unavailable. No payment was started."});}
-  }
-
-  const email = typeof body.email === "string" ? body.email.trim().slice(0, 254) : "";
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return res.status(400).json({ error: "Enter a valid email address." });
   }
 
   const params = new URLSearchParams();

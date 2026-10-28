@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Holding payments | Mounir Institute owners</title>
+<link rel="icon" type="image/png" href="/assets/FC8AA526-0245-40EA-8E99-F30B74C9E950.png?v=3">
 <style>
 :root{--bg:#090909;--panel:#141310;--line:#57452966;--gold:#d7b56d;--gold2:#f0dca5;--cream:#f7f4ec;--muted:#a9a293;--danger:#e0a3a3;--ok:#9fcfb0}
 *{box-sizing:border-box}
@@ -98,7 +99,7 @@ th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute
       tr.append(cell("Applicant", a.name || "Unknown", sub(a.email || "")));
       tr.append(cell("Application", a.status || "", sub(a.appliedAt ? "Applied " + when(a.appliedAt) : "")));
       tr.append(cell("Payment", badge(r.state), sub(r.paidAt ? "Paid " + when(r.paidAt) : "Hold created " + when(r.createdAt))));
-      const refundText = r.state === "refunded" ? (r.refundReason === "withdrawn" ? "Withdrew" : "Not offered a place") : "";
+      const refundText = r.state === "refunded" ? (r.refundReason === "withdrawn" ? "Withdrew" : r.refundReason === "declined" ? "Not offered a place" : "Refunded in Stripe") : "";
       tr.append(cell("Refund", refundText, sub(r.refundedAt ? when(r.refundedAt) + (r.stripeRefundId ? " · " + r.stripeRefundId : "") : "")));
       const actions = document.createElement("div"); actions.className = "actions";
       if (r.state === "paid") {

@@ -28,7 +28,11 @@
       };
       var place = function () {
         queued = 0;
-        if (win.getComputedStyle(glide).display === "none") { placed = false; glide.classList.remove("ready", "on"); halo.classList.remove("ready", "on"); return; }
+        if (win.getComputedStyle(glide).display === "none") {
+          /* Phones use the per-card glow. Reset once, so this does not keep re-triggering itself. */
+          if (placed) { placed = false; lastSpot = ""; glide.classList.remove("ready", "on", "moving"); halo.classList.remove("ready", "on", "moving"); }
+          return;
+        }
         var step = section.querySelector(".method-step.is-active") || section.querySelector(".method-step");
         if (!step) return;
         var card = step.querySelector(".method-card"), num = step.querySelector(".method-number");
@@ -49,7 +53,9 @@
         }
       };
       var queue = function () { if (!queued) queued = win.requestAnimationFrame(place); };
-      new MutationObserver(queue).observe(track, { subtree: true, attributes: true, attributeFilter: ["class"] });
+      /* Watch only the principle cards, so the light's own class changes never wake this up. */
+      var watcher = new MutationObserver(queue);
+      Array.prototype.forEach.call(track.querySelectorAll(".method-step"), function (step) { watcher.observe(step, { attributes: true, attributeFilter: ["class"] }); });
       if ("ResizeObserver" in win) new ResizeObserver(queue).observe(track);
       win.addEventListener("resize", queue);
       queue();
