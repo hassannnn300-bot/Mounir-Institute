@@ -38,6 +38,6 @@ Inspect the current source before describing implementation details. File names 
 
 A prior user report said they could not proceed after filling in the questionnaire detail form. They also asked for the same email address and phone number to be reusable for multiple submissions when the submitted details are correct.
 
-On 23 October 2026 the application endpoint was changed to accept repeat email addresses and phone numbers, and docs/founding-applications.sql now drops the database uniqueness rule on email. Whether that SQL has been run against the live Supabase project has not been verified; see TASKS.md.
+On 23 October 2026 the application endpoint was changed to accept repeat email addresses and phone numbers, and docs/founding-applications.sql now drops the database uniqueness rule on email. On 28 October 2026 the live Supabase project was found to still have that rule, which made Secure My Place fail for returning applicants. The endpoint now updates the existing application for that email when the database refuses a second record, until the SQL is run; see TASKS.md.
 
 This is a reported requirement, not a verified diagnosis or confirmation that the current code still has the issue. See TASKS.md before changing validation or record-handling behaviour.
