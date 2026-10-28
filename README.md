@@ -23,6 +23,7 @@ These documents are the shared project notes. Separate ChatGPT accounts do not a
 - waiting-list.html — waiting list page.
 - api/ — serverless JavaScript endpoints for applications, checkout, the Stripe webhook and the owners' refunds.
 - admin/refunds.html — the owners' page for refunding holding payments (token-protected).
+- assets/motion.css and assets/motion.js — the homepage animation layer (hero rosettes, gold dust and voice waves, section reveals, card and button effects). Decoration only; it switches itself off for visitors who ask for reduced motion.
 - docs/ — SQL setup files for the application data.
 - privacy.html, cookies.html, terms.html, and safeguarding.html — policy pages.
 - vercel.json — Vercel routing and deployment configuration.
