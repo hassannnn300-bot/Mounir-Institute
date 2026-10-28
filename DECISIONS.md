@@ -1,5 +1,13 @@
 # Decisions and open questions
 
+## 2026-10-28
+
+- The intake is called Applied Maqamaat, never the Founding Class. The £159 a month plan is the Maqamaat Intensive everywhere; the name Monthly Learning is retired.
+- The £25 is a holding payment, not a reservation fee. It comes off the first month if the applicant starts, and is refunded in full if they are not offered a place or decide not to go ahead. Stripe, the site and the terms now all say this.
+- Student records and recordings are kept for 3 years after a student leaves, and applications that do not lead to a place for 3 years after last contact. This matches the learning platform's privacy policy.
+- The site is hosted on Vercel only. The GitHub Pages workflow was removed because it published a second copy of the site where checkout could not work.
+- Pull request #1 from Taaha's fork is superseded by the applied-maqamaat-wording branch, which applies the same wording on top of the 23 October changes.
+
 ## 2026-10-21
 
 - Repository visibility was checked through GitHub and is currently public. No visibility change was made.
