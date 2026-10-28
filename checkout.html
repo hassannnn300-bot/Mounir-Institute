@@ -264,42 +264,39 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
 <body>
 <header class="site-topbar" id="top"><div class="topbar-inner"><a class="topbar-logo" href="index.html#top" aria-label="Mounir Institute home"><img src="/assets/FC8AA526-0245-40EA-8E99-F30B74C9E950.png" alt="Mounir Institute"><span class="topbar-brand-name"><span>Mounir</span><span>Institute</span></span></a><nav class="topbar-links" aria-label="Main navigation"><a href="index.html#top">Home</a><details class="topbar-dropdown"><summary>Discover <span aria-hidden="true">⌄</span></summary><div class="topbar-menu"><a href="index.html#approach">Our approach</a><a href="index.html#teachers">Learning journey</a><a href="index.html#testimonials">Student stories</a></div></details><details class="topbar-dropdown"><summary>Courses <span aria-hidden="true">⌄</span></summary><div class="topbar-menu"><a href="index.html#programmes">Explore our programmes</a><a href="index.html#journey">Find your learning path</a><a href="assessment.html">Apply for 1-to-1 mentoring</a></div></details><a href="index.html#faq">FAQs</a></nav><a class="topbar-cta" href="index.html#journey">Get started <span aria-hidden="true">→</span></a></div></header>
 <main>
-  <div class="eyebrow" id="checkout-eyebrow">Your journey starts here · Secure checkout</div>
+  <div class="eyebrow" id="checkout-eyebrow">Secure checkout</div>
   <h1 id="checkout-title">Invest in your <em style="color:var(--light)">recitation.</em></h1>
-  <p class="intro" id="checkout-intro">Enrol securely with Stripe.</p>
   <div class="layout checkout-layout">
     <aside class="panel summary">
-      <div class="number">Your selected learning path</div><span class="pill">SECURE STRIPE CHECKOUT</span>
+      <div class="number" id="summary-label">Your learning path</div>
       <h2 class="plan-title" id="plan-name">Recorded Maqamaat Lessons</h2>
       <p class="note" id="plan-desc">Learn at your pace.</p>
       <div class="price" id="price">£250 <small>one-time</small></div>
       <ul id="features"></ul>
       <div class="total"><span id="total-label">Due today</span><strong id="total">£250</strong></div>
       <p class="note" id="renewal">One-time payment. No recurring charge.</p>
-      <div class="divider"></div><a class="small-link" href="index.html#programmes">← Return to choose another option</a>
+      <a class="small-link" href="index.html#programmes">← Choose a different option</a>
     </aside>
-        <section class="panel">
-      <div class="number">01 / Your details & payment</div>
-      <h2 style="margin-top:7px" id="details-heading">Complete your enrolment</h2>
-      <p class="note" id="details-copy">Your contact details are carried over from the questionnaire, so you can continue without entering your email again.</p>
-      <div class="divider"></div>
-      <h2 style="margin-top:7px" id="payment-heading">Secure payment details</h2>
-      <p class="note" id="payment-copy">Pay securely below.</p>
+        <section class="panel payment-panel">
+      <div class="number">Payment</div>
+      <h2 id="payment-heading">Pay securely</h2>
+      <p class="note" id="payment-copy">Your details are carried over from the questionnaire, so you only need to add your payment details.</p>
       <div id="status" class="status" role="status" aria-live="polite"></div>
       <div id="embedded-checkout"></div>
-      <button class="cta" id="start-payment" type="button">Load secure payment form →</button>
+      <button class="cta" id="start-payment" type="button">Continue to payment →</button>
       <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
-      <p class="fine">Payments are securely processed by Stripe. Every purchase has a 7-day money-back guarantee. The £25 holding payment is refunded in full if you do not go ahead.</p>
+      <p class="fine" id="guarantee">Covered by our 7-day money-back guarantee. <a href="terms.html">Terms &amp; Refunds</a></p>
     </section>
   </div>
 </main>
 <script>
 (() => {
   const plans = {
-    recorded: {name:"Recorded Maqamaat Lessons",desc:"Learn at your pace.",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"One-time payment. No recurring charge."},
-    monthly: {name:"Maqamaat Intensive",desc:"Live lessons and community.",price:"£159",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£159 today, then £159 monthly until cancelled."},
-    founding_presale: {name:"Applied Maqamaat Place Reservation",desc:"30 places only, first come, first served. £25 holds your place and comes off your first month if you start. Refunded in full if you are not offered a place or decide not to go ahead. £159/month begins at launch with your authorisation. Once full, enrolment closes.",price:"£25",period:"one-time reservation",features:["30 places only, first come, first served","No recurring payment starts today","£25 credited towards your first month","Refunded in full if you do not go ahead"],renewal:"One-time £25 holding payment. Comes off your first month if you start. Refunded in full if you do not go ahead. No recurring charge."},
-    mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"Personal mentoring with Hassan Mounir.",price:"£299",period:"per month",features:["Everything in the Maqamaat Intensive","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£299 today, then £299 monthly until cancelled."}
+    // Each plan states its points once: the summary card holds the key points, the payment card holds the payment.
+    recorded: {name:"Recorded Maqamaat Lessons",desc:"",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"No recurring charge."},
+    monthly: {name:"Maqamaat Intensive",desc:"",price:"£159",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£159 today, then £159 monthly until cancelled."},
+    founding_presale: {name:"Applied Maqamaat Place Reservation",desc:"A place on the Maqamaat Intensive, £159 a month from launch.",price:"£25",period:"one-time holding payment",features:["30 places, first come, first served. Enrolment closes when they are filled.","If you are offered a place and start, the £25 comes off your first month.","Refunded in full if you are not offered a place or decide not to go ahead.","Not a subscription. No monthly charge starts until launch, and only with your separate authorisation."],renewal:""},
+    mentoring: {name:"1-to-1 Learning with Qari Hassan Mounir",desc:"",price:"£299",period:"per month",features:["Everything in the Maqamaat Intensive","1-to-1 learning with Qari Hassan Mounir","Two online lessons each week","Private community and daily activities"],renewal:"£299 today, then £299 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
   const planKey = Object.prototype.hasOwnProperty.call(plans,key) ? key : "recorded";
@@ -310,20 +307,24 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   let savedEmail = "";
   try { savedEmail = (sessionStorage.getItem("mounir_checkout_email") || localStorage.getItem("mounir_checkout_email") || "").trim(); } catch(e) {}
   if(planKey === "founding_presale") {
-    document.getElementById("checkout-eyebrow").textContent = "Applied Maqamaat · Reserve your place";
+    document.getElementById("checkout-eyebrow").textContent = "Applied Maqamaat";
     document.getElementById("checkout-title").innerHTML = 'Reserve your <em style="color:var(--light)">place.</em>';
-    document.getElementById("checkout-intro").textContent = "Pay £25 to hold one of 30 places. First come, first served. Refunded in full if you do not go ahead.";
-    document.getElementById("details-heading").textContent = "Reserve your place";
-    document.getElementById("details-copy").textContent = "Only 30 places. £25 holds your place, subject to availability.";
-    document.getElementById("payment-heading").textContent = "Secure reservation payment";
-    document.getElementById("payment-copy").textContent = "Pay £25 once today. It comes off your first month. No monthly subscription starts now.";
+    document.getElementById("summary-label").textContent = "Your reservation";
+    document.getElementById("payment-copy").textContent = "Your details are carried over from your application, so you only need to add your payment details.";
     button.textContent = "Reserve your place →";
+  }
+  if(planKey === "recorded") {
+    document.getElementById("payment-copy").textContent = "Enter the email address for your receipt and course access.";
+    // The acknowledgement below already mentions the money-back guarantee, so it is not repeated underneath.
+    document.getElementById("guarantee").hidden = true;
   }
   document.getElementById("plan-name").textContent = plan.name;
   document.getElementById("plan-desc").textContent = plan.desc;
   document.getElementById("price").innerHTML = plan.price + ' <small>' + plan.period + '</small>';
   document.getElementById("total").textContent = plan.price;
   document.getElementById("renewal").textContent = plan.renewal;
+  document.getElementById("plan-desc").hidden = !plan.desc;
+  document.getElementById("renewal").hidden = !plan.renewal;
   document.getElementById("features").replaceChildren(...plan.features.map(text => {const li=document.createElement("li");li.textContent=text;return li;}));
   if(planKey !== "recorded") document.getElementById("total-label").textContent = "Due today";
   function showStatus(message){status.textContent=message;status.classList.add("show");}
@@ -392,11 +393,11 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       checkoutMounted = true;
       if(consentBox) consentBox.disabled = true;
       button.hidden = true;
-      showStatus(planKey === "founding_presale" ? "Secure reservation payment ready. You can request a refund within 7 days of purchase under our 7-day money-back guarantee by emailing info@mounirinstitute.com." : "Secure payment form ready. Complete your payment below.");
+      showStatus("Your payment form is ready below.");
     } catch (error) {
       showStatus(checkoutStage + ": " + (error.message || "Could not load secure checkout. Please try again."));
       button.disabled = false;
-      button.textContent = planKey === "founding_presale" ? "Try reserving your place again →" : "Try secure checkout again →";
+      button.textContent = planKey === "founding_presale" ? "Try reserving your place again →" : "Try again →";
     }
   });
 })();
@@ -842,7 +843,7 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 <footer class="footer mi-footer" id="contact"><div class="wrap">
 <img class="mi-footer-logo" src="/assets/FC8AA526-0245-40EA-8E99-F30B74C9E950.png" alt="Mounir Institute logo" loading="lazy">
 <h2 class="mi-footer-title">MOUNIR INSTITUTE</h2>
-<p class="mi-footer-tag">Learn the Maqamaat. Master your recitation. Inspire the next generation.</p><p class="mi-footer-tag">Our 7-day money-back guarantee gives you peace of mind.</p>
+<p class="mi-footer-tag">Learn the Maqamaat. Master your recitation. Inspire the next generation.</p>
 <div class="mi-footer-socials" aria-label="Social media">
 <a href="https://www.instagram.com/hassanmounirofficial/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm5.5-3a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"/></svg></a>
 <a href="https://www.tiktok.com/@hassanmounirofficial" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.7 2c.3 2.5 1.7 4 4.3 4.2v3.3a9 9 0 0 1-4.3-1.1v6.5c0 4.3-3.1 7.1-7.1 7.1a7 7 0 0 1-7-7c0-4.3 3.5-7.4 8-7v3.5c-2.6-.7-4.6 1-4.6 3.5a3.5 3.5 0 0 0 7 0V2h3.7z"/></svg></a>
@@ -995,4 +996,45 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
  .site-topbar .topbar-brand-name span:first-child,
  .site-topbar .topbar-brand-name span:last-child{font-size:12px!important}
 }
+</style>
+
+<style id="checkout-refresh">
+/* Checkout tidy-up (28 October 2026): one focused column, the key points in the first card and the payment
+   in the second. Kept last in the file, and prefixed with "html body", so it wins over the earlier blocks. */
+html body .site-topbar { max-width: none !important; width: auto !important; margin: 0 !important; }
+html body main { max-width: 720px !important; margin: clamp(32px, 6vw, 56px) auto 88px !important; padding: 0 18px !important; }
+html body main > .eyebrow { text-align: center; }
+html body main > h1 { text-align: center; margin: 10px 0 clamp(24px, 4vw, 34px) !important; font-size: clamp(2.4rem, 7vw, 3.5rem) !important; line-height: 1.08 !important; }
+html body .checkout-layout { display: grid !important; grid-template-columns: minmax(0, 1fr) !important; gap: 16px !important; max-width: none !important; }
+html body .checkout-layout > .panel { padding: clamp(22px, 4.5vw, 34px) !important; border-radius: 16px !important; }
+html body .checkout-layout .panel .number { margin: 0 0 10px !important; }
+
+/* First card: what you are buying, each point once */
+html body .summary { border-color: rgba(215, 181, 109, .32) !important; }
+html body .summary .plan-title { margin: 0 0 6px !important; font-size: clamp(1.4rem, 3.6vw, 1.75rem) !important; line-height: 1.25 !important; }
+html body .summary #plan-desc { margin: 0 0 4px !important; color: var(--muted) !important; font-size: .95rem !important; }
+html body .summary .price { display: flex !important; align-items: baseline; gap: 10px; margin: 18px 0 8px !important; font-size: clamp(2.4rem, 7vw, 3rem) !important; line-height: 1 !important; }
+html body .summary .price small { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: .82rem; color: var(--muted); letter-spacing: .02em; }
+html body #features { margin: 16px 0 4px !important; padding: 0 !important; list-style: none !important; }
+html body #features li { display: flex !important; gap: 12px; align-items: flex-start; padding: 12px 0 !important; border-bottom: 1px solid rgba(215, 181, 109, .12) !important; font-size: .95rem !important; line-height: 1.5 !important; color: #e8dfcb !important; }
+html body #features li:last-child { border-bottom: 0 !important; }
+html body #features li::before {
+  content: "" !important; flex: 0 0 20px; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%;
+  border: 1px solid rgba(215, 181, 109, .5);
+  background: rgba(215, 181, 109, .12) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.8 8.4l2.8 2.8 5.6-6.4' fill='none' stroke='%23f0dca5' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 12px no-repeat;
+}
+html body .summary .total { display: flex !important; justify-content: space-between; align-items: center; margin: 14px 0 0 !important; padding: 16px 0 0 !important; border-top: 1px solid rgba(215, 181, 109, .35) !important; font-size: .95rem !important; }
+html body .summary .total strong { font: 400 1.6rem/1 Georgia, "Times New Roman", serif !important; color: var(--light) !important; }
+html body .summary #renewal { margin: 8px 0 0 !important; font-size: .85rem !important; }
+html body .summary .small-link { display: inline-block; margin-top: 18px !important; font-size: .85rem !important; }
+
+/* Second card: the payment only */
+html body .payment-panel #payment-heading { margin: 0 0 6px !important; font: 400 clamp(1.4rem, 3.6vw, 1.75rem)/1.25 Georgia, "Times New Roman", serif !important; }
+html body .payment-panel #payment-copy { margin: 0 0 18px !important; color: var(--muted) !important; font-size: .95rem !important; }
+html body .payment-panel #start-payment { width: 100% !important; margin: 4px 0 0 !important; padding: 16px 20px !important; font-size: 1rem !important; }
+html body .payment-panel #embedded-checkout:empty { min-height: 0 !important; margin: 0 !important; }
+html body .payment-panel #embedded-checkout:not(:empty) { margin: 6px 0 4px !important; }
+html body .payment-panel .secure-note { justify-content: center; margin: 16px 0 0 !important; }
+html body .payment-panel .fine { margin: 8px 0 0 !important; text-align: center !important; }
+html body .payment-panel .fine a { color: var(--light); }
 </style>

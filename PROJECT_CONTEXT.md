@@ -32,7 +32,7 @@ This is a multi-page HTML website. The main page is index.html; assessment.html 
 
 The owners' page admin/refunds.html, backed by api/admin-holding-payments.js, lists and refunds the £25 holding payments; api/stripe-webhook.js records payments and refunds in the founding_reservations table (SQL in docs/).
 
-The homepage's animations live in assets/motion.css and assets/motion.js, loaded by index.html; the page works without them.
+The homepage's added motion (button glows, the gold light that follows the mouse, the principles glow) lives in assets/motion.css and assets/motion.js, loaded by index.html; the page works without them. The principles glow timing is in the inline script that toggles .is-active in index.html.
 
 Inspect the current source before describing implementation details. File names alone do not prove the runtime behaviour or the current production configuration.
 
