@@ -4,6 +4,8 @@ Status here is a hand-maintained coordination aid. Update it when work is verifi
 
 - [x] Reproduce the reported issue where the user cannot continue after completing the questionnaire detail form. Done 28 October 2026: the repeat-email database rule was fixed, and a site-wide bug sweep fixed the related questionnaire problems (see DECISIONS.md). Verified in headless Chrome.
 - [x] If the issue is still present, fix the actual failing step and record how it was verified.
+- [x] Phone-first premium finish. Done 29 October 2026: one shared header and footer on every page (assets/site.css, assets/site.js), header dropdowns that open on Android taps (they used to close straight away), 16px form fields so iPhones do not zoom, a lighter cropped emblem, a stronger gradient on the lit principle, and link-preview tags pointing at www.mounirinstitute.com. Verified in headless Chrome at 360, 390, 430, 768 and 1280px on all eleven pages.
+- [ ] Check the header menus on a real iPhone and Android phone after the next deploy.
 - [ ] Support multiple valid submissions that reuse the same email address and phone number. First decide the intended record behaviour and verify it against the current schema; do not reject a submission only because its contact details were used before.
 - [ ] Recheck the prices, launch wording, place limits, and programme terms in index.html before changing public copy or checkout behaviour.
 - [ ] Ask the repository owner for the co-partner’s exact GitHub username if write access is wanted. The current public visibility already allows anyone to view the repository.

@@ -32,6 +32,8 @@ This is a multi-page HTML website. The main page is index.html; assessment.html 
 
 The owners' page admin/refunds.html, backed by api/admin-holding-payments.js, lists and refunds the £25 holding payments; api/stripe-webhook.js records payments and refunds in the founding_reservations table (SQL in docs/).
 
+The shared header, footer and phone layout for every public page live in assets/site.css and assets/site.js. Each page's footer keeps a span with id year, which the homepage questionnaire script needs.
+
 The homepage's added motion (button glows, the gold light that follows the mouse, the principles glow) lives in assets/motion.css and assets/motion.js, loaded by index.html; the page works without them. The principles glow order and timing are in the inline script that toggles .is-active in index.html; motion.js moves the gliding light to whichever card is active.
 
 Inspect the current source before describing implementation details. File names alone do not prove the runtime behaviour or the current production configuration.
