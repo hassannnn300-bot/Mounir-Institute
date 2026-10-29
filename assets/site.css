@@ -105,6 +105,8 @@ html body #top.site-topbar .topbar-dropdown > summary > span[aria-hidden]::befor
 }
 html body #top.site-topbar .topbar-dropdown[open] > summary > span[aria-hidden]::before { transform: rotate(-135deg) !important; top: 3px !important; opacity: 1 !important; }
 html body #top.site-topbar .topbar-dropdown > summary::after { content: none !important; }
+/* Older page styles drew a second chevron on the same span; only the one above is kept. */
+html body #top.site-topbar .topbar-dropdown > summary > span[aria-hidden]::after { content: none !important; display: none !important; }
 
 /* Dropdown panel (desktop: a floating card under its button) */
 @keyframes mi-menu-in { from { opacity: 0; transform: translate(-50%, -6px) scale(.98); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }

@@ -53,9 +53,9 @@ html #method #method-title .gold {
 
 /* ---------- The four principles: the white glow flows from card to card ----------
    The page's script moves .is-active along the visible cards. Here each change cross-fades slowly
-   instead of snapping, a soft sheen drifts across the lit card, and its number's halo breathes. */
+   instead of snapping (in under a second), a soft sheen drifts across the lit card, and its number's halo breathes. */
 html.mi-motion #method .method-step .method-card {
-  transition: border-color 1.6s cubic-bezier(.45, 0, .2, 1), box-shadow 1.6s cubic-bezier(.45, 0, .2, 1), background-color 1.6s ease !important;
+  transition: border-color .8s cubic-bezier(.45, 0, .2, 1), box-shadow .8s cubic-bezier(.45, 0, .2, 1), background-color .8s ease !important;
 }
 html.mi-motion #method .method-step .method-card::before {
   background:
@@ -63,15 +63,15 @@ html.mi-motion #method .method-step .method-card::before {
     linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, .07) 44%, rgba(255, 248, 228, .13) 50%, rgba(215, 181, 109, .07) 56%, transparent 75%) !important;
   background-size: 100% 100%, 260% 100% !important;
   background-repeat: no-repeat !important;
-  transition: opacity 1.6s cubic-bezier(.45, 0, .2, 1) !important;
+  transition: opacity .8s cubic-bezier(.45, 0, .2, 1) !important;
 }
 html.mi-motion #method .method-step.is-active .method-card::before { animation: mi-sheen 7s ease-in-out infinite alternate !important; }
-html.mi-motion #method .method-card h3, html.mi-motion #method .method-step-tag { transition: color 1.4s ease, text-shadow 1.4s ease !important; }
-html.mi-motion #method .method-number { transition: border-color 1.6s ease, color 1.6s ease, background-color 1.6s ease !important; }
+html.mi-motion #method .method-card h3, html.mi-motion #method .method-step-tag { transition: color .7s ease, text-shadow .7s ease !important; }
+html.mi-motion #method .method-number { transition: border-color .8s ease, color .8s ease, background-color .8s ease !important; }
 html.mi-motion #method .method-number::after {
   content: ""; position: absolute; inset: -1px; border-radius: 50%; pointer-events: none;
   box-shadow: 0 0 16px rgba(255, 255, 255, .42), 0 0 34px rgba(255, 255, 255, .16);
-  opacity: 0; transition: opacity 1.6s cubic-bezier(.45, 0, .2, 1);
+  opacity: 0; transition: opacity .8s cubic-bezier(.45, 0, .2, 1);
 }
 html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1; animation: mi-halo 3.4s ease-in-out infinite; }
 
@@ -112,7 +112,7 @@ html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1
 .mi-glide-halo::after { content: ""; position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 22px rgba(255, 255, 255, .3); animation: mi-halo 3.4s ease-in-out infinite; }
 .mi-glide.on, .mi-glide-halo.on { opacity: 1; transition: opacity .8s ease; }
 .mi-glide.ready, .mi-glide-halo.ready {
-  transition: transform 1.7s cubic-bezier(.65, 0, .35, 1), width 1.7s cubic-bezier(.65, 0, .35, 1), height 1.7s cubic-bezier(.65, 0, .35, 1),
+  transition: transform .85s cubic-bezier(.65, 0, .35, 1), width .85s cubic-bezier(.65, 0, .35, 1), height .85s cubic-bezier(.65, 0, .35, 1),
     opacity .8s ease, border-color .7s ease, box-shadow .7s ease;
 }
 .mi-glide.moving { box-shadow: 0 0 44px rgba(255, 236, 190, .14), 0 0 100px rgba(215, 181, 109, .08), inset 0 0 40px rgba(255, 244, 214, .05); }
@@ -134,7 +134,7 @@ html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1
     border-radius: inherit !important; padding: 1.5px !important; pointer-events: none !important;
     background: var(--mi-lit-edge) !important;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important; -webkit-mask-composite: xor !important; mask-composite: exclude !important;
-    opacity: 0 !important; transition: opacity 1.2s ease !important; animation: none !important;
+    opacity: 0 !important; transition: opacity .7s ease !important; animation: none !important;
   }
   html #method .method-step.is-active .method-card {
     background: var(--mi-lit-fill), linear-gradient(160deg, #1d1b16 0%, #0f0e0c 100%) !important;

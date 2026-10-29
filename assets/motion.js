@@ -43,7 +43,7 @@
         if (placed && lastSpot && spot !== lastSpot) {
           glide.classList.add("moving"); halo.classList.add("moving");
           win.clearTimeout(settle);
-          settle = win.setTimeout(function () { glide.classList.remove("moving"); halo.classList.remove("moving"); }, 1250);
+          settle = win.setTimeout(function () { glide.classList.remove("moving"); halo.classList.remove("moving"); }, 650);
         }
         lastSpot = spot;
         if (!placed) {
