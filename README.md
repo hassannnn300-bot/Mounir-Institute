@@ -27,7 +27,8 @@ These documents are the shared project notes. Separate ChatGPT accounts do not a
 - assets/images/hassan-mounir-stage.webp and assets/images/teacher-*.webp: the homepage photos as WebP (made 31 October 2026). The stage photo is cropped from IMG_8642.jpeg, a phone screenshot, to rows 836 to 1491, the only part the page ever showed; every reference to it (the img, the hidden background layers, the ratio script) uses this one file so it downloads once. teacher-moulay-mounir.webp replaces the 6.9 MB IMG_9031.PNG at 800px wide. The original files are kept but no page links them. Add new photos as WebP at no more than twice their display width.
 - assets/mounir-emblem.webp: the logo mark (388x480, transparent, 37 KB) used in the header, footer and video thumbnails. It and every icon (favicon.ico, assets/icons/, assets/og-image.png) were made on 31 October 2026 from the owner's 2000x2000 logo file, always at the mark's own proportions. Pages link the tab icons by versioned file names (assets/icons/favicon-v3.ico, icon-192-v3.png, apple-touch-icon-v3.png). When the icon changes, save it under a new file name and update the links: Safari keeps the icon it saved for a page and ignores ?v= query strings. The root /favicon.ico and /apple-touch-icon.png stay for browsers and crawlers that ask for them directly.
 - assets/motion.css and assets/motion.js — the homepage's added motion: the button glows, a soft gold light that follows the mouse, and the flowing glow across the four principles. Decoration only; it switches itself off for visitors who ask for reduced motion.
-- docs/ — SQL setup files for the application data.
+- assets/live-viewers.js and api/live-viewers.js: the "N people viewing now" line on each homepage plan (added 31 October 2026). It counts real visitors only: while a plan card is on someone's screen (all three on a wide screen, the one swiped to on a phone), their page sends a random id every 20 seconds, and a card shows its line only when 2 or more people have it on screen. The id is made fresh on each page load and kept only in memory, so nothing is stored on the visitor's device. Needs `docs/live-viewers.sql` run once in Supabase; until then the endpoint answers nothing and no line shows. Never replace it with a made-up or padded number: fake viewer counts are a misleading practice under UK consumer law.
+- docs/ — SQL setup files for the application data and the live viewer count.
 - privacy.html, cookies.html, terms.html, and safeguarding.html — policy pages.
 - vercel.json — Vercel routing and deployment configuration.
 
@@ -47,7 +48,7 @@ One-off setup:
 | --- | --- |
 | STRIPE_SECRET_KEY, STRIPE_PUBLISHABLE_KEY | Checkout sessions and refunds |
 | STRIPE_WEBHOOK_SECRET | Verifying Stripe webhook signatures |
-| SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY | Applications and reservations |
+| SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY | Applications, reservations and the live viewer count |
 | ADMIN_API_TOKEN | The owners' refunds page |
 | SITE_URL | Optional; the checkout return address |
 

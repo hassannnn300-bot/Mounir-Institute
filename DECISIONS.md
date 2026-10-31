@@ -33,6 +33,7 @@
 - Every live class is recorded, so students can catch up. The site says so on the Intensive card and in the FAQ.
 - The launch date is not set yet. The FAQ says it will be announced soon and that nothing beyond the £25 hold is charged until launch.
 - The Maqamaat Intensive's live classes are taught by another teacher, not Hassan (Hassan, 31 October). Hassan teaches the Maqamaat Mastery 1-to-1 lessons. The Intensive card says "2 live classes a week" without his name; do not name Hassan as the Intensive's teacher. The homepage's search and link-preview description now ties his name to the 1-to-1 lessons instead of the live classes; Google was asked to read the homepage again.
+- The plans show a **real** live viewer count, never an invented one (Hassan asked for "37 people are viewing this package right now" with a changing number; a made-up count is a misleading practice under UK consumer law, so the owners chose a real count instead). Each plan card shows "N people viewing now" only when 2 or more people have that card on screen; otherwise nothing shows. See README.md for how it works.
 - How brothers and sisters are taught is still to be decided (a proposal was put to the owners on 31 October).
 
 ## Open questions

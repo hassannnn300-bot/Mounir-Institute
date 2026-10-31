@@ -379,3 +379,12 @@ html body footer.mi-foot .mf-bottom {
   html body #programmes .price-card .plan-benefits + .plan-subhead { display: none !important; }
   html body #programmes .price-card .excluded-benefits { margin-top: 3px !important; }
 }
+
+/* Live viewers line on each homepage plan (assets/live-viewers.js sets its top, height and right so it sits inside
+   the right end of the label pill; it only appears when 2 or more people have that plan on screen). */
+html body #programmes .price-card > .mi-live { position: absolute !important; top: 0; right: 20px; margin: 0 !important; padding: 0 !important; display: flex !important; align-items: center; gap: 6px; font-size: 11px !important; line-height: 1 !important; font-weight: 600; letter-spacing: .2px; color: rgba(247, 244, 236, .74) !important; white-space: nowrap; pointer-events: none; }
+html body #programmes .price-card > .mi-live[hidden] { display: none !important; }
+html body #programmes .price-card.mi-live-on > .choice-label { text-align: left !important; }
+html body #programmes .price-card > .mi-live .mi-live-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miLivePulse 2s ease-out infinite; }
+@keyframes miLivePulse { 0% { box-shadow: 0 0 0 0 rgba(79, 191, 138, .5); } 70% { box-shadow: 0 0 0 6px rgba(79, 191, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 191, 138, 0); } }
+@media (prefers-reduced-motion: reduce) { html body #programmes .price-card > .mi-live .mi-live-dot { animation: none; } }
