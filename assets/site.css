@@ -255,7 +255,7 @@ html body footer.mi-foot a { margin: 0 !important; text-decoration: none !import
 html body footer.mi-foot .mf-brand { display: inline-flex !important; flex-direction: column !important; align-items: center !important; gap: 16px !important; color: inherit !important; }
 html body footer.mi-foot .mf-brand img {
   display: block !important; width: auto !important; height: 86px !important; max-width: none !important; margin: 0 !important;
-  filter: drop-shadow(0 8px 26px rgba(215, 181, 109, .22)) !important;
+  filter: none !important;
 }
 html body footer.mi-foot .mf-name {
   display: block !important; margin: 0 -.34em 0 0 !important;
