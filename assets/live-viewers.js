@@ -1,7 +1,11 @@
 /* Live viewers (31 October 2026). Each homepage plan card shows "N people viewing now" while that many people have
    it on screen, counted by /api/live-viewers (docs/live-viewers.sql). On a wide screen all three cards are in view;
    on a phone, only the card swiped to. The id below is random, made fresh on each page load and kept only in memory,
-   so nothing is stored on the visitor's device. A card shows its line only when its real count is 2 or more. */
+   so nothing is stored on the visitor's device. A card shows its line only when its real count is 2 or more.
+   The places pop-up also lives here: the first time the plans come on screen, a small card says how many Applied
+   Maqamaat places are taken and left, read from the places block (#founding-class) so the page has one source for
+   that number, and adds "N people viewing the plans now" while 2 or more people really are. It closes after
+   15 seconds, when the plans leave the screen, or with its close button, and shows once per page view. */
 (function () {
   "use strict";
   var doc = document, win = window;
@@ -16,6 +20,33 @@
     line.innerHTML = '<span class="mi-live-dot" aria-hidden="true"></span><span class="mi-live-text"></span>';
     card.appendChild(line); return line;
   });
+  var pop = null, popLive = null, popTimer = 0, popShown = false;
+  var block = doc.querySelector("#founding-class .founding-number"), left = block ? parseInt(block.querySelector("strong").textContent, 10) : NaN;
+  var of = block ? parseInt((block.textContent.match(/open to (\d+)/i) || [])[1], 10) : NaN;
+  if (left > 0 && of > left) {
+    pop = doc.createElement("aside"); pop.className = "mi-places-pop"; pop.hidden = true; pop.setAttribute("aria-label", "Places left");
+    pop.innerHTML = '<button type="button" class="mi-pop-close" aria-label="Close">×</button>' +
+      '<span class="mi-pop-eyebrow">Applied Maqamaat · open to ' + of + ' places</span>' +
+      '<strong class="mi-pop-places">' + (of - left) + ' taken · only ' + left + (left === 1 ? ' place' : ' places') + ' left</strong>' +
+      '<span class="mi-pop-live" hidden><span class="mi-live-dot" aria-hidden="true"></span><span></span></span>' +
+      '<a class="mi-pop-cta" href="#journey">Request Your Place →</a>';
+    doc.body.appendChild(pop);
+    popLive = pop.querySelector(".mi-pop-live");
+    var closePop = function () {
+      clearTimeout(popTimer); pop.classList.remove("in");
+      popTimer = setTimeout(function () { pop.hidden = true; }, 400);
+    };
+    pop.querySelector(".mi-pop-close").addEventListener("click", closePop);
+    pop.querySelector(".mi-pop-cta").addEventListener("click", closePop);
+    var openPop = function () {
+      if (popShown) return; popShown = true;
+      popTimer = setTimeout(function () {
+        pop.hidden = false;
+        win.requestAnimationFrame(function () { win.requestAnimationFrame(function () { pop.classList.add("in"); }); });
+        popTimer = setTimeout(closePop, 15000);
+      }, 1200);
+    };
+  }
   /* Sits inside the right end of the card's label pill, so the card does not grow. Phones centre the label's text,
      so it moves left while the line shows; if the full wording would touch it, the line shortens to "N viewing now". */
   var place = function (line, n) {
@@ -33,6 +64,11 @@
       line.hidden = !on; card.classList.toggle("mi-live-on", on);
       if (on) place(line, n);
     });
+    if (popLive) {
+      var total = counts ? counts.total : 0;
+      popLive.hidden = !(total >= 2);
+      if (!popLive.hidden) popLive.lastChild.textContent = total + " people viewing the plans now";
+    }
   };
   var plans = function () {
     return doc.visibilityState === "visible" ? cards.filter(function (c) { return inView[c.getAttribute("data-plan")]; }).map(function (c) { return c.getAttribute("data-plan"); }) : [];
@@ -59,6 +95,11 @@
   var seen = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) { inView[e.target.getAttribute("data-plan")] = e.isIntersecting; });
     later();
+    if (pop) {
+      var any = function () { return cards.some(function (c) { return inView[c.getAttribute("data-plan")]; }); };
+      /* Same grace as above, so the carousel's slide does not close it. */
+      if (any()) openPop(); else if (popShown) setTimeout(function () { if (!any()) closePop(); }, 1500);
+    }
   }, { threshold: 0.6 });
   cards.forEach(function (card) { seen.observe(card); });
   doc.addEventListener("visibilitychange", later);

@@ -8,8 +8,8 @@ create table if not exists public.live_viewers (
  last_seen timestamptz not null default now()
 );
 alter table public.live_viewers enable row level security;
--- Records which plans this viewer has on screen (none means they left) and returns how many
--- people are viewing each plan, for example {"intensive": 3, "mastery": 1}.
+-- Records which plans this viewer has on screen (none means they left) and returns how many people
+-- are viewing each plan and the plans overall, for example {"intensive": 3, "mastery": 1, "total": 3}.
 create or replace function public.ping_live_viewer(p_viewer_id uuid, p_plans text[])
 returns jsonb language plpgsql security definer set search_path=public as $$
 begin
@@ -23,7 +23,8 @@ begin
  -- A viewer counts while their last ping is under 45 seconds old (pings come every 20 seconds).
  return (select coalesce(jsonb_object_agg(plan, viewers), '{}'::jsonb) from (
    select plan, count(*) as viewers from public.live_viewers, unnest(plans) as plan
-   where last_seen > now() - interval '45 seconds' group by plan) counts);
+   where last_seen > now() - interval '45 seconds' group by plan) counts)
+   || jsonb_build_object('total', (select count(*) from public.live_viewers where last_seen > now() - interval '45 seconds'));
 end $$;
 revoke all on function public.ping_live_viewer(uuid, text[]) from public, anon, authenticated;
 grant execute on function public.ping_live_viewer(uuid, text[]) to service_role;

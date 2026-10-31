@@ -1,4 +1,4 @@
-// How many people have each homepage plan on screen right now. Needs docs/live-viewers.sql run once in Supabase.
+// How many people have each homepage plan, and the plans overall (total), on screen right now. Needs docs/live-viewers.sql run once in Supabase.
 // Until then, or if Supabase is unreachable, it answers counts:null and the page shows nothing.
 const VIEWER_ID=/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 const PLANS=['recorded','intensive','mastery'];
@@ -17,7 +17,7 @@ export default async function handler(req,res){
   const response=await fetch(process.env.SUPABASE_URL.replace(/\/$/,'')+'/rest/v1/rpc/ping_live_viewer',{method:'POST',headers:{apikey:key,Authorization:'Bearer '+key,'Content-Type':'application/json'},body:JSON.stringify({p_viewer_id:id,p_plans:plans})});
   if(!response.ok){console.error('Live viewer count failed',response.status,(await response.text()).slice(0,300));return res.status(200).json({counts:null});}
   const rows=await response.json(),counts={};
-  for(const p of PLANS)counts[p]=rows&&Number.isInteger(rows[p])?rows[p]:0;
+  for(const p of [...PLANS,'total'])counts[p]=rows&&Number.isInteger(rows[p])?rows[p]:0;
   return res.status(200).json({counts});
  }catch{console.error('Live viewer service unavailable');return res.status(200).json({counts:null});}
 }
