@@ -26,6 +26,14 @@
 - The user wants valid submissions to be allowed to reuse the same email address and phone number. The exact duplicate-record, update, and abuse-prevention behaviour remains undecided and must be checked against the current data model before implementation.
 - Website programme details and prices are recorded as a snapshot from index.html, not as permanent business decisions. Recheck them before publishing claims.
 
+## 2026-10-31
+
+- The £299 plan is called **Maqamaat Mastery** everywhere (Hassan asked for "Master Maqamaat or something to that effect"; Maqamaat Mastery matches the Maqamaat Intensive's naming). It replaces Private Mentorship, 1-to-1 Mentoring with Hassan Mounir, 1-to-1 Learning with Qari Hassan Mounir and VIP Private Mentorship. The assessment link keeps ?programme=vip so old links still work.
+- The site shows **27 of 30 places left** on the Applied Maqamaat intake (Hassan's figure). It is written into the page, not counted live; the checkout's database limit (docs/founding-capacity.sql) is still 30 holds. Update both if places are taken outside the website.
+- Every live class is recorded, so students can catch up. The site says so on the Intensive card and in the FAQ.
+- The launch date is not set yet. The FAQ says it will be announced soon and that nothing beyond the £25 hold is charged until launch.
+- How brothers and sisters are taught is still to be decided (a proposal was put to the owners on 31 October).
+
 ## Open questions
 
 - Does the co-partner need view access only, or permission to edit the repository?

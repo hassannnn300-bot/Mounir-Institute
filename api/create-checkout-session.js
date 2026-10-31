@@ -88,7 +88,7 @@ export default async function handler(req, res) {
     },
     founding_presale: {name: "Applied Maqamaat Place Reservation", amount: 2500, mode: "payment", description: "£25 holding payment for an Applied Maqamaat place. Comes off your first month if you start. Refunded in full if you are not offered a place or decide not to go ahead. Not a subscription."},
     mentoring: {
-      name: "1-to-1 Learning with Qari Hassan Mounir",
+      name: "Maqamaat Mastery",
       amount: 29900,
       mode: "subscription",
       description: "Everything in the Maqamaat Intensive (all eight Maqamaat lessons, two online lessons each week, community) plus individual mentoring."

@@ -1,5 +1,5 @@
 /* Mounir Institute motion layer (28 October 2026). Styles live in assets/motion.css.
-   Sets the html classes the styles depend on, glides a single light between the four principles,
+   Sets the html classes the styles depend on, flows an orb of light between the four principles,
    and adds the soft gold light that follows the mouse. Respects prefers-reduced-motion, and only runs
    the mouse light for mouse and trackpad users. */
 (function () {
@@ -12,44 +12,53 @@
   root.classList.toggle("mi-fine", fine && !reduce);
   if (reduce) return;
 
-  /* The four principles: one white light glides to whichever card the page's script marks .is-active. */
+  /* The four principles: an orb of light flows along the numbers to whichever card the page's script marks
+     .is-active, a softer glow trails behind it, and the card lights up as the orb arrives (31 October 2026). */
   try {
     var section = doc.getElementById("method"), track = section && section.querySelector(".method-timeline");
     if (track) {
-      var make = function (cls) { var n = doc.createElement("span"); n.className = cls; n.setAttribute("aria-hidden", "true"); track.appendChild(n); return n; };
-      var glide = make("mi-glide"), halo = make("mi-glide-halo"), placed = false, queued = 0, lastSpot = "", settle = 0;
+      var make = function (cls) { var n = doc.createElement("span"); n.className = cls; n.setAttribute("aria-hidden", "true"); track.insertBefore(n, track.firstChild); return n; };
+      var orb = make("mi-orb"), trail = make("mi-orb-trail"), line = make("mi-orb-line"), lights = [orb, trail, line];
+      var core = doc.createElement("span"); core.className = "mi-orb-core"; orb.appendChild(core);
+      Array.prototype.forEach.call(track.querySelectorAll(".method-card"), function (card) {
+        var lit = doc.createElement("span"); lit.className = "mi-lit"; lit.setAttribute("aria-hidden", "true"); card.appendChild(lit);
+      });
+      var placed = false, queued = 0, last = null, settle = 0;
       section.classList.add("mi-gliding");
-      var put = function (node, target) {
-        var t = track.getBoundingClientRect(), r = target.getBoundingClientRect();
-        var x = r.left - t.left + track.scrollLeft - track.clientLeft, y = r.top - t.top + track.scrollTop - track.clientTop;
-        node.style.width = r.width.toFixed(1) + "px";
-        node.style.height = r.height.toFixed(1) + "px";
-        node.style.transform = "translate(" + x.toFixed(1) + "px," + y.toFixed(1) + "px)";
+      var centre = function (el) {
+        var t = track.getBoundingClientRect(), r = el.getBoundingClientRect();
+        return { x: r.left - t.left + track.scrollLeft - track.clientLeft + r.width / 2, y: r.top - t.top + track.scrollTop - track.clientTop + r.height / 2 };
       };
+      var move = function (node, at) { node.style.transform = "translate(" + at.x.toFixed(1) + "px," + at.y.toFixed(1) + "px)"; };
       var place = function () {
         queued = 0;
-        if (win.getComputedStyle(glide).display === "none") {
+        if (win.getComputedStyle(orb).display === "none") {
           /* Phones use the per-card glow. Reset once, so this does not keep re-triggering itself. */
-          if (placed) { placed = false; lastSpot = ""; glide.classList.remove("ready", "on", "moving"); halo.classList.remove("ready", "on", "moving"); }
+          if (placed) { placed = false; last = null; lights.forEach(function (n) { n.classList.remove("ready", "on", "moving"); }); }
           return;
         }
-        var step = section.querySelector(".method-step.is-active") || section.querySelector(".method-step");
-        if (!step) return;
-        var card = step.querySelector(".method-card"), num = step.querySelector(".method-number");
-        if (card) { glide.style.borderRadius = win.getComputedStyle(card).borderTopLeftRadius; put(glide, card); }
-        if (num && num.offsetWidth) { halo.style.visibility = ""; put(halo, num); } else { halo.style.visibility = "hidden"; }
-        /* While it travels, the light softens into a wider glow, then sharpens again on arrival. */
-        var spot = glide.style.transform;
-        if (placed && lastSpot && spot !== lastSpot) {
-          glide.classList.add("moving"); halo.classList.add("moving");
+        var steps = track.querySelectorAll(".method-step");
+        var step = section.querySelector(".method-step.is-active") || steps[0];
+        var num = step && step.querySelector(".method-number");
+        if (!num || !num.offsetWidth) return;
+        var at = centre(num);
+        /* The hairline runs from the first number to the last while they share a row. */
+        var a = centre(steps[0].querySelector(".method-number")), b = centre(steps[steps.length - 1].querySelector(".method-number"));
+        if (Math.abs(a.y - b.y) < 2 && b.x > a.x) { line.style.width = (b.x - a.x).toFixed(1) + "px"; move(line, a); line.style.visibility = ""; }
+        else line.style.visibility = "hidden";
+        /* While it travels, the orb stretches along its path, then rounds off again as it arrives. */
+        if (placed && last && (Math.abs(last.x - at.x) > 1 || Math.abs(last.y - at.y) > 1)) {
+          core.style.setProperty("--mi-orb-angle", (Math.atan2(at.y - last.y, at.x - last.x) * 180 / Math.PI).toFixed(1) + "deg");
+          orb.classList.add("moving");
           win.clearTimeout(settle);
-          settle = win.setTimeout(function () { glide.classList.remove("moving"); halo.classList.remove("moving"); }, 650);
+          settle = win.setTimeout(function () { orb.classList.remove("moving"); }, 520);
         }
-        lastSpot = spot;
+        move(orb, at); move(trail, at);
+        last = at;
         if (!placed) {
           placed = true;
-          glide.classList.add("on"); halo.classList.add("on");
-          win.requestAnimationFrame(function () { win.requestAnimationFrame(function () { glide.classList.add("ready"); halo.classList.add("ready"); }); });
+          lights.forEach(function (n) { n.classList.add("on"); });
+          win.requestAnimationFrame(function () { win.requestAnimationFrame(function () { lights.forEach(function (n) { n.classList.add("ready"); }); }); });
         }
       };
       var queue = function () { if (!queued) queued = win.requestAnimationFrame(place); };

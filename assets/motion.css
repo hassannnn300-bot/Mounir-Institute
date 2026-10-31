@@ -1,6 +1,6 @@
 /* Mounir Institute motion layer (28 October 2026, trimmed the same day at the owners' request).
    It keeps three things: the button glows, a soft gold light that follows the mouse, and a smoother,
-   flowing white glow across the four principles. html.mi-motion is only set when the visitor has not
+   an orb of light flowing across the four principles. html.mi-motion is only set when the visitor has not
    asked for reduced motion, and html.mi-fine only for a mouse or trackpad.
    Selectors start with "html" because many of the page's own style blocks sit in <body> and use !important. */
 
@@ -89,42 +89,88 @@ html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1
   html #method .method-timeline { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
 }
 
-@keyframes mi-glide-sheen { from { background-position: 115% 0; } to { background-position: -15% 0; } }
-.mi-glide, .mi-glide-halo { display: none; position: absolute; left: 0; top: 0; z-index: 2; pointer-events: none; opacity: 0; will-change: transform; }
-.mi-glide {
-  border-radius: 14px; border: 0; overflow: hidden; mix-blend-mode: screen;
-  background: var(--mi-lit-fill);
-  box-shadow: 0 0 36px rgba(255, 236, 190, .17), 0 0 90px rgba(215, 181, 109, .11), inset 0 0 30px rgba(255, 244, 214, .05);
+/* ---------- The four principles: an orb of light flows between the numbers (31 October 2026) ----------
+   motion.js adds a hairline through the numbers, an orb that glides from number to number with a softer glow
+   trailing a little behind it, and a lit layer in each card that fades in as the orb arrives. The orb sits behind
+   the number circles, so a resting orb shows as light around the lit number. Wider screens only: phones keep the
+   swipeable carousel and its per-card glow below. */
+@keyframes mi-orb-breathe { 0%, 100% { transform: scale(1); opacity: .8; } 50% { transform: scale(1.14); opacity: 1; } }
+@keyframes mi-lit-sheen { from { background-position: 115% 0; } to { background-position: -15% 0; } }
+.mi-orb, .mi-orb-trail, .mi-orb-line, .mi-lit { display: none; pointer-events: none; }
+.mi-orb, .mi-orb-trail, .mi-orb-line { position: absolute; left: 0; top: 0; z-index: 0; width: 0; height: 0; opacity: 0; will-change: transform; }
+.mi-orb-line {
+  height: 1px; margin-top: -.5px;
+  background: linear-gradient(90deg, rgba(215, 181, 109, 0), rgba(215, 181, 109, .42) 10%, rgba(215, 181, 109, .42) 90%, rgba(215, 181, 109, 0));
 }
-/* The edge: bright white at the top, warming to gold and fading towards the bottom */
-.mi-glide::before {
-  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none;
+.mi-orb-core {
+  position: absolute; left: -48px; top: -48px; width: 96px; height: 96px; border-radius: 50%; mix-blend-mode: screen;
+  background: radial-gradient(circle, #fff 0%, rgba(255, 249, 230, .94) 13%, rgba(247, 228, 176, .6) 29%, rgba(215, 181, 109, .24) 49%, rgba(215, 181, 109, 0) 70%);
+  transform: rotate(var(--mi-orb-angle, 0deg)) scale(1, 1);
+  transition: transform .34s cubic-bezier(.4, 0, .2, 1);
+}
+.mi-orb-core::after {
+  content: ""; position: absolute; inset: -46px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 236, 190, .2) 0%, rgba(215, 181, 109, .08) 42%, rgba(215, 181, 109, 0) 70%);
+  animation: mi-orb-breathe 3.2s ease-in-out infinite;
+}
+.mi-orb.moving .mi-orb-core { transform: rotate(var(--mi-orb-angle, 0deg)) scale(1.55, .8); }
+.mi-orb-trail::before {
+  content: ""; position: absolute; left: -70px; top: -70px; width: 140px; height: 140px; border-radius: 50%; mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(255, 240, 200, .34) 0%, rgba(230, 200, 130, .14) 38%, rgba(215, 181, 109, 0) 68%);
+}
+.mi-orb.on, .mi-orb-trail.on, .mi-orb-line.on { opacity: 1; transition: opacity .8s ease; }
+.mi-orb.ready { transition: transform .7s cubic-bezier(.45, .05, .25, 1), opacity .8s ease; }
+.mi-orb-trail.ready { transition: transform 1.05s cubic-bezier(.45, .05, .25, 1), opacity .8s ease; }
+/* The card's light: the warm white-to-gold fill, its bright edge and a slow sheen */
+.mi-lit {
+  position: absolute; inset: 0; z-index: 0; border-radius: inherit; opacity: 0; mix-blend-mode: screen; overflow: hidden;
+  background: var(--mi-lit-fill);
+  box-shadow: 0 0 36px rgba(255, 236, 190, .16), 0 0 90px rgba(215, 181, 109, .1), inset 0 0 30px rgba(255, 244, 214, .05);
+  transition: opacity .55s cubic-bezier(.45, 0, .2, 1);
+}
+.mi-lit::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
   background: var(--mi-lit-edge);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
-  transition: opacity .7s ease;
 }
-.mi-glide::after {
+.mi-lit::after {
   content: ""; position: absolute; inset: 0; background-repeat: no-repeat; background-size: 260% 100%;
   background-image: linear-gradient(110deg, transparent 30%, rgba(255, 248, 228, .15) 50%, transparent 70%);
-  animation: mi-glide-sheen 7s ease-in-out infinite alternate;
+  animation: mi-lit-sheen 7s ease-in-out infinite alternate;
 }
-.mi-glide-halo { border-radius: 50%; box-shadow: 0 0 0 1px rgba(255, 255, 255, .85), 0 0 18px rgba(255, 255, 255, .42), 0 0 40px rgba(255, 255, 255, .16); }
-.mi-glide-halo::after { content: ""; position: absolute; inset: 0; border-radius: 50%; box-shadow: 0 0 22px rgba(255, 255, 255, .3); animation: mi-halo 3.4s ease-in-out infinite; }
-.mi-glide.on, .mi-glide-halo.on { opacity: 1; transition: opacity .8s ease; }
-.mi-glide.ready, .mi-glide-halo.ready {
-  transition: transform .85s cubic-bezier(.65, 0, .35, 1), width .85s cubic-bezier(.65, 0, .35, 1), height .85s cubic-bezier(.65, 0, .35, 1),
-    opacity .8s ease, border-color .7s ease, box-shadow .7s ease;
-}
-.mi-glide.moving { box-shadow: 0 0 44px rgba(255, 236, 190, .14), 0 0 100px rgba(215, 181, 109, .08), inset 0 0 40px rgba(255, 244, 214, .05); }
-.mi-glide.moving::before { opacity: .45; }
-.mi-glide-halo.moving { box-shadow: 0 0 0 1px rgba(255, 255, 255, .35), 0 0 26px rgba(255, 255, 255, .3), 0 0 52px rgba(255, 255, 255, .12); }
 @media (min-width: 761px) {
-  html.mi-motion #method.mi-gliding .mi-glide, html.mi-motion #method.mi-gliding .mi-glide-halo { display: block; }
-  /* The gliding light replaces each card's own white edge, sheen and number halo. */
+  html.mi-motion #method.mi-gliding .mi-orb, html.mi-motion #method.mi-gliding .mi-orb-trail,
+  html.mi-motion #method.mi-gliding .mi-orb-line, html.mi-motion #method.mi-gliding .mi-lit { display: block; }
+  html.mi-motion #method.mi-gliding .method-number { position: relative !important; z-index: 1 !important; }
+  html.mi-motion #method.mi-gliding .method-card { position: relative !important; }
+  /* The card lights a moment after the orb sets off, so it brightens as the orb arrives. (The page forces every
+     direct child of a card to full opacity, so these rules have to be this specific.) */
+  html.mi-motion #method.mi-gliding .method-step .method-card > .mi-lit { opacity: 0 !important; }
+  html.mi-motion #method.mi-gliding .method-step.is-active .method-card > .mi-lit { opacity: 1 !important; transition: opacity .75s cubic-bezier(.45, 0, .2, 1) .38s; }
+  html.mi-motion #method.mi-gliding .method-step.is-active .method-number { border-color: rgba(255, 246, 222, .85) !important; color: #fff !important; transition-delay: .38s !important; }
+  /* The orb and the card's light replace each card's own white edge, sheen and number halo. */
   html.mi-motion #method.mi-gliding .method-step.is-active .method-card { border-color: rgba(215, 181, 109, .2) !important; box-shadow: none !important; }
   html.mi-motion #method.mi-gliding .method-step.is-active .method-card::before { opacity: 0 !important; animation: none !important; }
   html.mi-motion #method.mi-gliding .method-step.is-active .method-number::after { opacity: 0 !important; animation: none !important; }
 }
+
+/* ---------- The four principles: a warm panel with a faint zellige, framed in gold (31 October 2026) ----------
+   So the section stands out from the black sections around it. The eight-point stars fade out towards the edges. */
+html #method.method-section {
+  position: relative !important; isolation: isolate;
+  background:
+    radial-gradient(75% 60% at 50% 60%, rgba(215, 181, 109, .15) 0%, rgba(215, 181, 109, .05) 45%, rgba(215, 181, 109, 0) 75%),
+    linear-gradient(180deg, #16120b 0%, #1d180f 50%, #16120b 100%) !important;
+  border-top: 1px solid rgba(215, 181, 109, .32) !important; border-bottom: 1px solid rgba(215, 181, 109, .32) !important;
+}
+html #method.method-section::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .16;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Cg fill='none' stroke='%23d7b56d' stroke-width='1'%3E%3Cpath d='M33 33h26v26H33z'/%3E%3Cpath d='M46 27.6 64.4 46 46 64.4 27.6 46z'/%3E%3Cpath d='M0 0l33 33M92 0 59 33M0 92l33-33M92 92 59 59'/%3E%3C/g%3E%3C/svg%3E") center / 92px 92px repeat;
+  -webkit-mask-image: radial-gradient(85% 75% at 50% 55%, #000 0%, rgba(0, 0, 0, .5) 55%, transparent 88%);
+  mask-image: radial-gradient(85% 75% at 50% 55%, #000 0%, rgba(0, 0, 0, .5) 55%, transparent 88%);
+}
+/* The number circles: a dark warm fill on the new panel, without the old ring that matched the grey background */
+html #method .method-number { background: #15110b !important; box-shadow: none !important; }
 
 /* Phones: the carousel's lit card wears the gradient itself (the page's own phone styles had faded it to 23%). */
 @media (max-width: 760px) {
