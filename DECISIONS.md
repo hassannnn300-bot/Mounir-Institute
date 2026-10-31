@@ -32,7 +32,7 @@
 - The site shows **27 of 30 places left** on the Applied Maqamaat intake (Hassan's figure). It is written into the page, not counted live; the checkout's database limit (docs/founding-capacity.sql) is still 30 holds. Update both if places are taken outside the website.
 - Every live class is recorded, so students can catch up. The site says so on the Intensive card and in the FAQ.
 - The launch date is not set yet. The FAQ says it will be announced soon and that nothing beyond the £25 hold is charged until launch.
-- The Maqamaat Intensive's live classes are taught by another teacher, not Hassan (Hassan, 31 October). Hassan teaches the Maqamaat Mastery 1-to-1 lessons. The Intensive card says "2 live classes a week" without his name; do not name Hassan as the Intensive's teacher.
+- The Maqamaat Intensive's live classes are taught by another teacher, not Hassan (Hassan, 31 October). Hassan teaches the Maqamaat Mastery 1-to-1 lessons. The Intensive card says "2 live classes a week" without his name; do not name Hassan as the Intensive's teacher. The homepage's search and link-preview description now ties his name to the 1-to-1 lessons instead of the live classes; Google was asked to read the homepage again.
 - How brothers and sisters are taught is still to be decided (a proposal was put to the owners on 31 October).
 
 ## Open questions
