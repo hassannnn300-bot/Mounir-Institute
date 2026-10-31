@@ -24,7 +24,7 @@ These documents are the shared project notes. Separate ChatGPT accounts do not a
 - api/ — serverless JavaScript endpoints for applications, checkout, the Stripe webhook and the owners' refunds.
 - admin/refunds.html — the owners' page for refunding holding payments (token-protected).
 - assets/site.css and assets/site.js: the one shared header, footer and phone layout used by every public page. The header dropdowns (Discover, Courses) run from site.js; on phones they open as full-width panels under the header. To change either file, bump its ?v= value in every page's head.
-- assets/mounir-emblem.webp: the cropped emblem used in the header and footer (42 KB, against 710 KB for the full logo image).
+- assets/mounir-emblem.webp: the logo mark (388x480, transparent, 37 KB) used in the header, footer and video thumbnails. It and every icon (favicon.ico, assets/icons/, assets/og-image.png) were made on 31 October 2026 from the owner's 2000x2000 logo file, always at the mark's own proportions.
 - assets/motion.css and assets/motion.js — the homepage's added motion: the button glows, a soft gold light that follows the mouse, and the flowing glow across the four principles. Decoration only; it switches itself off for visitors who ask for reduced motion.
 - docs/ — SQL setup files for the application data.
 - privacy.html, cookies.html, terms.html, and safeguarding.html — policy pages.
