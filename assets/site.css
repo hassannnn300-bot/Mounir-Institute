@@ -379,6 +379,20 @@ html body footer.mi-foot .mf-bottom {
   html body #programmes .price-card .plan-benefits + .plan-subhead { display: none !important; }
   html body #programmes .price-card .excluded-benefits { margin-top: 3px !important; }
 }
+/* The plans fill one phone screen (with assets/site.js, 31 October 2026): the cards reach from under the heading to
+   just above the bottom of the screen, following Safari's toolbars as they show and hide (dvh), and each card's
+   contents spread out to fill it, so the button is always on screen without scrolling. On short screens the cards
+   keep their natural height. */
+@media (max-width: 760px) {
+  html body #programmes .pricing { box-sizing: border-box; min-height: calc(100vh - var(--mi-plans-top, 120px) - 10px); min-height: calc(100dvh - var(--mi-plans-top, 120px) - 10px); }
+  html body #programmes .pricing > .price-card { display: flex !important; flex-direction: column !important; }
+  html body #programmes .price-card .plan-benefits { align-self: center; width: fit-content; max-width: 100%; text-align: left !important; }
+  html body #programmes .price-card .plan-benefits:not(.excluded-benefits) { display: flex !important; flex-direction: column; gap: clamp(2px, calc((100dvh - 620px) / 10), 20px); }
+  html body #programmes .price-card .plan-benefits li { margin: 0 !important; font-size: clamp(11.5px, 1.6dvh, 13.5px) !important; }
+  /* The rest of the height is shared above "What you get" and above "What you miss". */
+  html body #programmes .price-card > p + .plan-subhead, html body #programmes .price-card > .excluded-benefits { margin-top: auto !important; }
+  html body #programmes#programmes .pricing > .price-card > .cta { margin-top: 10px !important; }
+}
 
 /* Live viewers line on each homepage plan (assets/live-viewers.js sets its top, height and right so it sits inside
    the right end of the label pill; it only appears when 2 or more people have that plan on screen). */

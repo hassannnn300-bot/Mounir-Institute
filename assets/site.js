@@ -1,12 +1,28 @@
 /* Mounir Institute shared page script (29 October 2026). Loaded on every public page with defer.
    It runs the header dropdowns (Discover, Courses) for mouse, keyboard and touch, adds the dimmed backdrop
-   and panel titles used on phones, and fills the footer year. Styles live in assets/site.css. */
+   and panel titles used on phones, fills the footer year, and sizes the homepage plans to one phone screen. Styles live in assets/site.css. */
 (function () {
   "use strict";
   var doc = document, root = doc.documentElement, win = window;
 
   var year = doc.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
+
+  /* Phones: the homepage plans fill one screen (31 October 2026). site.css stretches the plan cards from under the
+     section heading to the bottom of the screen; this measures where the cards start (ignoring the fade-in's
+     transform) so their buttons land just above the bottom edge. */
+  var plans = doc.getElementById("programmes"), pricing = plans && plans.querySelector(".pricing");
+  if (pricing) {
+    var pageTop = function (el) { var t = 0; while (el) { t += el.offsetTop; el = el.offsetParent; } return t; };
+    /* Includes the gap the page leaves above the section when it is scrolled to (the page's scroll-padding-top). */
+    var fitPlans = function () {
+      var gap = (parseFloat(win.getComputedStyle(root).scrollPaddingTop) || 0) + (parseFloat(win.getComputedStyle(plans).scrollMarginTop) || 0);
+      plans.style.setProperty("--mi-plans-top", Math.round(pageTop(pricing) - pageTop(plans) + gap) + "px");
+    };
+    fitPlans();
+    win.addEventListener("resize", fitPlans);
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(fitPlans);
+  }
 
   var menus = Array.prototype.slice.call(doc.querySelectorAll(".site-topbar .topbar-dropdown"));
   if (!menus.length) return;
