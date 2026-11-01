@@ -26,15 +26,16 @@
     line.querySelector(".mi-viewing-text").textContent = count + " viewing this programme";
 
     var label = card.querySelector(".choice-label");
-    var topLine = doc.createElement("div");
-    topLine.className = "mi-plan-topline";
     if (label && label.parentNode === card) {
-      card.insertBefore(topLine, label);
-      topLine.appendChild(label);
+      var labelText = doc.createElement("span");
+      labelText.className = "mi-plan-label-text";
+      labelText.textContent = label.textContent.trim();
+      label.textContent = "";
+      label.appendChild(labelText);
+      label.appendChild(line);
     } else {
-      card.insertBefore(topLine, card.firstChild);
+      card.insertBefore(line, card.firstChild);
     }
-    topLine.appendChild(line);
   });
   try { win.sessionStorage.setItem(storageKey, JSON.stringify(previous)); } catch (_) {}
 
