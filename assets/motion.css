@@ -152,8 +152,9 @@ html.mi-motion #method.mi-gliding .method-step.is-active .method-card { border-c
 html.mi-motion #method.mi-gliding .method-step.is-active .method-card::before { opacity: 0 !important; animation: none !important; }
 html.mi-motion #method.mi-gliding .method-step.is-active .method-number::after { opacity: 0 !important; animation: none !important; }
 
-/* ---------- The four principles: a warm panel with a faint zellige, framed in gold (31 October 2026) ----------
-   So the section stands out from the black sections around it. The eight-point stars fade out towards the edges. */
+/* ---------- The four principles: a warm panel with a faint lattice, framed in gold (31 October 2026) ----------
+   So the section stands out from the black sections around it. The pattern is an ogee lattice (1 November 2026: it replaced
+   eight-point stars, which the owner felt could be mistaken for another symbol); it fades out towards the edges. */
 html #method.method-section {
   position: relative !important; isolation: isolate;
   background:
@@ -163,7 +164,7 @@ html #method.method-section {
 }
 html #method.method-section::before {
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .16;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='92' height='92' viewBox='0 0 92 92'%3E%3Cg fill='none' stroke='%23d7b56d' stroke-width='1'%3E%3Cpath d='M33 33h26v26H33z'/%3E%3Cpath d='M46 27.6 64.4 46 46 64.4 27.6 46z'/%3E%3Cpath d='M0 0l33 33M92 0 59 33M0 92l33-33M92 92 59 59'/%3E%3C/g%3E%3C/svg%3E") center / 92px 92px repeat;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='96' viewBox='0 0 64 96'%3E%3Cpath d='M0 0C0 24 32 24 32 48S0 72 0 96M64 0C64 24 32 24 32 48S64 72 64 96' fill='none' stroke='%23d7b56d' stroke-width='1'/%3E%3Cg fill='%23d7b56d'%3E%3Ccircle cx='32' cy='48' r='1.8'/%3E%3Ccircle r='1.8'/%3E%3Ccircle cx='64' r='1.8'/%3E%3Ccircle cy='96' r='1.8'/%3E%3Ccircle cx='64' cy='96' r='1.8'/%3E%3C/g%3E%3C/svg%3E") center / 64px 96px repeat;
   -webkit-mask-image: radial-gradient(85% 75% at 50% 55%, #000 0%, rgba(0, 0, 0, .5) 55%, transparent 88%);
   mask-image: radial-gradient(85% 75% at 50% 55%, #000 0%, rgba(0, 0, 0, .5) 55%, transparent 88%);
 }

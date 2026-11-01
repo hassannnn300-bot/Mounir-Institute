@@ -42,6 +42,8 @@
 - Places wording is **"3 places remaining"** (not "3 of 30 places left"). The places section shows the intake size again (a large 30, "PLACES") with "Only 3 places remaining" under it. The number remaining lives in data-places-left on #founding-class, which the pop-up reads.
 - The places pop-up says "3 places remaining" and, when 2 or more people really have the Maqamaat Intensive card on screen, "N people viewing this offer now".
 - The four principles are written to the student ("you"), with what each one trains and why. On phones they now use the same orb as on wider screens: the numbers 01 to 04 in a row with the orb flowing along them, one card space below that shows the principle the orb has reached, 8 seconds per principle, and a tap on a number or a swipe moves to another. Visitors who ask for reduced motion keep the swipeable carousel.
+- Applied Maqamaat is described by its **melodies and tunes** ("You’ll learn each one’s melody and the short tunes that define it"), not a Maqam's "character".
+- **No star patterns.** The faint eight-point-star tile behind the principles was replaced with an ogee (Moorish arch) lattice, because Hassan felt the stars could be mistaken for the Star of David. Use arch, lattice or other non-star geometry for decoration.
 - How brothers and sisters are taught is still to be decided (a proposal was put to the owners on 31 October).
 
 ## Open questions
