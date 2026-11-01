@@ -394,25 +394,21 @@ html body footer.mi-foot .mf-bottom {
   html body #programmes#programmes .pricing > .price-card > .cta { margin-top: 10px !important; }
 }
 
-/* Live viewers line on each homepage plan (assets/live-viewers.js sets its top, height and right so it sits inside
-   the right end of the label pill; it only appears when 2 or more people have that plan on screen). */
-html body #programmes .price-card > .mi-live { position: absolute !important; top: 0; right: 20px; margin: 0 !important; padding: 0 !important; display: flex !important; align-items: center; gap: 6px; font-size: 11px !important; line-height: 1 !important; font-weight: 600; letter-spacing: .2px; color: rgba(247, 244, 236, .74) !important; white-space: nowrap; pointer-events: none; }
-html body #programmes .price-card > .mi-live[hidden] { display: none !important; }
-html body #programmes .price-card.mi-live-on > .choice-label { text-align: left !important; }
-html body #programmes .price-card > .mi-live .mi-live-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miLivePulse 2s ease-out infinite; }
-@keyframes miLivePulse { 0% { box-shadow: 0 0 0 0 rgba(79, 191, 138, .5); } 70% { box-shadow: 0 0 0 6px rgba(79, 191, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 191, 138, 0); } }
-@media (prefers-reduced-motion: reduce) { html body #programmes .price-card > .mi-live .mi-live-dot { animation: none; } }
+/* Randomized illustrative activity line on each plan, placed under the label so the exact wording fits on phones. */
+html body #programmes .price-card > .mi-programme-viewing { position: static !important; display: flex !important; align-items: center; gap: 6px; width: fit-content; margin: 4px 0 5px !important; padding: 0 !important; font-size: 11px !important; line-height: 1.2 !important; font-weight: 600; letter-spacing: .2px; color: rgba(247, 244, 236, .74) !important; white-space: nowrap; }
+html body #programmes .price-card > .mi-programme-viewing .mi-viewing-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miViewingPulse 2s ease-out infinite; }
+@keyframes miViewingPulse { 0% { box-shadow: 0 0 0 0 rgba(79, 191, 138, .5); } 70% { box-shadow: 0 0 0 6px rgba(79, 191, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 191, 138, 0); } }
+@media (prefers-reduced-motion: reduce) { html body #programmes .price-card > .mi-programme-viewing .mi-viewing-dot { animation: none; } }
 
-/* Places pop-up (assets/live-viewers.js): bottom left on wide screens, at the top on phones so it never covers a
+/* Places pop-up (assets/programme-activity.js): bottom left on wide screens, at the top on phones so it never covers a
    plan's button. */
 html body .mi-places-pop { position: fixed; left: 24px; bottom: 24px; z-index: 60; width: min(340px, calc(100vw - 32px)); box-sizing: border-box; display: flex; flex-direction: column; gap: 5px; padding: 15px 40px 15px 16px; border: 1px solid rgba(215, 181, 109, .5); border-radius: 10px; background: rgba(20, 18, 13, .97); box-shadow: 0 18px 50px rgba(0, 0, 0, .55), 0 0 0 1px rgba(0, 0, 0, .4); color: #f7f4ec; font-family: Manrope, system-ui, sans-serif; text-align: left; opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .4s cubic-bezier(.2, .8, .2, 1); }
 html body .mi-places-pop.in { opacity: 1; transform: none; }
 html body .mi-places-pop[hidden] { display: none !important; }
 html body .mi-places-pop .mi-pop-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #d7b56d; }
 html body .mi-places-pop .mi-pop-places { font-size: 17px; line-height: 1.25; font-weight: 800; color: #f7f4ec; }
-html body .mi-places-pop .mi-pop-live { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: rgba(247, 244, 236, .78); }
-html body .mi-places-pop .mi-pop-live[hidden] { display: none !important; }
-html body .mi-places-pop .mi-live-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miLivePulse 2s ease-out infinite; }
+html body .mi-places-pop .mi-pop-viewing { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: rgba(247, 244, 236, .78); }
+html body .mi-places-pop .mi-viewing-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miViewingPulse 2s ease-out infinite; }
 html body .mi-places-pop .mi-pop-cta { margin-top: 4px; font-size: 13px; font-weight: 700; color: #d7b56d; text-decoration: none; }
 html body .mi-places-pop .mi-pop-cta:hover { text-decoration: underline; }
 html body .mi-places-pop .mi-pop-close { position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: rgba(247, 244, 236, .6); font-size: 20px; line-height: 1; cursor: pointer; }
@@ -422,4 +418,4 @@ html body .mi-places-pop .mi-pop-close:hover { color: #f7f4ec; background: rgba(
   html body .mi-places-pop .mi-pop-places { font-size: 15.5px; }
   html body .mi-places-pop .mi-pop-cta { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { html body .mi-places-pop { transition: opacity .2s; transform: none; } html body .mi-places-pop .mi-live-dot { animation: none; } }
+@media (prefers-reduced-motion: reduce) { html body .mi-places-pop { transition: opacity .2s; transform: none; } html body .mi-places-pop .mi-viewing-dot { animation: none; } }

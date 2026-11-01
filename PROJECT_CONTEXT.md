@@ -34,6 +34,8 @@ The owners' page admin/refunds.html, backed by api/admin-holding-payments.js, li
 
 The shared header, footer and phone layout for every public page live in assets/site.css and assets/site.js. Each page's footer keeps a span with id year, which the homepage questionnaire script needs.
 
+The homepage plan cards use assets/programme-activity.js for the green indicator and randomized illustrative "N viewing this programme" line. The Applied Maqamaat plan's number is reused in the places pop-up. This display does not call the legacy api/live-viewers.js endpoint or verify visitor traffic; docs/live-viewers.sql and that endpoint remain unused legacy files.
+
 The homepage's added motion (button glows, the gold light that follows the mouse, the principles glow) lives in assets/motion.css and assets/motion.js, loaded by index.html; the page works without them. The principles glow order and timing are in the inline script that toggles .is-active in index.html; motion.js moves the gliding light to whichever card is active.
 
 Inspect the current source before describing implementation details. File names alone do not prove the runtime behaviour or the current production configuration.

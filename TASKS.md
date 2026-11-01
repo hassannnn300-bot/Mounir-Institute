@@ -2,6 +2,10 @@
 
 Status here is a hand-maintained coordination aid. Update it when work is verified; do not mark a task complete based only on an assumption.
 
+Current homepage plan indicators use randomized illustrative values and the exact wording "N viewing this programme"; the live-count checks below describe an earlier version. See DECISIONS.md.
+
+- [x] Update homepage plan activity wording. Done 1 November 2026: each plan card now has a green animated indicator and randomized illustrative "N viewing this programme" text; the offer pop-up repeats the Applied Maqamaat plan's number. Prices and £25 terms are unchanged. Verified the JavaScript syntax, stylesheet references, and diff; a browser preview could not be started in this environment.
+
 - [x] Reproduce the reported issue where the user cannot continue after completing the questionnaire detail form. Done 28 October 2026: the repeat-email database rule was fixed, and a site-wide bug sweep fixed the related questionnaire problems (see DECISIONS.md). Verified in headless Chrome.
 - [x] If the issue is still present, fix the actual failing step and record how it was verified.
 - [x] Phone-first premium finish. Done 29 October 2026: one shared header and footer on every page (assets/site.css, assets/site.js), header dropdowns that open on Android taps (they used to close straight away), 16px form fields so iPhones do not zoom, a lighter cropped emblem, a stronger gradient on the lit principle, and link-preview tags pointing at www.mounirinstitute.com. Verified in headless Chrome at 360, 390, 430, 768 and 1280px on all eleven pages.
