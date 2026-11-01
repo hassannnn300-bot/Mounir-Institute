@@ -34,11 +34,12 @@ export default async function handler(req,res){
    const rows=await update.json();
    if(!rows.length){console.error('Application conflicted but no existing record matched',detail.slice(0,1200));return failed();}
    console.warn('Repeat application updated an existing record. Run docs/founding-applications.sql so repeat applications are stored separately.');
-   return res.status(200).json({ok:true,updated:true,message:'Your details have been updated. This is not a confirmed place; we will contact you with enrolment details.'});
+   return res.status(200).json({ok:true,updated:true,id:rows[0].id,message:'Your details have been updated. This is not a confirmed place; we will contact you with enrolment details.'});
   }
   if(!response.ok){const detail=await response.text();console.error('Application persistence failed',response.status,detail.slice(0,1200));return failed();}
   const rows=await response.json();
   if(!rows.length)return res.status(502).json({error:'We could not confirm that your request was saved. Please try again.'});
-  return res.status(201).json({ok:true,message:'Your request has been received. This is not a confirmed place; we will contact you with enrolment details.'});
+  // The id lets the page send the applicant's recitation next (api/recitation-upload.js).
+  return res.status(201).json({ok:true,id:rows[0].id,message:'Your request has been received. This is not a confirmed place; we will contact you with enrolment details.'});
  }catch(e){console.error('Application service unavailable');return res.status(502).json({error:'We could not save your request. Please try again.'});}
 }

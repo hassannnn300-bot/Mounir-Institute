@@ -49,8 +49,10 @@
       }, 1200);
     };
   }
-  /* Sits inside the right end of the card's label pill, so the card does not grow. Phones centre the label's text,
-     so it moves left while the line shows; if the full wording would touch it, the line shortens to "N viewing now". */
+  /* Sits inside the right end of the card's label pill, so the card never changes size. Phones centre the label's
+     text, so it moves left while the line shows. The line must not crowd the label's words (Hassan, 1 November 2026):
+     if the full wording would come within 10px of them it shortens to "N viewing now", then "N viewing", and on a
+     screen too narrow even for that (the self-paced card at 320px) the card shows no line. */
   var place = function (line, n) {
     var card = line.parentNode, label = card.querySelector(".choice-label"), text = line.lastChild;
     text.textContent = n + " people viewing now";
@@ -58,7 +60,10 @@
     line.style.top = label.offsetTop + "px"; line.style.height = label.offsetHeight + "px";
     line.style.right = parseFloat(win.getComputedStyle(card).paddingRight) + parseFloat(win.getComputedStyle(label).paddingRight) + 2 + "px";
     var words = doc.createRange(); words.selectNodeContents(label);
-    if (line.getBoundingClientRect().left < words.getBoundingClientRect().right + 10) text.textContent = n + " viewing now";
+    var crowded = function () { return line.getBoundingClientRect().left < words.getBoundingClientRect().right + 10; };
+    if (crowded()) text.textContent = n + " viewing now";
+    if (crowded()) text.textContent = n + " viewing";
+    if (crowded()) { line.hidden = true; card.classList.remove("mi-live-on"); }
   };
   var show = function (counts) {
     cards.forEach(function (card, i) {

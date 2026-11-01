@@ -1338,6 +1338,33 @@ p{line-height:1.75}
 <nav class="mf-links" aria-label="Footer navigation"><div class="mf-col"><span class="mf-col-title">Explore</span><a href="index.html#top">Home</a><a href="index.html#approach">About Us</a><a href="index.html#teachers">Our Journey</a><a href="index.html#faq">FAQs</a></div><div class="mf-col"><span class="mf-col-title">Policies</span><a href="privacy.html">Privacy</a><a href="terms.html">Terms &amp; Refunds</a><a href="cookies.html">Cookies</a><a href="safeguarding.html">Safeguarding</a></div><div class="mf-col mf-contact"><span class="mf-col-title">Contact Us</span><a href="mailto:info@mounirinstitute.com">info@mounirinstitute.com</a></div></nav>
 <div class="mf-bottom">© <span id="year">2026</span> Mounir Institute · Mounir Academy Ltd. All rights reserved.</div>
 </div></footer>
+<style id="recitation-recorder-2026">
+/* The recitation in the questionnaire's details step (1 November 2026). data-state on #recite shows one part at a time. */
+#recite .recite-hint{margin:0;color:#cfc6b4;font-size:.9rem;line-height:1.5}
+#recite .recite-hint strong{color:#f1d9a0;font-weight:600}
+#recite .recite-start,#recite .recite-live,#recite .recite-done{display:none}
+#recite[data-state="empty"] .recite-start{display:flex}
+#recite[data-state="recording"] .recite-live{display:flex}
+#recite[data-state="done"] .recite-done{display:block}
+#recite .recite-start{gap:10px;flex-wrap:wrap}
+#recite .recite-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:9px;flex:1 1 150px;min-height:46px;margin:0;padding:10px 16px;border:1px solid rgba(215,181,109,.55);border-radius:7px;background:#15110b;color:#f1d9a0;font:inherit;font-size:14px!important;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent}
+#recite .recite-btn:hover{border-color:#d7b56d}
+#recite .recite-record{background:linear-gradient(135deg,#e2c47f,#b98f44);border-color:transparent;color:#15110b}
+#recite .recite-file{position:absolute;width:1px;height:1px;padding:0;border:0;opacity:0;pointer-events:none}
+#recite .recite-file:focus-visible+label{outline:2px solid #d7b56d;outline-offset:2px}
+#recite .recite-dot{flex:none;width:10px;height:10px;border-radius:50%;background:#c0392b}
+#recite .recite-record .recite-dot{background:#7d1a10}
+#recite .recite-live{align-items:center;gap:10px 12px;flex-wrap:wrap;padding:10px 12px;border:1px solid #494131;border-radius:7px;background:#0b0b09}
+#recite .recite-clock{color:#fff;font-weight:700;font-variant-numeric:tabular-nums}
+#recite .recite-note{flex:1 1 120px;color:#a99f8c;font-size:.82rem}
+#recite .recite-live .recite-btn{flex:0 0 auto;min-height:40px;padding:7px 16px}
+#recite .recite-done audio{display:block;width:100%;height:44px}
+#recite .recite-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;color:#cfc6b4;font-size:.85rem}
+#recite .recite-link{appearance:none;padding:6px 0;border:0;background:none;color:#d7b56d;font:inherit;text-decoration:underline;cursor:pointer}
+#recite .fineprint{margin-top:2px}
+@media (prefers-reduced-motion:no-preference){#recite .recite-live .recite-dot{animation:recite-pulse 1.2s ease-in-out infinite}}
+@keyframes recite-pulse{50%{opacity:.3}}
+</style>
 <script>
 (function(){
 const motionOK=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1359,6 +1386,7 @@ const steps=[
 let index=-1;const content=document.getElementById("step-content"),count=document.getElementById("step-count"),bar=document.getElementById("progress-bar"),nav=document.getElementById("nav-actions"),next=document.getElementById("next"),back=document.getElementById("back");
 document.getElementById("year").textContent=new Date().getFullYear();
 function render(){
+ stopRecitation();
  const s=steps[index];count.textContent="Question "+(index+1)+" of "+steps.length;bar.style.width=((index+1)/(steps.length+1)*100)+"%";nav.hidden=false;next.hidden=false;
  content.classList.remove("step-enter");content.innerHTML='<h3 class="question">'+s.title+'</h3><p class="hint">'+s.hint+'</p><div class="options" role="group" aria-label="'+s.title+'">'+s.options.map((o,i)=>'<button type="button" class="option" style="--option-index:'+i+'" aria-pressed="'+(answers[s.key]===o[0]?'true':'false')+'" data-value="'+i+'"><span class="symbol">'+o[1]+'</span><span class="label">'+o[0]+'</span></button>').join('')+'</div>';void content.offsetWidth;content.classList.add("step-enter");
  content.querySelectorAll(".option").forEach((b,i)=>b.addEventListener("click",()=>{answers[s.key]=s.options[i][0];content.querySelectorAll(".option").forEach(x=>x.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");next.disabled=false;}));
@@ -1377,7 +1405,7 @@ function whatsappNumber(code,raw){
 function details(){
   count.textContent="Your details";bar.style.width="100%";nav.hidden=false;next.hidden=false;next.disabled=true;next.textContent="Next Step →";
   const countryOptions=[["GB","United Kingdom","+44"],["US","United States","+1"],["CA","Canada","+1"],["AU","Australia","+61"],["NZ","New Zealand","+64"],["IE","Ireland","+353"],["FR","France","+33"],["DE","Germany","+49"],["ES","Spain","+34"],["IT","Italy","+39"],["NL","Netherlands","+31"],["BE","Belgium","+32"],["PT","Portugal","+351"],["CH","Switzerland","+41"],["SE","Sweden","+46"],["NO","Norway","+47"],["DK","Denmark","+45"],["PL","Poland","+48"],["GR","Greece","+30"],["TR","Türkiye","+90"],["MA","Morocco","+212"],["DZ","Algeria","+213"],["TN","Tunisia","+216"],["EG","Egypt","+20"],["SA","Saudi Arabia","+966"],["AE","United Arab Emirates","+971"],["QA","Qatar","+974"],["KW","Kuwait","+965"],["OM","Oman","+968"],["JO","Jordan","+962"],["LB","Lebanon","+961"],["IQ","Iraq","+964"],["PK","Pakistan","+92"],["IN","India","+91"],["BD","Bangladesh","+880"],["ID","Indonesia","+62"],["MY","Malaysia","+60"],["SG","Singapore","+65"],["PH","Philippines","+63"],["TH","Thailand","+66"],["CN","China","+86"],["JP","Japan","+81"],["KR","South Korea","+82"],["NG","Nigeria","+234"],["GH","Ghana","+233"],["KE","Kenya","+254"],["ZA","South Africa","+27"],["ET","Ethiopia","+251"],["SO","Somalia","+252"],["SD","Sudan","+249"],["UG","Uganda","+256"],["TZ","Tanzania","+255"],["BR","Brazil","+55"],["MX","Mexico","+52"],["AR","Argentina","+54"],["CL","Chile","+56"],["CO","Colombia","+57"],["PE","Peru","+51"],["RU","Russia","+7"],["UA","Ukraine","+380"],["IL","Israel","+972"],["PS","Palestine","+970"],["AF","Afghanistan","+93"],["LK","Sri Lanka","+94"],["NP","Nepal","+977"],["VN","Vietnam","+84"],["HK","Hong Kong","+852"],["TW","Taiwan","+886"],["JM","Jamaica","+1"],["TT","Trinidad and Tobago","+1"],["FJ","Fiji","+679"],["CY","Cyprus","+357"],["IS","Iceland","+354"],["LU","Luxembourg","+352"],["MT","Malta","+356"],["RO","Romania","+40"],["HU","Hungary","+36"],["CZ","Czechia","+420"],["SK","Slovakia","+421"],["HR","Croatia","+385"],["RS","Serbia","+381"],["BG","Bulgaria","+359"],["SI","Slovenia","+386"],["LT","Lithuania","+370"],["LV","Latvia","+371"],["EE","Estonia","+372"],["GE","Georgia","+995"],["AM","Armenia","+374"],["AZ","Azerbaijan","+994"]];
-content.innerHTML='<h3 class="question">Where can we send your results?</h3><p class="hint">Add your details below to receive your personalised Maqamaat learning path.</p><div class="field"><label for="full-name">Your name</label><input id="full-name" autocomplete="name" placeholder="Enter your name" aria-describedby="name-error" required><span id="name-error" class="details-error" role="alert" hidden>Please enter your name.</span></div><div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="email-error" required><span id="email-error" class="details-error" role="alert" hidden>Please enter a valid email address, like name@example.com.</span></div><div class="field"><label for="phone">WhatsApp number *</label><div class="phone-combo" style="display:flex;align-items:stretch;width:100%"><div class="country-picker"><button type="button" id="country-trigger" class="country-trigger" aria-haspopup="listbox" aria-expanded="false"><span id="country-selected" class="country-selected">🇲🇦 +212</span><span class="country-arrow">▼</span></button><input id="country-code" type="hidden" value="+212"><div id="country-dropdown" class="country-dropdown" hidden><input id="country-search" class="country-search" type="search" aria-label="Search country or calling code" placeholder="Search country or code" autocomplete="off"><div id="country-results" class="country-results" role="listbox"></div></div></div><input id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="Your number" aria-describedby="phone-help" required style="flex:1;min-width:0;width:0;background:transparent;border:0;border-radius:0;padding:11px 12px;color:#fff;font:inherit;outline:none"></div><span id="phone-help" class="fineprint">Choose your country code in the same bar, then enter your number.</span><span id="phone-error" class="details-error" role="alert" hidden>Please enter a valid WhatsApp number, including the correct country code.</span></div><p class="fineprint">Your details help us personalise your results and understand your learning goals.</p>';
+content.innerHTML='<h3 class="question">Where can we send your results?</h3><p class="hint">Add your details below to receive your personalised Maqamaat learning path.</p><div class="field"><label for="full-name">Your name</label><input id="full-name" autocomplete="name" placeholder="Enter your name" aria-describedby="name-error" required><span id="name-error" class="details-error" role="alert" hidden>Please enter your name.</span></div><div class="field"><label for="email">Email address</label><input id="email" type="email" autocomplete="email" placeholder="you@example.com" aria-describedby="email-error" required><span id="email-error" class="details-error" role="alert" hidden>Please enter a valid email address, like name@example.com.</span></div><div class="field"><label for="phone">WhatsApp number *</label><div class="phone-combo" style="display:flex;align-items:stretch;width:100%"><div class="country-picker"><button type="button" id="country-trigger" class="country-trigger" aria-haspopup="listbox" aria-expanded="false"><span id="country-selected" class="country-selected">🇲🇦 +212</span><span class="country-arrow">▼</span></button><input id="country-code" type="hidden" value="+212"><div id="country-dropdown" class="country-dropdown" hidden><input id="country-search" class="country-search" type="search" aria-label="Search country or calling code" placeholder="Search country or code" autocomplete="off"><div id="country-results" class="country-results" role="listbox"></div></div></div><input id="phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="Your number" aria-describedby="phone-help" required style="flex:1;min-width:0;width:0;background:transparent;border:0;border-radius:0;padding:11px 12px;color:#fff;font:inherit;outline:none"></div><span id="phone-help" class="fineprint">Choose your country code in the same bar, then enter your number.</span><span id="phone-error" class="details-error" role="alert" hidden>Please enter a valid WhatsApp number, including the correct country code.</span></div><div class="field" id="recite" data-state="empty" role="group" aria-labelledby="recite-label"><label id="recite-label">Your recitation *</label><p class="recite-hint">Record or upload <strong>30 to 90 seconds</strong> of your recitation, so our teachers can hear where you are now.</p><div class="recite-start"><button type="button" class="recite-btn recite-record" id="recite-record"><span class="recite-dot" aria-hidden="true"></span>Record now</button><input id="recite-file" class="recite-file" type="file" accept="audio/*,.m4a,.mp3,.wav,.aac,.ogg,.opus,.webm,.caf"><label class="recite-btn" for="recite-file">Upload a recording</label></div><div class="recite-live" role="status" aria-live="polite"><span class="recite-dot" aria-hidden="true"></span><span class="recite-clock" id="recite-clock">0:00 / 1:30</span><span class="recite-note" id="recite-note"></span><button type="button" class="recite-btn" id="recite-stop">Stop</button></div><div class="recite-done"><audio id="recite-player" controls preload="metadata" aria-label="Your recitation"></audio><div class="recite-row"><span id="recite-summary"></span><button type="button" class="recite-link" id="recite-redo">Remove and try again</button></div></div><span id="recite-error" class="details-error" role="alert" hidden></span><span class="fineprint">Only our teachers listen to it, to place you in the right group. It is sent when you secure your place.</span></div><p class="fineprint">Your details help us personalise your results and understand your learning goals.</p>';
   ["name","email","phone"].forEach(kind=>{const field=content.querySelector("#"+(kind==="name"?"full-name":kind));const err=content.querySelector("#"+kind+"-error");if(field&&err){const label=field.closest(".field")?.querySelector("label");if(label)label.insertAdjacentElement("afterend",err);}});
   const name=content.querySelector("#full-name"),email=content.querySelector("#email"),country=content.querySelector("#country-code"),countryTrigger=content.querySelector("#country-trigger"),countrySelected=content.querySelector("#country-selected"),countryDropdown=content.querySelector("#country-dropdown"),countrySearch=content.querySelector("#country-search"),countryResults=content.querySelector("#country-results"),phone=content.querySelector("#phone"),phoneError=content.querySelector("#phone-error"),nameError=content.querySelector("#name-error"),emailError=content.querySelector("#email-error"),phoneCombo=content.querySelector(".phone-combo");
   function flag(code){return String.fromCodePoint(...code.split("").map(x=>127397+x.charCodeAt(0)))}
@@ -1397,8 +1425,72 @@ content.innerHTML='<h3 class="question">Where can we send your results?</h3><p c
   countrySearch.addEventListener("input",showCountryResults);
   countrySearch.addEventListener("keydown",e=>{if(e.key==="Escape"){countryDropdown.hidden=true;countryTrigger.setAttribute("aria-expanded","false");countryTrigger.focus()}else if(e.key==="Enter"&&!countryDropdown.hidden){e.preventDefault();const first=countryResults.querySelector(".country-result");if(first)first.click()}});
   document.addEventListener("click",e=>{const picker=content.querySelector(".country-picker");if(picker&&!picker.contains(e.target)){countryDropdown.hidden=true;countryTrigger.setAttribute("aria-expanded","false")}});
-  function check(){const validPhone=whatsappNumber(country.value,phone.value).valid;nameError.hidden=!(name.dataset.touched&&!name.value.trim());emailError.textContent="Please enter a valid email address.";phoneError.textContent="Please enter a valid WhatsApp number.";emailError.hidden=!(email.dataset.touched&&(!email.value.trim()||!email.validity.valid));phoneError.hidden=!(phone.dataset.touched&&!validPhone);next.disabled=!(name.value.trim()&&email.validity.valid&&email.value.trim()&&validPhone);}
+  function check(){const validPhone=whatsappNumber(country.value,phone.value).valid;nameError.hidden=!(name.dataset.touched&&!name.value.trim());emailError.textContent="Please enter a valid email address.";phoneError.textContent="Please enter a valid WhatsApp number.";emailError.hidden=!(email.dataset.touched&&(!email.value.trim()||!email.validity.valid));phoneError.hidden=!(phone.dataset.touched&&!validPhone);next.disabled=!(name.value.trim()&&email.validity.valid&&email.value.trim()&&validPhone&&recitation);}
+  reciteSetup(check);
   name.addEventListener("input",()=>{name.dataset.touched="true";check()});email.addEventListener("input",()=>{email.dataset.touched="true";emailError.textContent="Please enter a valid email address.";check()});phone.addEventListener("input",()=>{phone.dataset.touched="true";phoneError.textContent="Please enter a valid WhatsApp number.";check()});name.addEventListener("blur",()=>{name.dataset.touched="true";check()});email.addEventListener("blur",()=>{email.dataset.touched="true";check()});phone.addEventListener("blur",()=>{phone.dataset.touched="true";check()});country.addEventListener("change",()=>{check()});name.focus();next.textContent="Next Step →";
+}
+// The recitation (Hassan, 1 November 2026): 30 to 90 seconds, recorded here or uploaded, is needed before the results.
+// It stays in this page until Secure My Place, which saves the application and then sends the audio to the owners'
+// private Supabase Storage (api/recitation-upload.js). Nothing is uploaded if they never secure a place.
+const RECITE_MIN=30,RECITE_MAX=90,RECITE_BYTES=20*1024*1024;
+let recitation=null,recitationStop=null;
+function stopRecitation(){if(recitationStop)recitationStop();}
+const reciteClock=s=>Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
+const reciteTypes={m4a:"audio/mp4",mp4:"audio/mp4",mp3:"audio/mpeg",wav:"audio/wav",aac:"audio/aac",ogg:"audio/ogg",opus:"audio/ogg",webm:"audio/webm",caf:"audio/x-caf"};
+function reciteSetup(check){
+  const box=content.querySelector("#recite"),record=box.querySelector("#recite-record"),file=box.querySelector("#recite-file"),clock=box.querySelector("#recite-clock"),note=box.querySelector("#recite-note"),stop=box.querySelector("#recite-stop"),player=box.querySelector("#recite-player"),summary=box.querySelector("#recite-summary"),redo=box.querySelector("#recite-redo"),error=box.querySelector("#recite-error");
+  let recorder=null;
+  const fail=message=>{error.textContent=message||"";error.hidden=!message;};
+  const show=()=>{
+    box.dataset.state=recitation?"done":"empty";
+    if(recitation){player.src=URL.createObjectURL(recitation.blob);summary.textContent=(recitation.source==="recorded"?"Recorded":"Uploaded")+(recitation.seconds?" · "+reciteClock(recitation.seconds):" · "+recitation.name);}
+    check();
+  };
+  const keep=(blob,type,seconds,source,name)=>{recitation={blob:blob,type:type,seconds:seconds,source:source,name:name||""};fail("");show();};
+  record.addEventListener("click",async()=>{
+    fail("");
+    if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia||!window.MediaRecorder){fail("This browser can’t record here. Please upload a recording instead.");return;}
+    let stream;
+    try{stream=await navigator.mediaDevices.getUserMedia({audio:true});}catch(e){fail("We couldn’t use your microphone. Allow it in your browser’s settings, or upload a recording instead.");return;}
+    const type=["audio/webm;codecs=opus","audio/mp4","audio/webm","audio/ogg;codecs=opus"].find(t=>MediaRecorder.isTypeSupported(t))||"";
+    const chunks=[],started=Date.now();let cancelled=false,tick=0;
+    recorder=type?new MediaRecorder(stream,{mimeType:type}):new MediaRecorder(stream);
+    recorder.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data);};
+    recorder.onstop=()=>{
+      clearInterval(tick);stream.getTracks().forEach(t=>t.stop());recitationStop=null;
+      if(cancelled)return;
+      const seconds=Math.min((Date.now()-started)/1000,RECITE_MAX),kind=(recorder.mimeType||type||"audio/webm").split(";")[0];
+      if(seconds<RECITE_MIN){box.dataset.state="empty";fail("That was "+reciteClock(seconds)+". Please record at least 30 seconds.");return;}
+      keep(new Blob(chunks,{type:kind}),kind,seconds,"recorded");
+    };
+    recitationStop=()=>{cancelled=true;clearInterval(tick);if(recorder.state!=="inactive")recorder.stop();stream.getTracks().forEach(t=>t.stop());recitationStop=null;};
+    recorder.start(1000);box.dataset.state="recording";
+    const update=()=>{
+      const s=(Date.now()-started)/1000;
+      clock.textContent=reciteClock(Math.min(s,RECITE_MAX))+" / 1:30";
+      note.textContent=s<RECITE_MIN?"Keep going, at least 0:30":"You can stop when you’re ready";
+      if(s>=RECITE_MAX&&recorder.state==="recording")recorder.stop();
+    };
+    update();tick=setInterval(update,250);
+  });
+  stop.addEventListener("click",()=>{if(recorder&&recorder.state==="recording")recorder.stop();});
+  file.addEventListener("change",()=>{
+    const f=file.files[0];file.value="";if(!f)return;fail("");
+    const ext=(f.name.split(".").pop()||"").toLowerCase(),kind=/^audio\//.test(f.type)?f.type.split(";")[0]:reciteTypes[ext];
+    if(!kind){fail("Please choose an audio file, such as a voice memo.");return;}
+    if(f.size>RECITE_BYTES){fail("That file is over 20 MB. Please choose a smaller recording.");return;}
+    // Reads the length from the file itself; a file whose length can’t be read is accepted as it is.
+    const probe=new Audio(),url=URL.createObjectURL(f);let settled=false;
+    const finish=seconds=>{
+      if(settled)return;settled=true;URL.revokeObjectURL(url);
+      const known=isFinite(seconds)&&seconds>0;
+      if(known&&(seconds<RECITE_MIN-.5||seconds>RECITE_MAX+.5)){fail("That recording is "+reciteClock(seconds)+". Please choose one between 30 and 90 seconds.");return;}
+      keep(f,kind,known?seconds:0,"uploaded",f.name);
+    };
+    probe.preload="metadata";probe.onloadedmetadata=()=>finish(probe.duration);probe.onerror=()=>finish(NaN);setTimeout(()=>finish(NaN),5000);probe.src=url;
+  });
+  redo.addEventListener("click",()=>{recitation=null;player.removeAttribute("src");player.load();show();record.focus();});
+  show();
 }
 function emailDraftLink(){
  const subject=encodeURIComponent("Mounir Institute: Applied Maqamaat Place Request");
@@ -1406,8 +1498,8 @@ function emailDraftLink(){
  return "mailto:info@mounirinstitute.com?subject="+subject+"&body="+body;
 }
 let funnelStage="";
-let verifiedDetails=false;
-function hasVerifiedDetails(){return verifiedDetails&&!!answers.name&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email||"")&&/^\+[1-9]\d{7,14}$/.test(answers.phone||"");}
+let verifiedDetails=false,applicationId="";
+function hasVerifiedDetails(){return verifiedDetails&&!!recitation&&!!answers.name&&/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answers.email||"")&&/^\+[1-9]\d{7,14}$/.test(answers.phone||"");}
 function done(){
  answers.name=content.querySelector("#full-name").value.trim();answers.email=content.querySelector("#email").value.trim();answers.phone=content.querySelector("#phone").value.replace(/[\s().-]/g,"");
  count.textContent="Watch the video";bar.style.width="100%";nav.hidden=true;
@@ -1450,6 +1542,7 @@ function animateResultsUnlock(){
  funnelStage="";back.hidden=false;showResults();
 }
 function showResults(){
+ stopRecitation();
  if(!hasVerifiedDetails()){infoStep=true;details();return;}
  try{localStorage.setItem("mounir_questionnaire_answers",JSON.stringify(answers));}catch(e){}
  funnelStage="results";count.textContent="Your results";bar.style.width="100%";nav.hidden=false;back.hidden=false;next.hidden=true;next.disabled=true;
@@ -1476,13 +1569,39 @@ function showResults(){
  content.querySelector(".success").insertAdjacentHTML("beforeend",'<div class="results-next"><h3>Secure your Applied Maqamaat place</h3><p class="hint">£25 holds your place and comes off your first month, or is refunded in full if you’re not offered a place or change your mind. £159 a month starts at launch, with your go-ahead.</p><div style="position:absolute;left:-9999px" aria-hidden="true"><label>Website<input id="application-website" tabindex="-1" autocomplete="off"></label></div><button class="cta" type="button" id="submit-founding">Secure My Place</button><p class="fineprint" id="application-status" role="status" aria-live="polite"></p></div>');
  const submit=content.querySelector("#submit-founding"),status=content.querySelector("#application-status");
  submit.addEventListener("click",async()=>{
-  submit.disabled=true;submit.textContent="Preparing your reservation…";status.textContent="Saving your details before secure checkout…";
-  try{
-   const response=await fetch("/api/founding-application",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...answers,presale_interest:true,website:content.querySelector("#application-website").value})});
-   const result=await response.json();if(!response.ok)throw new Error(result.error||"We could not save your details.");
+  submit.disabled=true;submit.textContent="Preparing your reservation…";
+  const checkout=()=>{
    try{sessionStorage.setItem("mounir_checkout_email",answers.email);localStorage.setItem("mounir_checkout_email",answers.email);}catch(e){}
    status.textContent="Your details were saved. Opening secure checkout…";
    window.location.href="checkout.html?plan=founding_presale";
+  };
+  try{
+   if(!applicationId){
+    status.textContent="Saving your details before secure checkout…";
+    const response=await fetch("/api/founding-application",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({...answers,presale_interest:true,website:content.querySelector("#application-website").value})});
+    const result=await response.json();if(!response.ok)throw new Error(result.error||"We could not save your details.");
+    applicationId=result.id||"";
+   }
+   if(recitation&&applicationId){
+    status.textContent="Sending your recitation…";
+    try{
+     const ask=await fetch("/api/recitation-upload",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({application_id:applicationId,email:answers.email,type:recitation.type,size:recitation.blob.size})});
+     const slot=await ask.json().catch(()=>({}));
+     // Recordings not set up on the server (503): carry on, so nobody is stuck before checkout.
+     if(ask.status!==503){
+      if(!ask.ok||!slot.upload_url)throw new Error(slot.error||"");
+      const sent=await fetch(slot.upload_url,{method:"PUT",headers:{"Content-Type":recitation.type},body:recitation.blob});
+      // 409 means this recording already arrived on an earlier try.
+      if(!sent.ok&&sent.status!==409&&!/already exists/i.test(await sent.text().catch(()=>"")))throw new Error("");
+     }
+    }catch(e){
+     status.innerHTML="";status.append(e.message||"Your recitation didn’t send. Please try again.",document.createElement("br"));
+     const skip=document.createElement("button");skip.type="button";skip.className="recite-skip";skip.textContent="Continue to checkout without it";skip.style.cssText="appearance:none;margin-top:6px;padding:4px 0;border:0;background:none;color:#d7b56d;font:inherit;text-decoration:underline;cursor:pointer";
+     skip.addEventListener("click",checkout);status.append(skip);
+     submit.disabled=false;submit.textContent="Try again →";return;
+    }
+   }
+   checkout();
   }catch(error){status.textContent=error.message;submit.disabled=false;submit.textContent="Try again →";}
  });
 }
@@ -1503,7 +1622,7 @@ function showVsl(){
 document.getElementById("begin").addEventListener("click",()=>{index=0;steps.forEach(step=>answers[step.key]="");render()});
 back.addEventListener("click",()=>{funnelStage="";next.hidden=false;back.hidden=false;if(infoStep){infoStep=false;index=steps.length-1;render()}else if(index>0){index--;render()}else{index=-1;nav.hidden=true;count.textContent="Welcome";bar.style.width="0";content.innerHTML='<h3 class="question">Your recitation journey starts here.</h3><p class="hint">Answer five quick questions to find your next step.</p><button class="cta" id="begin">Begin My Journey →</button>';document.getElementById("begin").addEventListener("click",()=>{index=0;render()})}});
 let infoStep=false;
-next.addEventListener("click",async()=>{if(funnelStage==="short-vsl"){animateResultsUnlock();return;}if(funnelStage==="results"){funnelStage="";showVsl();return;}if(index<steps.length-1){index++;render()}else if(!infoStep){infoStep=true;details()}else{const name=content.querySelector("#full-name"),email=content.querySelector("#email"),country=content.querySelector("#country-code"),phone=content.querySelector("#phone");if(!name||!email||!country||!phone||!name.value.trim()||!email.validity.valid||!email.value.trim())return;const number=whatsappNumber(country.value,phone.value);if(!number.valid)return;answers.name=name.value.trim();answers.email=email.value.trim();answers.phone=number.full;verifiedDetails=true;showResults()}});
+next.addEventListener("click",async()=>{if(funnelStage==="short-vsl"){animateResultsUnlock();return;}if(funnelStage==="results"){funnelStage="";showVsl();return;}if(index<steps.length-1){index++;render()}else if(!infoStep){infoStep=true;details()}else{const name=content.querySelector("#full-name"),email=content.querySelector("#email"),country=content.querySelector("#country-code"),phone=content.querySelector("#phone");if(!name||!email||!country||!phone||!name.value.trim()||!email.validity.valid||!email.value.trim())return;const number=whatsappNumber(country.value,phone.value);if(!number.valid||!recitation)return;answers.name=name.value.trim();answers.email=email.value.trim();answers.phone=number.full;verifiedDetails=true;applicationId="";showResults()}});
 
 })();
 </script>
@@ -2289,7 +2408,7 @@ p{margin-top:8px;margin-bottom:10px;line-height:1.62!important}
 <!-- The header dropdowns now run from assets/site.js. --><script id="carousel-dot-controls-2026">
 (()=>{function init(id,selector){const track=document.querySelector(selector),dots=document.querySelector('.carousel-dots[data-for="'+id+'"]');if(!track||!dots)return;const cards=[...track.children].filter(el=>el.matches('article'));cards.forEach((card,i)=>{const btn=document.createElement('button');btn.type='button';btn.setAttribute('aria-label','Show '+(id==='method'?'principle ':'programme ')+(i+1));btn.addEventListener('click',()=>track.scrollTo({left:card.offsetLeft-cards[0].offsetLeft,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'}));dots.append(btn)});const update=()=>{let closest=0,d=Infinity;cards.forEach((c,i)=>{const dist=Math.abs(c.getBoundingClientRect().left-track.getBoundingClientRect().left);if(dist<d){d=dist;closest=i}});[...dots.children].forEach((b,i)=>b.setAttribute('aria-current',String(i===closest)))};track.addEventListener('scroll',update,{passive:true});window.addEventListener('resize',update);update()}init('method','#method .method-timeline');init('programmes','#programmes .pricing')})();
 </script><script id="slow-autoplay-carousels-2026">(()=>{const reduced=matchMedia('(prefers-reduced-motion: reduce)');if(reduced.matches)return;function setup(selector,wait){const track=document.querySelector(selector);if(!track)return;const cards=[...track.children].filter(c=>c.matches('article'));if(cards.length<2)return;let index=0,timer=null,frame=null,paused=false;const duration=selector.includes('method')?1750:2200;const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;function glide(target){cancelAnimationFrame(frame);const from=track.scrollLeft,to=cards[target].offsetLeft-cards[0].offsetLeft,start=performance.now();function tick(now){const t=Math.min(1,(now-start)/duration);track.scrollLeft=from+(to-from)*ease(t);if(t<1)frame=requestAnimationFrame(tick)}frame=requestAnimationFrame(tick)}function schedule(){clearTimeout(timer);if(paused||document.hidden)return;timer=setTimeout(()=>{index=(index+1)%cards.length;glide(index);schedule()},wait)}function stop(){paused=true;clearTimeout(timer);cancelAnimationFrame(frame)}function resume(){paused=false;let closest=0,dist=Infinity;cards.forEach((c,i)=>{const d=Math.abs(c.offsetLeft-cards[0].offsetLeft-track.scrollLeft);if(d<dist){dist=d;closest=i}});index=closest;schedule()}track.addEventListener('pointerdown',stop,{passive:true});track.addEventListener('touchstart',stop,{passive:true});track.addEventListener('focusin',stop);track.addEventListener('mouseenter',stop);track.addEventListener('mouseleave',resume);track.addEventListener('focusout',e=>{if(!track.contains(e.relatedTarget))resume()});track.addEventListener('pointerup',()=>{clearTimeout(timer);timer=setTimeout(resume,14000)},{passive:true});track.addEventListener('touchend',()=>{clearTimeout(timer);timer=setTimeout(resume,14000)},{passive:true});document.addEventListener('visibilitychange',()=>document.hidden?stop():resume());schedule()}setup('#method .method-timeline',14500);setup('#programmes .pricing',11500)})();</script><script src="/assets/motion.js?v=20261031" defer></script>
-<script src="/assets/live-viewers.js?v=20261101c" defer></script>
+<script src="/assets/live-viewers.js?v=20261101d" defer></script>
 </body>
 
 
