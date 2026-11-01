@@ -93,7 +93,7 @@ html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1
    motion.js adds a hairline through the numbers, an orb that glides from number to number with a softer glow
    trailing a little behind it, and a lit layer in each card that fades in as the orb arrives. The orb sits behind
    the number circles, so a resting orb shows as light around the lit number. Phones (from 1 November 2026) put the
-   numbers in a row above one shared card space, set out further down. */
+   numbers in a row above a row of cards, set out further down. */
 @keyframes mi-orb-breathe { 0%, 100% { transform: scale(1); opacity: .8; } 50% { transform: scale(1.14); opacity: 1; } }
 @keyframes mi-lit-sheen { from { background-position: 115% 0; } to { background-position: -15% 0; } }
 .mi-orb, .mi-orb-trail, .mi-orb-line, .mi-lit { display: none; pointer-events: none; }
@@ -192,13 +192,18 @@ html #method .method-number { background: #15110b !important; box-shadow: none !
   html:not(.mi-motion) #method .method-step.is-active .method-card h3 { color: #fff !important; text-shadow: 0 0 18px rgba(255, 240, 205, .28) !important; }
 
 /* Phones (1 November 2026): the same orb as on wider screens. The four numbers sit in a row with the orb flowing
-   along them, and the principles share one card space below: each card fades in as the orb reaches its number.
-   The page's script lingers longer on each principle here so there is time to read it, and a tap on a number or an
-   arrow, or a swipe across the card, moves to another; cards slide in from the side they are on. Visitors who ask for reduced motion keep the swipeable carousel. */
+   along them, and the principles sit side by side below, one in front with the edge of the next showing at the side
+   of the screen (people could not tell they swipe), and the row slides along as the orb reaches each number.
+   The page's script lingers longer on each principle here so there is time to read it, and a tap on a number or on
+   the card showing at the side, or a swipe across the cards, moves to another. Visitors who ask for reduced motion
+   keep the swipeable carousel. */
 @media (max-width: 760px) {
   html.mi-motion #method .method-timeline {
     display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; grid-template-rows: auto auto !important;
     gap: 18px 0 !important; overflow: visible !important; scroll-snap-type: none !important; position: relative !important; padding: 6px 0 0 !important;
+    /* Reaches the screen's edges so the next card shows right up to the edge (the page clips the rest). */
+    margin-inline: calc(50% - 50vw) !important; padding-inline: calc(50vw - 50%) !important; width: auto !important; max-width: none !important;
+    --mi-peek: 48px; --mi-at: 0; --mi-end: 0; --mi-dx: 0px;
   }
   html.mi-motion #method .method-timeline::before, html.mi-motion #method .method-timeline::after { display: none !important; }
   html.mi-motion #method .method-timeline > .method-step { display: contents !important; }
@@ -210,29 +215,24 @@ html #method .method-number { background: #15110b !important; box-shadow: none !
   html.mi-motion #method .method-step:nth-of-type(2) .method-number { grid-column: 2; }
   html.mi-motion #method .method-step:nth-of-type(3) .method-number { grid-column: 3; }
   html.mi-motion #method .method-step:nth-of-type(4) .method-number { grid-column: 4; }
-  /* Hidden cards stay readable to screen readers (opacity, not visibility) but cannot be tapped. */
+  /* The cards share one grid cell and each is moved along by its place in the row (--mi-i) less the principle in
+     front (--mi-at), so the front card lines up with the text above and 46px of the next one shows at the screen's
+     edge. The gap between cards is the screen's side margin plus 2px, so no sliver of the card before shows on the
+     left. The last card lines up with the right edge instead (--mi-end), so 46px of the one before it shows on the
+     left. --mi-dx is the finger's travel during a swipe. */
   html.mi-motion #method .method-step .method-card {
-    grid-row: 2; grid-column: 1 / -1; width: auto !important; max-width: none !important; margin: 0 !important;
-    opacity: 0 !important; pointer-events: none; transition: opacity .4s ease !important;
+    grid-row: 2; grid-column: 1 / -1; justify-self: start; width: calc(100% - var(--mi-peek)) !important; max-width: none !important; margin: 0 !important;
+    --mi-i: 0; opacity: .6 !important; cursor: pointer; -webkit-tap-highlight-color: transparent;
+    transform: translateX(calc((var(--mi-i) - var(--mi-at)) * (100% + (100vw - 100% - var(--mi-peek)) / 2 + 2px) + var(--mi-end) * var(--mi-peek) + var(--mi-dx))) !important;
+    transition: transform .55s cubic-bezier(.25, .8, .3, 1), opacity .45s ease !important;
   }
-  html.mi-motion #method .method-step.is-active .method-card { opacity: 1 !important; pointer-events: auto; transition: opacity .6s ease .3s !important; }
+  html.mi-motion #method .method-step:nth-of-type(2) .method-card { --mi-i: 1; }
+  html.mi-motion #method .method-step:nth-of-type(3) .method-card { --mi-i: 2; }
+  html.mi-motion #method .method-step:nth-of-type(4) .method-card { --mi-i: 3; }
+  html.mi-motion #method .method-step.is-active .method-card { opacity: 1 !important; cursor: auto; }
+  html.mi-motion #method .method-timeline.mi-dragging .method-card { transition: opacity .45s ease !important; }
   html.mi-motion #method .carousel-hint, html.mi-motion #method .carousel-dots { display: none !important; }
   /* Sideways swipes belong to the cards (the page's script moves them), so the page only scrolls up and down here. */
   html.mi-motion #method .method-timeline { touch-action: pan-y pinch-zoom; }
-  /* "Swipe" between two arrow buttons under the card (1 November 2026: people could not tell the cards swipe). */
-  html.mi-motion #method .mi-swipe { display: flex; grid-row: 3; grid-column: 1 / -1; align-items: center; justify-content: center; gap: 16px; margin-top: -4px; }
-  html.mi-motion #method .mi-swipe span { font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: #d7b56d; }
-  html.mi-motion #method .mi-swipe button {
-    appearance: none; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid rgba(215, 181, 109, .38);
-    border-radius: 50%; background: rgba(21, 17, 11, .85); color: #d7b56d; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: opacity .3s ease;
-  }
-  html.mi-motion #method .mi-swipe button:disabled { opacity: .3; cursor: default; }
-  html.mi-motion #method .mi-swipe svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-  html.mi-motion #method:not(.mi-swiped) .mi-swipe-next:not(:disabled) svg { animation: mi-swipe-next 1.6s ease-in-out infinite; }
-  html.mi-motion #method:not(.mi-swiped) .mi-swipe-prev:not(:disabled) svg { animation: mi-swipe-prev 1.6s ease-in-out infinite; }
 }
 }
-/* The swipe cue only shows in the phone layout above. */
-#method .mi-swipe { display: none; }
-@keyframes mi-swipe-next { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
-@keyframes mi-swipe-prev { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }
