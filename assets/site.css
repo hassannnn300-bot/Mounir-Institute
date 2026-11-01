@@ -394,11 +394,18 @@ html body footer.mi-foot .mf-bottom {
   html body #programmes#programmes .pricing > .price-card > .cta { margin-top: 10px !important; }
 }
 
-/* Randomized illustrative activity line on each plan, placed under the label so the exact wording fits on phones. */
-html body #programmes .price-card > .mi-programme-viewing { position: static !important; display: flex !important; align-items: center; gap: 6px; width: fit-content; margin: 4px 0 5px !important; padding: 0 !important; font-size: 11px !important; line-height: 1.2 !important; font-weight: 600; letter-spacing: .2px; color: rgba(247, 244, 236, .74) !important; white-space: nowrap; }
-html body #programmes .price-card > .mi-programme-viewing .mi-viewing-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miViewingPulse 2s ease-out infinite; }
+/* Keep the randomized activity indicator beside each plan label in the card's top row. */
+html body #programmes .price-card > .mi-plan-topline { display: flex !important; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; width: 100%; margin: 0 0 12px !important; }
+html body #programmes .price-card > .mi-plan-topline > .choice-label { flex: 0 1 auto; width: auto; max-width: 100%; min-width: 0; margin: 0 !important; white-space: nowrap; }
+html body #programmes .price-card > .mi-plan-topline > .mi-programme-viewing { position: static !important; display: flex !important; flex: 0 0 auto; align-items: center; gap: 6px; width: auto; max-width: 100%; margin: 0 !important; padding: 0 !important; font-size: 11px !important; line-height: 1.2 !important; font-weight: 600; letter-spacing: .2px; color: rgba(247, 244, 236, .74) !important; white-space: nowrap; }
+html body #programmes .price-card > .mi-plan-topline > .mi-programme-viewing .mi-viewing-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miViewingPulse 2s ease-out infinite; }
+@media (max-width: 760px) {
+  html body #programmes .price-card > .mi-plan-topline { gap: 5px; margin-bottom: 8px !important; }
+  html body #programmes#programmes .price-card > .mi-plan-topline > .choice-label { padding: 4px 7px !important; font-size: 10.5px !important; }
+  html body #programmes .price-card > .mi-plan-topline > .mi-programme-viewing { flex: 0 1 auto; gap: 4px; font-size: 10px !important; letter-spacing: 0; }
+}
 @keyframes miViewingPulse { 0% { box-shadow: 0 0 0 0 rgba(79, 191, 138, .5); } 70% { box-shadow: 0 0 0 6px rgba(79, 191, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 191, 138, 0); } }
-@media (prefers-reduced-motion: reduce) { html body #programmes .price-card > .mi-programme-viewing .mi-viewing-dot { animation: none; } }
+@media (prefers-reduced-motion: reduce) { html body #programmes .price-card > .mi-plan-topline > .mi-programme-viewing .mi-viewing-dot { animation: none; } }
 
 /* Places pop-up (assets/programme-activity.js): bottom left on wide screens, at the top on phones so it never covers a
    plan's button. */

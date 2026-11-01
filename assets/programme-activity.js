@@ -26,8 +26,15 @@
     line.querySelector(".mi-viewing-text").textContent = count + " viewing this programme";
 
     var label = card.querySelector(".choice-label");
-    if (label && label.parentNode === card) label.insertAdjacentElement("afterend", line);
-    else card.insertBefore(line, card.firstChild);
+    var topLine = doc.createElement("div");
+    topLine.className = "mi-plan-topline";
+    if (label && label.parentNode === card) {
+      card.insertBefore(topLine, label);
+      topLine.appendChild(label);
+    } else {
+      card.insertBefore(topLine, card.firstChild);
+    }
+    topLine.appendChild(line);
   });
   try { win.sessionStorage.setItem(storageKey, JSON.stringify(previous)); } catch (_) {}
 
