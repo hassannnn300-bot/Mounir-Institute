@@ -19,9 +19,25 @@
       var gap = (parseFloat(win.getComputedStyle(root).scrollPaddingTop) || 0) + (parseFloat(win.getComputedStyle(plans).scrollMarginTop) || 0);
       plans.style.setProperty("--mi-plans-top", Math.round(pageTop(pricing) - pageTop(plans) + gap) + "px");
     };
-    fitPlans();
-    win.addEventListener("resize", fitPlans);
-    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(fitPlans);
+    /* The three plans' lists line up (1 November 2026). Side by side, each "What you get" list takes the height of the
+       longest, so "What you miss" starts level across the row. On phones every list takes the width of the widest,
+       so the ticks start at the same place on each card. */
+    var lists = Array.prototype.slice.call(pricing.querySelectorAll(".price-card > .plan-benefits"));
+    var levelLists = function () {
+      lists.forEach(function (l) { l.style.minHeight = ""; l.style.width = ""; });
+      if (win.matchMedia("(max-width: 760px)").matches) {
+        var widest = Math.max.apply(null, lists.map(function (l) { return l.offsetWidth; }));
+        lists.forEach(function (l) { l.style.width = Math.ceil(widest) + "px"; });
+        return;
+      }
+      var got = lists.filter(function (l) { return !l.classList.contains("excluded-benefits"); });
+      var tallest = Math.max.apply(null, got.map(function (l) { return l.offsetHeight; }));
+      got.forEach(function (l) { l.style.minHeight = Math.ceil(tallest) + "px"; });
+    };
+    var fitAll = function () { fitPlans(); levelLists(); };
+    fitAll();
+    win.addEventListener("resize", fitAll);
+    if (doc.fonts && doc.fonts.ready) doc.fonts.ready.then(fitAll);
   }
 
   var menus = Array.prototype.slice.call(doc.querySelectorAll(".site-topbar .topbar-dropdown"));

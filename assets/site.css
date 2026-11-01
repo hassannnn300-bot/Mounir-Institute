@@ -390,8 +390,11 @@ html body footer.mi-foot .mf-bottom {
   html body #programmes .price-card .plan-benefits { align-self: center; width: fit-content; max-width: 100%; text-align: left !important; }
   html body #programmes .price-card .plan-benefits:not(.excluded-benefits) { display: flex !important; flex-direction: column; gap: clamp(2px, calc((100vh - 620px) / 10), 20px); gap: clamp(2px, calc((100lvh - 620px) / 10), 20px); }
   html body #programmes .price-card .plan-benefits li { margin: 0 !important; font-size: clamp(11.5px, 1.6vh, 13.5px) !important; font-size: clamp(11.5px, 1.6lvh, 13.5px) !important; }
-  /* The rest of the height is shared above "What you get" and above "What you miss". */
-  html body #programmes .price-card > p + .plan-subhead, html body #programmes .price-card > .excluded-benefits { margin-top: auto !important; }
+  /* "What you get" sits just under the description on every card, so the three line up, and the rest of the height
+     goes above the crossed-out items (1 November 2026: shared above both, the self-paced card's shorter list left a
+     large gap under its description). site.js gives every list the same width, so the ticks line up too. */
+  html body #programmes .price-card > p + .plan-subhead { margin-top: 16px !important; }
+  html body #programmes .price-card > .excluded-benefits { margin-top: auto !important; }
   html body #programmes#programmes .pricing > .price-card > .cta { margin-top: 10px !important; }
 }
 
@@ -411,22 +414,3 @@ html body #programmes .price-card > .choice-label > .mi-programme-viewing .mi-vi
 @keyframes miViewingPulse { 0% { box-shadow: 0 0 0 0 rgba(79, 191, 138, .5); } 70% { box-shadow: 0 0 0 6px rgba(79, 191, 138, 0); } 100% { box-shadow: 0 0 0 0 rgba(79, 191, 138, 0); } }
 @media (prefers-reduced-motion: reduce) { html body #programmes .price-card > .choice-label > .mi-programme-viewing .mi-viewing-dot { animation: none; } }
 
-/* Places pop-up (assets/programme-activity.js): bottom left on wide screens, at the top on phones so it never covers a
-   plan's button. */
-html body .mi-places-pop { position: fixed; left: 24px; bottom: 24px; z-index: 60; width: min(340px, calc(100vw - 32px)); box-sizing: border-box; display: flex; flex-direction: column; gap: 5px; padding: 15px 40px 15px 16px; border: 1px solid rgba(215, 181, 109, .5); border-radius: 10px; background: rgba(20, 18, 13, .97); box-shadow: 0 18px 50px rgba(0, 0, 0, .55), 0 0 0 1px rgba(0, 0, 0, .4); color: #f7f4ec; font-family: Manrope, system-ui, sans-serif; text-align: left; opacity: 0; transform: translateY(14px); transition: opacity .35s ease, transform .4s cubic-bezier(.2, .8, .2, 1); }
-html body .mi-places-pop.in { opacity: 1; transform: none; }
-html body .mi-places-pop[hidden] { display: none !important; }
-html body .mi-places-pop .mi-pop-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #d7b56d; }
-html body .mi-places-pop .mi-pop-places { font-size: 17px; line-height: 1.25; font-weight: 800; color: #f7f4ec; }
-html body .mi-places-pop .mi-pop-viewing { display: flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 600; color: rgba(247, 244, 236, .78); }
-html body .mi-places-pop .mi-viewing-dot { flex: none; width: 7px; height: 7px; border-radius: 50%; background: #4fbf8a; animation: miViewingPulse 2s ease-out infinite; }
-html body .mi-places-pop .mi-pop-cta { margin-top: 4px; font-size: 13px; font-weight: 700; color: #d7b56d; text-decoration: none; }
-html body .mi-places-pop .mi-pop-cta:hover { text-decoration: underline; }
-html body .mi-places-pop .mi-pop-close { position: absolute; top: 6px; right: 6px; width: 30px; height: 30px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: rgba(247, 244, 236, .6); font-size: 20px; line-height: 1; cursor: pointer; }
-html body .mi-places-pop .mi-pop-close:hover { color: #f7f4ec; background: rgba(247, 244, 236, .08); }
-@media (max-width: 760px) {
-  html body .mi-places-pop { left: 12px; right: 12px; top: 10px; bottom: auto; width: auto; padding: 11px 40px 11px 14px; gap: 3px; transform: translateY(-14px); }
-  html body .mi-places-pop .mi-pop-places { font-size: 15.5px; }
-  html body .mi-places-pop .mi-pop-cta { display: none; }
-}
-@media (prefers-reduced-motion: reduce) { html body .mi-places-pop { transition: opacity .2s; transform: none; } html body .mi-places-pop .mi-viewing-dot { animation: none; } }
