@@ -193,8 +193,8 @@ html #method .method-number { background: #15110b !important; box-shadow: none !
 
 /* Phones (1 November 2026): the same orb as on wider screens. The four numbers sit in a row with the orb flowing
    along them, and the principles share one card space below: each card fades in as the orb reaches its number.
-   The page's script lingers longer on each principle here so there is time to read it, and a tap on a number or a
-   swipe across the card moves to another. Visitors who ask for reduced motion keep the swipeable carousel. */
+   The page's script lingers longer on each principle here so there is time to read it, and a tap on a number or an
+   arrow, or a swipe across the card, moves to another; cards slide in from the side they are on. Visitors who ask for reduced motion keep the swipeable carousel. */
 @media (max-width: 760px) {
   html.mi-motion #method .method-timeline {
     display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; grid-template-rows: auto auto !important;
@@ -217,5 +217,22 @@ html #method .method-number { background: #15110b !important; box-shadow: none !
   }
   html.mi-motion #method .method-step.is-active .method-card { opacity: 1 !important; pointer-events: auto; transition: opacity .6s ease .3s !important; }
   html.mi-motion #method .carousel-hint, html.mi-motion #method .carousel-dots { display: none !important; }
+  /* Sideways swipes belong to the cards (the page's script moves them), so the page only scrolls up and down here. */
+  html.mi-motion #method .method-timeline { touch-action: pan-y pinch-zoom; }
+  /* "Swipe" between two arrow buttons under the card (1 November 2026: people could not tell the cards swipe). */
+  html.mi-motion #method .mi-swipe { display: flex; grid-row: 3; grid-column: 1 / -1; align-items: center; justify-content: center; gap: 16px; margin-top: -4px; }
+  html.mi-motion #method .mi-swipe span { font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: #d7b56d; }
+  html.mi-motion #method .mi-swipe button {
+    appearance: none; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 1px solid rgba(215, 181, 109, .38);
+    border-radius: 50%; background: rgba(21, 17, 11, .85); color: #d7b56d; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: opacity .3s ease;
+  }
+  html.mi-motion #method .mi-swipe button:disabled { opacity: .3; cursor: default; }
+  html.mi-motion #method .mi-swipe svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  html.mi-motion #method:not(.mi-swiped) .mi-swipe-next:not(:disabled) svg { animation: mi-swipe-next 1.6s ease-in-out infinite; }
+  html.mi-motion #method:not(.mi-swiped) .mi-swipe-prev:not(:disabled) svg { animation: mi-swipe-prev 1.6s ease-in-out infinite; }
 }
 }
+/* The swipe cue only shows in the phone layout above. */
+#method .mi-swipe { display: none; }
+@keyframes mi-swipe-next { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+@keyframes mi-swipe-prev { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(-4px); } }
