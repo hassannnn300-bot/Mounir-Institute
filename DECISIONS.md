@@ -46,6 +46,7 @@
 - **No star patterns.** The faint eight-point-star tile behind the principles was replaced with an ogee (Moorish arch) lattice, because Hassan felt the stars could be mistaken for the Star of David. Use arch, lattice or other non-star geometry for decoration.
 - **"3 places remaining" appears only in the places pop-up and the grey notice on the Maqamaat Intensive card** (Hassan, 1 November 2026; the notice also shows on the plan card after the questionnaire). The places section under the 30 says "First come, first served.", and the questionnaire result and the checkout no longer give a number.
 - Viewer counts stay real. Hassan asked again for a changing "20+ people watching" number; declined, as a made-up figure would mislead buyers. The real count (api/live-viewers.js) has been running since docs/live-viewers.sql was run in Supabase later that day.
+- On phones and tablets, where the plans sit in a self-moving carousel, a visitor counts as viewing all three plans while the carousel is on screen (as on desktop, where all three cards are in view). Counting only the card in front meant two phone visitors rarely saw each other.
 - How brothers and sisters are taught is still to be decided (a proposal was put to the owners on 31 October).
 
 ## Open questions
