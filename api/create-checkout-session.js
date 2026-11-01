@@ -78,7 +78,7 @@ export default async function handler(req, res) {
       name: "Recorded Maqamaat Lessons",
       amount: 25000,
       mode: "payment",
-      description: "All eight Maqamaat, recorded video lessons, vocal drills and breathing techniques. Immediate access requested at checkout; the 14-day cancellation right ends once access begins. 7-day money-back guarantee applies."
+      description: "All eight Maqamaat, recorded video lessons, vocal drills and breathing techniques. Immediate access requested at checkout; the 14-day cancellation right ends once access begins."
     },
     monthly: {
       name: "Maqamaat Intensive",
@@ -101,8 +101,8 @@ export default async function handler(req, res) {
   // The recorded course is digital content supplied straight away. UK consumer law lets the 14-day
   // cancellation right end only if the buyer expressly asked for immediate access and acknowledged
   // losing that right, so the session is refused without that request, and the request is recorded.
-  const DIGITAL_CONSENT_VERSION = "2026-10-28";
-  const DIGITAL_CONSENT_TEXT = "I ask for immediate access to the recorded lessons as soon as my payment goes through, and I understand that I then lose my 14-day statutory right to cancel. The 7-day money-back guarantee still applies to this purchase.";
+  const DIGITAL_CONSENT_VERSION = "2026-11-01";
+  const DIGITAL_CONSENT_TEXT = "I ask for immediate access to the recorded lessons as soon as my payment goes through, and I understand that I then lose my 14-day statutory right to cancel.";
   if (body.plan === "recorded" && body.digital_consent !== true) {
     return res.status(400).json({ error: "Please tick the box asking for immediate access to the recorded lessons before continuing." });
   }
@@ -195,7 +195,7 @@ export default async function handler(req, res) {
       params.set("metadata[" + key + "]", value);
       params.set("payment_intent_data[metadata][" + key + "]", value);
     }
-    params.set("custom_text[submit][message]", "By paying, you confirm that you asked for immediate access to the recorded lessons and understand that your 14-day right to cancel ends once access begins. Our 7-day money-back guarantee still applies.");
+    params.set("custom_text[submit][message]", "By paying, you confirm that you asked for immediate access to the recorded lessons and understand that your 14-day right to cancel ends once access begins.");
   }
 
   try {

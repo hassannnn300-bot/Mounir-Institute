@@ -76,7 +76,7 @@ html.mi-motion #method .method-number::after {
 html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1; animation: mi-halo 3.4s ease-in-out infinite; }
 
 /* On wider screens all four principles sit in view (two by two, then one row from 1100px), so a single light
-   can glide from card to card. Phones keep the swipeable carousel and the per-card glow above. */
+   can glide from card to card. Phones get their own layout for the same light, further down. */
 @media (min-width: 761px) {
   html #method .method-timeline {
     display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 26px 18px !important;
@@ -92,8 +92,8 @@ html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1
 /* ---------- The four principles: an orb of light flows between the numbers (31 October 2026) ----------
    motion.js adds a hairline through the numbers, an orb that glides from number to number with a softer glow
    trailing a little behind it, and a lit layer in each card that fades in as the orb arrives. The orb sits behind
-   the number circles, so a resting orb shows as light around the lit number. Wider screens only: phones keep the
-   swipeable carousel and its per-card glow below. */
+   the number circles, so a resting orb shows as light around the lit number. Phones (from 1 November 2026) put the
+   numbers in a row above one shared card space, set out further down. */
 @keyframes mi-orb-breathe { 0%, 100% { transform: scale(1); opacity: .8; } 50% { transform: scale(1.14); opacity: 1; } }
 @keyframes mi-lit-sheen { from { background-position: 115% 0; } to { background-position: -15% 0; } }
 .mi-orb, .mi-orb-trail, .mi-orb-line, .mi-lit { display: none; pointer-events: none; }
@@ -138,21 +138,19 @@ html.mi-motion #method .method-step.is-active .method-number::after { opacity: 1
   background-image: linear-gradient(110deg, transparent 30%, rgba(255, 248, 228, .15) 50%, transparent 70%);
   animation: mi-lit-sheen 7s ease-in-out infinite alternate;
 }
-@media (min-width: 761px) {
-  html.mi-motion #method.mi-gliding .mi-orb, html.mi-motion #method.mi-gliding .mi-orb-trail,
-  html.mi-motion #method.mi-gliding .mi-orb-line, html.mi-motion #method.mi-gliding .mi-lit { display: block; }
-  html.mi-motion #method.mi-gliding .method-number { position: relative !important; z-index: 1 !important; }
-  html.mi-motion #method.mi-gliding .method-card { position: relative !important; }
-  /* The card lights a moment after the orb sets off, so it brightens as the orb arrives. (The page forces every
-     direct child of a card to full opacity, so these rules have to be this specific.) */
-  html.mi-motion #method.mi-gliding .method-step .method-card > .mi-lit { opacity: 0 !important; }
-  html.mi-motion #method.mi-gliding .method-step.is-active .method-card > .mi-lit { opacity: 1 !important; transition: opacity .75s cubic-bezier(.45, 0, .2, 1) .38s; }
-  html.mi-motion #method.mi-gliding .method-step.is-active .method-number { border-color: rgba(255, 246, 222, .85) !important; color: #fff !important; transition-delay: .38s !important; }
-  /* The orb and the card's light replace each card's own white edge, sheen and number halo. */
-  html.mi-motion #method.mi-gliding .method-step.is-active .method-card { border-color: rgba(215, 181, 109, .2) !important; box-shadow: none !important; }
-  html.mi-motion #method.mi-gliding .method-step.is-active .method-card::before { opacity: 0 !important; animation: none !important; }
-  html.mi-motion #method.mi-gliding .method-step.is-active .method-number::after { opacity: 0 !important; animation: none !important; }
-}
+html.mi-motion #method.mi-gliding .mi-orb, html.mi-motion #method.mi-gliding .mi-orb-trail,
+html.mi-motion #method.mi-gliding .mi-orb-line, html.mi-motion #method.mi-gliding .mi-lit { display: block; }
+html.mi-motion #method.mi-gliding .method-number { position: relative !important; z-index: 1 !important; }
+html.mi-motion #method.mi-gliding .method-card { position: relative !important; }
+/* The card lights a moment after the orb sets off, so it brightens as the orb arrives. (The page forces every
+   direct child of a card to full opacity, so these rules have to be this specific.) */
+html.mi-motion #method.mi-gliding .method-step .method-card > .mi-lit { opacity: 0 !important; }
+html.mi-motion #method.mi-gliding .method-step.is-active .method-card > .mi-lit { opacity: 1 !important; transition: opacity .75s cubic-bezier(.45, 0, .2, 1) .38s; }
+html.mi-motion #method.mi-gliding .method-step.is-active .method-number { border-color: rgba(255, 246, 222, .85) !important; color: #fff !important; transition-delay: .38s !important; }
+/* The orb and the card's light replace each card's own white edge, sheen and number halo. */
+html.mi-motion #method.mi-gliding .method-step.is-active .method-card { border-color: rgba(215, 181, 109, .2) !important; box-shadow: none !important; }
+html.mi-motion #method.mi-gliding .method-step.is-active .method-card::before { opacity: 0 !important; animation: none !important; }
+html.mi-motion #method.mi-gliding .method-step.is-active .method-number::after { opacity: 0 !important; animation: none !important; }
 
 /* ---------- The four principles: a warm panel with a faint zellige, framed in gold (31 October 2026) ----------
    So the section stands out from the black sections around it. The eight-point stars fade out towards the edges. */
@@ -172,22 +170,51 @@ html #method.method-section::before {
 /* The number circles: a dark warm fill on the new panel, without the old ring that matched the grey background */
 html #method .method-number { background: #15110b !important; box-shadow: none !important; }
 
-/* Phones: the carousel's lit card wears the gradient itself (the page's own phone styles had faded it to 23%). */
+/* Phones without the orb (visitors who ask for reduced motion): the carousel's lit card wears the gradient itself
+   (the page's own phone styles had faded it to 23%). */
 @media (max-width: 760px) {
-  html #method .method-step .method-card { position: relative !important; }
-  html #method .method-step .method-card::after {
+  html:not(.mi-motion) #method .method-step .method-card { position: relative !important; }
+  html:not(.mi-motion) #method .method-step .method-card::after {
     content: "" !important; display: block !important; position: absolute !important; inset: 0 !important; z-index: 1 !important;
     border-radius: inherit !important; padding: 1.5px !important; pointer-events: none !important;
     background: var(--mi-lit-edge) !important;
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0) !important; -webkit-mask-composite: xor !important; mask-composite: exclude !important;
     opacity: 0 !important; transition: opacity .7s ease !important; animation: none !important;
   }
-  html #method .method-step.is-active .method-card {
+  html:not(.mi-motion) #method .method-step.is-active .method-card {
     background: var(--mi-lit-fill), linear-gradient(160deg, #1d1b16 0%, #0f0e0c 100%) !important;
     border-color: transparent !important;
     box-shadow: 0 0 18px rgba(255, 236, 190, .12), 0 10px 22px -6px rgba(215, 181, 109, .14) !important;
   }
-  html #method .method-step.is-active .method-card::after { opacity: 1 !important; }
-  html #method .method-step.is-active .method-card::before { opacity: .55 !important; }
-  html #method .method-step.is-active .method-card h3 { color: #fff !important; text-shadow: 0 0 18px rgba(255, 240, 205, .28) !important; }
+  html:not(.mi-motion) #method .method-step.is-active .method-card::after { opacity: 1 !important; }
+  html:not(.mi-motion) #method .method-step.is-active .method-card::before { opacity: .55 !important; }
+  html:not(.mi-motion) #method .method-step.is-active .method-card h3 { color: #fff !important; text-shadow: 0 0 18px rgba(255, 240, 205, .28) !important; }
+
+/* Phones (1 November 2026): the same orb as on wider screens. The four numbers sit in a row with the orb flowing
+   along them, and the principles share one card space below: each card fades in as the orb reaches its number.
+   The page's script lingers longer on each principle here so there is time to read it, and a tap on a number or a
+   swipe across the card moves to another. Visitors who ask for reduced motion keep the swipeable carousel. */
+@media (max-width: 760px) {
+  html.mi-motion #method .method-timeline {
+    display: grid !important; grid-template-columns: repeat(4, minmax(0, 1fr)) !important; grid-template-rows: auto auto !important;
+    gap: 18px 0 !important; overflow: visible !important; scroll-snap-type: none !important; position: relative !important; padding: 6px 0 0 !important;
+  }
+  html.mi-motion #method .method-timeline::before, html.mi-motion #method .method-timeline::after { display: none !important; }
+  html.mi-motion #method .method-timeline > .method-step { display: contents !important; }
+  html.mi-motion #method .method-step .method-number {
+    display: grid !important; place-items: center !important; grid-row: 1; justify-self: center; width: 46px !important; height: 46px !important;
+    margin: 0 !important; border-radius: 50% !important; font-size: 16px !important; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  html.mi-motion #method .method-step:nth-of-type(1) .method-number { grid-column: 1; }
+  html.mi-motion #method .method-step:nth-of-type(2) .method-number { grid-column: 2; }
+  html.mi-motion #method .method-step:nth-of-type(3) .method-number { grid-column: 3; }
+  html.mi-motion #method .method-step:nth-of-type(4) .method-number { grid-column: 4; }
+  /* Hidden cards stay readable to screen readers (opacity, not visibility) but cannot be tapped. */
+  html.mi-motion #method .method-step .method-card {
+    grid-row: 2; grid-column: 1 / -1; width: auto !important; max-width: none !important; margin: 0 !important;
+    opacity: 0 !important; pointer-events: none; transition: opacity .4s ease !important;
+  }
+  html.mi-motion #method .method-step.is-active .method-card { opacity: 1 !important; pointer-events: auto; transition: opacity .6s ease .3s !important; }
+  html.mi-motion #method .carousel-hint, html.mi-motion #method .carousel-dots { display: none !important; }
+}
 }

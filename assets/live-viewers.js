@@ -3,9 +3,10 @@
    on a phone, only the card swiped to. The id below is random, made fresh on each page load and kept only in memory,
    so nothing is stored on the visitor's device. A card shows its line only when its real count is 2 or more.
    The places pop-up also lives here: the first time the plans come on screen, a small card says how many Applied
-   Maqamaat places are taken and left, read from the places block (#founding-class) so the page has one source for
-   that number, and adds "N people viewing the plans now" while 2 or more people really are. It closes after
-   15 seconds, when the plans leave the screen, or with its close button, and shows once per page view. */
+   Maqamaat places remain, read from data-places-left on the places section (#founding-class) so the page has one
+   source for that number, and adds "N people viewing this offer now" while 2 or more people really have the
+   Maqamaat Intensive card on screen. It closes after 15 seconds, when the plans leave the screen, or with its close
+   button, and shows once per page view. */
 (function () {
   "use strict";
   var doc = document, win = window;
@@ -21,13 +22,12 @@
     card.appendChild(line); return line;
   });
   var pop = null, popLive = null, popTimer = 0, popShown = false;
-  var block = doc.querySelector("#founding-class .founding-number"), left = block ? parseInt(block.querySelector("strong").textContent, 10) : NaN;
-  var of = block ? parseInt((block.textContent.match(/open to (\d+)/i) || [])[1], 10) : NaN;
-  if (left > 0 && of > left) {
+  var places = doc.getElementById("founding-class"), left = places ? parseInt(places.getAttribute("data-places-left"), 10) : NaN;
+  if (left > 0) {
     pop = doc.createElement("aside"); pop.className = "mi-places-pop"; pop.hidden = true; pop.setAttribute("aria-label", "Places left");
     pop.innerHTML = '<button type="button" class="mi-pop-close" aria-label="Close">×</button>' +
-      '<span class="mi-pop-eyebrow">Applied Maqamaat · open to ' + of + ' places</span>' +
-      '<strong class="mi-pop-places">' + (of - left) + ' taken · only ' + left + (left === 1 ? ' place' : ' places') + ' left</strong>' +
+      '<span class="mi-pop-eyebrow">Maqamaat Intensive · Applied Maqamaat</span>' +
+      '<strong class="mi-pop-places">' + left + (left === 1 ? ' place' : ' places') + ' remaining</strong>' +
       '<span class="mi-pop-live" hidden><span class="mi-live-dot" aria-hidden="true"></span><span></span></span>' +
       '<a class="mi-pop-cta" href="#journey">Request Your Place →</a>';
     doc.body.appendChild(pop);
@@ -65,9 +65,9 @@
       if (on) place(line, n);
     });
     if (popLive) {
-      var total = counts ? counts.total : 0;
-      popLive.hidden = !(total >= 2);
-      if (!popLive.hidden) popLive.lastChild.textContent = total + " people viewing the plans now";
+      var offer = counts ? counts.intensive : 0;
+      popLive.hidden = !(offer >= 2);
+      if (!popLive.hidden) popLive.lastChild.textContent = offer + " people viewing this offer now";
     }
   };
   var plans = function () {

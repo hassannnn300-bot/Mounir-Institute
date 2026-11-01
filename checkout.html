@@ -290,7 +290,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
       <div id="embedded-checkout"></div>
       <button class="cta" id="start-payment" type="button">Continue to payment →</button>
       <div class="secure-note"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Encrypted payment processing by Stripe</div>
-      <p class="fine" id="guarantee">Covered by our 7-day money-back guarantee. <a href="terms.html">Terms &amp; Refunds</a></p>
+      <p class="fine" id="guarantee"><a href="terms.html">Terms &amp; Refunds</a></p>
     </section>
   </div>
 </main>
@@ -300,7 +300,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
     // Each plan states its points once: the summary card holds the key points, the payment card holds the payment.
     recorded: {name:"Recorded Maqamaat Lessons",desc:"",price:"£250",period:"one-time",features:["All eight Maqamaat","Recorded video lessons","Vocal drills and breathing techniques","Self-paced learning"],renewal:"No recurring charge."},
     monthly: {name:"Maqamaat Intensive",desc:"",price:"£159",period:"per month",features:["All eight Maqamaat lessons","Two online lessons each week","Private student community","Daily quizzes and games"],renewal:"£159 today, then £159 monthly until cancelled."},
-    founding_presale: {name:"Applied Maqamaat Place Reservation",desc:"A place on the Maqamaat Intensive, £159 a month from launch.",price:"£25",period:"one-time holding payment",features:["3 of 30 places left, first come, first served. Enrolment closes when they are filled.","If you are offered a place and start, the £25 comes off your first month.","Refunded in full if you are not offered a place or decide not to go ahead.","Not a subscription. No monthly charge starts until launch, and only with your separate authorisation."],renewal:""},
+    founding_presale: {name:"Applied Maqamaat Place Reservation",desc:"A place on the Maqamaat Intensive, £159 a month from launch.",price:"£25",period:"one-time holding payment",features:["3 places remaining, first come, first served. Enrolment closes when they are filled.","If you are offered a place and start, the £25 comes off your first month.","Refunded in full if you are not offered a place or decide not to go ahead.","Not a subscription. No monthly charge starts until launch, and only with your separate authorisation."],renewal:""},
     mentoring: {name:"Maqamaat Mastery",desc:"",price:"£299",period:"per month",features:["Everything in the Maqamaat Intensive","4 private lessons a month with Hassan Mounir","Two live classes each week, each one recorded","Private community and daily activities"],renewal:"£299 today, then £299 monthly until cancelled."}
   };
   const key = new URLSearchParams(location.search).get("plan");
@@ -320,8 +320,6 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   }
   if(planKey === "recorded") {
     document.getElementById("payment-copy").textContent = "Enter the email address for your receipt and course access.";
-    // The acknowledgement below already mentions the money-back guarantee, so it is not repeated underneath.
-    document.getElementById("guarantee").hidden = true;
   }
   document.getElementById("plan-name").textContent = plan.name;
   document.getElementById("plan-desc").textContent = plan.desc;
@@ -334,7 +332,7 @@ img[src*="mounir-institute-logo.webp"],.checkout-brand-logo,.assessment-brand-lo
   if(planKey !== "recorded") document.getElementById("total-label").textContent = "Due today";
   function showStatus(message){status.textContent=message;status.classList.add("show");}
   // Digital content: the buyer must actively ask for immediate access and accept losing the 14-day cancellation right.
-  const DIGITAL_CONSENT_TEXT = "I ask for immediate access to the recorded lessons as soon as my payment goes through, and I understand that I then lose my 14-day statutory right to cancel. The 7-day money-back guarantee still applies to this purchase.";
+  const DIGITAL_CONSENT_TEXT = "I ask for immediate access to the recorded lessons as soon as my payment goes through, and I understand that I then lose my 14-day statutory right to cancel.";
   let consentBox = null;
   if(planKey==="recorded"){
     const emailField=document.createElement("input");emailField.type="email";emailField.id="direct-checkout-email";emailField.placeholder="Your email address";emailField.autocomplete="email";emailField.required=true;emailField.value=savedEmail;emailField.setAttribute("aria-label","Email address for your purchase");emailField.style.cssText="display:block;width:100%;padding:13px;margin:14px 0;background:#171510;border:1px solid #806b45;border-radius:6px;color:#f6e8cb;font:inherit";button.before(emailField);
