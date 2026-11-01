@@ -1,6 +1,8 @@
 /* Live viewers (31 October 2026). Each homepage plan card shows "N people viewing now" while that many people have
-   it on screen, counted by /api/live-viewers (docs/live-viewers.sql). On a wide screen all three cards are in view;
-   on a phone, only the card swiped to. The id below is random, made fresh on each page load and kept only in memory,
+   it on screen, counted by /api/live-viewers (docs/live-viewers.sql). On a wide screen all three cards are in view.
+   Where the cards sit in a sideways carousel (phones and tablets), the carousel moves between them by itself, so
+   everyone with it on screen counts for all three (1 November 2026: counting only the card in front meant two
+   people rarely showed each other). The id below is random, made fresh on each page load and kept only in memory,
    so nothing is stored on the visitor's device. A card shows its line only when its real count is 2 or more.
    The places pop-up also lives here: the first time the plans come on screen, a small card says how many Applied
    Maqamaat places remain, read from data-places-left on the places section (#founding-class) so the page has one
@@ -70,8 +72,12 @@
       if (!popLive.hidden) popLive.lastChild.textContent = offer + " people viewing this offer now";
     }
   };
+  var row = cards[0].parentNode;
   var plans = function () {
-    return doc.visibilityState === "visible" ? cards.filter(function (c) { return inView[c.getAttribute("data-plan")]; }).map(function (c) { return c.getAttribute("data-plan"); }) : [];
+    if (doc.visibilityState !== "visible") return [];
+    var list = cards.filter(function (c) { return inView[c.getAttribute("data-plan")]; });
+    if (list.length && row.scrollWidth > row.clientWidth + 2) list = cards;
+    return list.map(function (c) { return c.getAttribute("data-plan"); });
   };
   var post = function (list, leaving) {
     var body = JSON.stringify({ id: id, plans: list });
