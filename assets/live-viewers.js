@@ -7,7 +7,7 @@
    The places pop-up also lives here: the first time the plans come on screen, a small card says how many Applied
    Maqamaat places remain, read from data-places-left on the places section (#founding-class) so the page has one
    source for that number, and adds "N people viewing this offer now" while 2 or more people really have the
-   Maqamaat Intensive card on screen. It closes after 15 seconds, when the plans leave the screen, or with its close
+   Applied Maqamaat card on screen. It closes after 15 seconds, when the plans leave the screen, or with its close
    button, and shows once per page view. */
 (function () {
   "use strict";
@@ -28,7 +28,7 @@
   if (left > 0) {
     pop = doc.createElement("aside"); pop.className = "mi-places-pop"; pop.hidden = true; pop.setAttribute("aria-label", "Places left");
     pop.innerHTML = '<button type="button" class="mi-pop-close" aria-label="Close">×</button>' +
-      '<span class="mi-pop-eyebrow">Maqamaat Intensive · Applied Maqamaat</span>' +
+      '<span class="mi-pop-eyebrow">Applied Maqamaat</span>' +
       '<strong class="mi-pop-places">' + left + (left === 1 ? ' place' : ' places') + ' remaining</strong>' +
       '<span class="mi-pop-live" hidden><span class="mi-live-dot" aria-hidden="true"></span><span></span></span>' +
       '<a class="mi-pop-cta" href="#journey">Request Your Place →</a>';

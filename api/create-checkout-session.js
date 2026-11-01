@@ -81,7 +81,7 @@ export default async function handler(req, res) {
       description: "All eight Maqamaat, recorded video lessons, vocal drills and breathing techniques. Immediate access requested at checkout; the 14-day cancellation right ends once access begins."
     },
     monthly: {
-      name: "Maqamaat Intensive",
+      name: "Applied Maqamaat",
       amount: 15900,
       mode: "subscription",
       description: "All eight Maqamaat lessons, two online lessons each week, private student community, daily quizzes and games."
@@ -91,7 +91,7 @@ export default async function handler(req, res) {
       name: "Maqamaat Mastery",
       amount: 29900,
       mode: "subscription",
-      description: "Everything in the Maqamaat Intensive (all eight Maqamaat lessons, two online lessons each week, community) plus individual mentoring."
+      description: "Everything in Applied Maqamaat (all eight Maqamaat lessons, two online lessons each week, community) plus individual mentoring."
     }
   };
 
